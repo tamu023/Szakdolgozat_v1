@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "538904864226",
+    "firebase_url": "https://szakdolgozatv1.firebaseio.com",
+    "project_id": "szakdolgozatv1",
+    "storage_bucket": "szakdolgozatv1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:538904864226:android:7c0ce950733d6996",
+        "android_client_info": {
+          "package_name": "com.example.bloodline.szakdolgozat_v1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "538904864226-mjhvpb3938of20h5c4qi4kck5oadvfuf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bloodline.szakdolgozat_v1",
+            "certificate_hash": "52334d6fa1f0ee58137ab972ebba5255e7b2e48d"
+          }
+        },
+        {
+          "client_id": "538904864226-jg0v5cma9i25d2lr6g73jlj4uua5ve4r.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "538904864226-jg0v5cma9i25d2lr6g73jlj4uua5ve4r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAb_pt5GJJmCHxYDBkd99BPDqoPs8kzU-c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "538904864226-jg0v5cma9i25d2lr6g73jlj4uua5ve4r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
