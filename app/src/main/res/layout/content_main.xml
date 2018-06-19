@@ -7,6 +7,7 @@
     tools:showIn="@layout/app_bar_main">
 
     <FrameLayout
+        android:id="@+id/mainframeplace"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
