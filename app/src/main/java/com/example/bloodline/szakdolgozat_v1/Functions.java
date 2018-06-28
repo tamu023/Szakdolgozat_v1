@@ -2,6 +2,7 @@ package com.example.bloodline.szakdolgozat_v1;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Functions {
     private static String email;
@@ -17,7 +18,6 @@ public class Functions {
     private static Boolean gender; //true = man, false = woman
     private static Double bmiindex;
     private static Boolean acctype; //true = admin, false = use
-
 
     public static String getEmail() {
         return email;
@@ -122,4 +122,5 @@ public class Functions {
     public static void setAcctype(Boolean acctype) {
         Functions.acctype = acctype;
     }
+
 }

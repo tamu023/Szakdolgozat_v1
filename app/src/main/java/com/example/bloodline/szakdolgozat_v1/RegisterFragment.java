@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -44,6 +46,11 @@ public class RegisterFragment extends Fragment {
         edtPassw = view.findViewById(R.id.regPass);
         edtConfpassw = view.findViewById(R.id.regConfpass);
 
+        //Reklám
+        AdView mAdView = view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         //Back gomb
         txtBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +74,9 @@ public class RegisterFragment extends Fragment {
 
                 if (CheckInputs(Functions.getEmail(), passw, confpassw)) {
                     Register(Functions.getEmail(), passw);
+                    //teszt adatbázisba beírás
+                    RegLog reg = new RegLog("emai@l.com", "pisti", false, true, false, 78, 185, true, false);
+                    reg.setVariables();
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Missing or Invalid parameters.", Toast.LENGTH_LONG).show();
                 }
