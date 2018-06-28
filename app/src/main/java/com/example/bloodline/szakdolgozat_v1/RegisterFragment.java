@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -74,9 +75,6 @@ public class RegisterFragment extends Fragment {
 
                 if (CheckInputs(Functions.getEmail(), passw, confpassw)) {
                     Register(Functions.getEmail(), passw);
-                    //teszt adatbázisba beírás
-                    RegLog reg = new RegLog("emai@l.com", "pisti", false, true, false, 78, 185, true, false);
-                    reg.setVariables();
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Missing or Invalid parameters.", Toast.LENGTH_LONG).show();
                 }
@@ -100,6 +98,11 @@ public class RegisterFragment extends Fragment {
                         if (task.isSuccessful()) {
                             Functions.setUser(Functions.getmAuth().getCurrentUser());
                             Functions.setUID(Functions.getUser().getUid());
+                            //teszt adatbázisba beírás
+                            Firebase.setAndroidContext(getActivity().getApplicationContext());
+                            RegLog reg = new RegLog("emai@l.com", "pisti", false, true, false, 78, 185, true, false);
+                            reg.setVariables();
+                            //------------------------------------
                             Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                             getActivity().finish();

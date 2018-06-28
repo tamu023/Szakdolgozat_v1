@@ -3,16 +3,16 @@ package com.example.bloodline.szakdolgozat_v1;
 import com.firebase.client.Firebase;
 
 public class RegLog {
-    private String email;
-    private String name;
-    private Boolean cukorbetegseg;
-    private Boolean liszterzekenyseg;
-    private Boolean laktozerzekenyseg;
-    private Integer weight;
-    private Integer height;
-    private Boolean gender; //true = man, false = woman
-    private Double bmiindex;
-    private Boolean acctype; //true = admin, false = use
+    String email;
+    String name;
+    Boolean cukorbetegseg;
+    Boolean liszterzekenyseg;
+    Boolean laktozerzekenyseg;
+    Integer weight;
+    Integer height;
+    Boolean gender; //true = man, false = woman
+    Double bmiindex;
+    Boolean acctype; //true = admin, false = use
 
     //kintről hívjuk meg regisztrációkor
     public RegLog(String email, String name, Boolean cukorbetegseg, Boolean liszterzekenyseg, Boolean laktozerzekenyseg, Integer weight, Integer height, Boolean gender, Boolean acctype) {
@@ -28,7 +28,7 @@ public class RegLog {
     }
 
     //osztályon belülről hívjuk ezzel írjuk bele az adatokat az adatbázisba
-    private RegLog(String email, String name, Boolean cukorbetegseg, Boolean liszterzekenyseg, Boolean laktozerzekenyseg, Integer weight, Integer height, Boolean gender, Double bmiindex, Boolean acctype) {
+    public RegLog(String email, String name, Boolean cukorbetegseg, Boolean liszterzekenyseg, Boolean laktozerzekenyseg, Integer weight, Integer height, Boolean gender, Double bmiindex, Boolean acctype) {
         this.email = email;
         this.name = name;
         this.cukorbetegseg = cukorbetegseg;
@@ -54,8 +54,9 @@ public class RegLog {
         Functions.setBmiindex(calcBMI(this.height, this.weight));
         Functions.setAcctype(this.acctype);
         this.bmiindex = Functions.getBmiindex();
-        final Firebase ref = new Firebase(Global_Vars.usersRef);
-        RegLog uj = new RegLog(this.email, this.name, this.cukorbetegseg, this.liszterzekenyseg, this.laktozerzekenyseg, this.weight, this.height, this.gender, this.bmiindex, this.acctype);
+        //adatbázisba beírás
+        Firebase ref = new Firebase(Global_Vars.usersRef);
+        RegLog uj = new RegLog(email, name, cukorbetegseg, liszterzekenyseg, laktozerzekenyseg, weight, height, gender, bmiindex, acctype);
         ref.child(Functions.getUID()).setValue(uj);
     }
 
