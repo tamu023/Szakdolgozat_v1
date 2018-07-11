@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -83,6 +84,9 @@ public class LoginFragment extends Fragment {
                         if (task.isSuccessful()) {
                             Functions.setUser(Functions.getmAuth().getCurrentUser());
                             Functions.setUID(Functions.getUser().getUid());
+                            //adatok lekérése adatbázisból
+                            Firebase.setAndroidContext(getActivity().getApplicationContext());
+                            Functions.readAccdata();
                             Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                             getActivity().finish();

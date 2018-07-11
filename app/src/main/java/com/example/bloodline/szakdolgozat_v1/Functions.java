@@ -1,8 +1,11 @@
 package com.example.bloodline.szakdolgozat_v1;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class Functions {
     private static String email;
@@ -123,4 +126,57 @@ public class Functions {
         Functions.acctype = acctype;
     }
 
+    //TODO Letesztelni miért nem működik
+    public static void readAccdata() {
+        Firebase ref = new Firebase(Global_Vars.usersRef);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {
+                    if (elsoszint.getKey().equals(Functions.getUID())) {
+                        for (DataSnapshot masodikszint : elsoszint.getChildren()) {
+                            switch (masodikszint.getKey()) {
+                                case "name":
+                                    Functions.setName(masodikszint.getValue().toString());
+                                    break;
+                                case "email":
+                                    Functions.setEmail(masodikszint.getValue().toString());
+                                    break;
+                                case "cukorbetegseg":
+                                    Functions.setCukorbetegseg((boolean) masodikszint.getValue());
+                                    break;
+                                case "liszterzekenyeg":
+                                    Functions.setLiszterzekenyseg((boolean) masodikszint.getValue());
+                                    break;
+                                case "weight":
+                                    Functions.setWeight((int) masodikszint.getValue());
+                                    break;
+                                case "height":
+                                    Functions.setHeight((int) masodikszint.getValue());
+                                    break;
+                                case "gender":
+                                    Functions.setGender((boolean) masodikszint.getValue());
+                                    break;
+                                case "bmiindex":
+                                    Functions.setBmiindex((double) masodikszint.getValue());
+                                    break;
+                                case "laktozerzekenyseg":
+                                    Functions.setLaktozerzekenyseg((boolean) masodikszint.getValue());
+                                    break;
+                                case "acctype":
+                                    Functions.setAcctype((boolean) masodikszint.getValue());
+                                    break;
+                                default:
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
 }

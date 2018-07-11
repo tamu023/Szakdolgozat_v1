@@ -1,5 +1,8 @@
 package com.example.bloodline.szakdolgozat_v1;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -16,6 +19,7 @@ import com.google.android.gms.ads.AdView;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    //TODO átlátszó hátteret találni az activityre
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +64,12 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.nav_addfood) {
+            Fragment fragment = new ProductTypeFragment();
+            FragmentManager fm = getFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.mainframeplace, fragment);
+            ft.commit();
         } else if (id == R.id.nav_logout) {
             Functions.getmAuth().signOut();
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);

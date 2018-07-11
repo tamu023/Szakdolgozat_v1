@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +32,20 @@ public class RegisterFragment extends Fragment {
     private EditText edtEmail;
     private EditText edtPassw;
     private EditText edtConfpassw;
+    private EditText edtName;
+    private EditText edtHeight;
+    private EditText edtWeight;
+    private TextView txtUser;
+    private TextView txtAdmin;
+    private RadioButton rdbMale;
+    private RadioButton rdbFemale;
+    private Switch swCukor;
+    private Switch swLaktoz;
+    private Switch swLiszt;
+
+    private boolean type; //true = admin selected, false = user selected
+    private boolean gender; //true = male, false = female
+    private boolean checked;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -46,6 +64,22 @@ public class RegisterFragment extends Fragment {
         edtEmail = view.findViewById(R.id.regEmail);
         edtPassw = view.findViewById(R.id.regPass);
         edtConfpassw = view.findViewById(R.id.regConfpass);
+        edtName = view.findViewById(R.id.regName);
+        edtHeight = view.findViewById(R.id.regHeight);
+        edtWeight = view.findViewById(R.id.regWeight);
+        txtUser = view.findViewById(R.id.regUser);
+        txtAdmin = view.findViewById(R.id.regAdmin);
+        RadioGroup rbgGender = view.findViewById(R.id.regGrpGender);
+        rdbMale = view.findViewById(R.id.regMale);
+        rdbFemale = view.findViewById(R.id.regFemale);
+        swCukor = view.findViewById(R.id.regCukor);
+        swLaktoz = view.findViewById(R.id.regLaktoz);
+        swLiszt = view.findViewById(R.id.regLiszt);
+
+        type = false;
+        checked = false;
+        txtUser.setBackgroundColor(Color.parseColor("#278737"));
+        txtAdmin.setBackgroundColor(Color.TRANSPARENT);
 
         //Reklám
         AdView mAdView = view.findViewById(R.id.adView);
@@ -73,19 +107,60 @@ public class RegisterFragment extends Fragment {
                 String passw = edtPassw.getText().toString();
                 String confpassw = edtConfpassw.getText().toString();
 
-                if (CheckInputs(Functions.getEmail(), passw, confpassw)) {
+                if (CheckInputs(Functions.getEmail(), passw, confpassw, edtName.getText().toString(), edtHeight.getText().toString(), edtWeight.getText().toString(), checked)) {
                     Register(Functions.getEmail(), passw);
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Missing or Invalid parameters.", Toast.LENGTH_LONG).show();
                 }
             }
         });
+
+        //Felhasználó típus kijelölése
+        txtUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (type) {
+                    type = false;
+                    txtUser.setBackgroundColor(Color.parseColor("#278737"));
+                    txtAdmin.setBackgroundColor(Color.TRANSPARENT);
+                }
+            }
+        });
+
+        //Admin típus kijelölése
+        txtAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!type) {
+                    type = true;
+                    txtAdmin.setBackgroundColor(Color.parseColor("#278737"));
+                    txtUser.setBackgroundColor(Color.TRANSPARENT);
+                }
+            }
+        });
+
+        //Radiobutton group kezelése
+        rbgGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                checked = true;
+                if (rdbFemale.isChecked()) {
+                    gender = false;
+                } else if (rdbMale.isChecked()) {
+                    gender = true;
+                }
+            }
+        });
     }
 
-    private boolean CheckInputs(String email, String password, String confpassword) {
+    private boolean CheckInputs(String email, String password, String confpassword, String name, String height, String weight, boolean checked) {
         boolean ok = true;
-        if (email.isEmpty() || password.isEmpty() || confpassword.isEmpty() || !password.equals(confpassword)) {
+        if (email.isEmpty() || password.isEmpty() || confpassword.isEmpty() || !password.equals(confpassword) || name.isEmpty() || height.isEmpty() || weight.isEmpty() || !checked) {
             ok = false;
+        }
+        //adatok mentése Functions-ba ha megfelelőek az ellenörzés után
+        if (ok) {
+            setVariables();
         }
         return ok;
     }
@@ -98,11 +173,11 @@ public class RegisterFragment extends Fragment {
                         if (task.isSuccessful()) {
                             Functions.setUser(Functions.getmAuth().getCurrentUser());
                             Functions.setUID(Functions.getUser().getUid());
-                            //teszt adatbázisba beírás
+                            //adatbázisba beírás
                             Firebase.setAndroidContext(getActivity().getApplicationContext());
-                            RegLog reg = new RegLog("emai@l.com", "pisti", false, true, false, 78, 185, true, false);
-                            reg.setVariables();
-                            //------------------------------------
+                            RegLog reg = new RegLog(Functions.getEmail(), Functions.getName(), Functions.getCukorbetegseg(), Functions.getLiszterzekenyseg(), Functions.getLaktozerzekenyseg(), Functions.getWeight(), Functions.getHeight(), Functions.getGender(), Functions.getBmiindex(), Functions.getAcctype());
+                            reg.write_database();
+                            //------------------
                             Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                             getActivity().finish();
@@ -111,5 +186,22 @@ public class RegisterFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    private void setVariables() {
+        Functions.setName(edtName.getText().toString());
+        Functions.setEmail(edtEmail.getText().toString());
+        Functions.setCukorbetegseg(swCukor.isChecked());
+        Functions.setLiszterzekenyseg(swLiszt.isChecked());
+        Functions.setLaktozerzekenyseg(swLaktoz.isChecked());
+        Functions.setWeight(Integer.parseInt(edtWeight.getText().toString()));
+        Functions.setHeight(Integer.parseInt(edtHeight.getText().toString()));
+        Functions.setGender(gender);
+        Functions.setBmiindex(calcBMI(Functions.getHeight(), Functions.getWeight()));
+        Functions.setAcctype(type);
+    }
+
+    private double calcBMI(Integer height, Integer weight) {
+        return (double) weight / Math.pow((double) height, 2);
     }
 }
