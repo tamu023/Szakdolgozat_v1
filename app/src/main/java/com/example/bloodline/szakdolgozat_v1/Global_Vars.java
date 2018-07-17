@@ -5,5 +5,6 @@ public interface Global_Vars {
     String usersRef = "https://szakdolgozatv1.firebaseio.com/Users";
     String finProdRef = "https://szakdolgozatv1.firebaseio.com/Products/Finished Products";
     String rawProdRef = "https://szakdolgozatv1.firebaseio.com/Products/Raw Ingredients";
-    String pendingprodRef = "https://szakdolgozatv1.firebaseio.com/Pending Products";
+    String finpendingProdRef = "https://szakdolgozatv1.firebaseio.com/Pending Products/Finished Products";
+    String rawpendingProdRef = "https://szakdolgozatv1.firebaseio.com/Pending Products/Raw Ingredients";
 }

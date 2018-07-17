@@ -1,6 +1,8 @@
 package com.example.bloodline.szakdolgozat_v1;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,7 +33,11 @@ public class ProductTypeFragment extends Fragment {
         btnRaw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Fragment startfragment = new RawfFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.mainframeplace, startfragment);
+                ft.commit();
             }
         });
 
