@@ -1,5 +1,7 @@
 package com.example.bloodline.szakdolgozat_v1;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
@@ -43,6 +45,12 @@ public class RawfFragment extends Fragment {
                     //TODO alert dialog ami megkérdezi hogy biztosan hozzáadjuk
                     AddProducts uj = new AddProducts(edtMegnev.getText().toString(), Integer.parseInt(edtCarb.getText().toString()), swFlour.isChecked(), swMilk.isChecked(), swMeat.isChecked());
                     if (uj.add_raw()) {
+                        //hozzáadás után visszalépünk az előző képernyőre
+                        Fragment fragm = new ProductTypeFragment();
+                        FragmentManager fm = getFragmentManager();
+                        FragmentTransaction ft = fm.beginTransaction();
+                        ft.replace(R.id.mainframeplace, fragm);
+                        ft.commit();
                         Toast.makeText(getActivity().getApplicationContext(), "Added to database", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getActivity().getApplicationContext(), "Failed to add to the database", Toast.LENGTH_SHORT).show();

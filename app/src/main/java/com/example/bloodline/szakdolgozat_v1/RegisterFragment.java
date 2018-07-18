@@ -194,14 +194,14 @@ public class RegisterFragment extends Fragment {
         Functions.setCukorbetegseg(swCukor.isChecked());
         Functions.setLiszterzekenyseg(swLiszt.isChecked());
         Functions.setLaktozerzekenyseg(swLaktoz.isChecked());
-        Functions.setWeight(Integer.parseInt(edtWeight.getText().toString()));
-        Functions.setHeight(Integer.parseInt(edtHeight.getText().toString()));
+        Functions.setWeight(Long.parseLong(edtWeight.getText().toString()));
+        Functions.setHeight(Long.parseLong(edtHeight.getText().toString()));
         Functions.setGender(gender);
         Functions.setBmiindex(calcBMI(Functions.getHeight(), Functions.getWeight()));
         Functions.setAcctype(type);
     }
 
-    private double calcBMI(Integer height, Integer weight) {
-        return (double) weight / Math.pow((double) height, 2);
+    private double calcBMI(Long height, Long weight) {
+        return  (double)weight / Math.pow((double)height, 2);
     }
 }

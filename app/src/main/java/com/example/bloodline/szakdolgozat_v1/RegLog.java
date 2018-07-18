@@ -9,13 +9,13 @@ public class RegLog {
     Boolean cukorbetegseg;
     Boolean liszterzekenyseg;
     Boolean laktozerzekenyseg;
-    Integer weight;
-    Integer height;
+    Long weight;
+    Long height;
     Boolean gender; //true = man, false = woman
     Double bmiindex;
     Boolean acctype; //true = admin, false = use
 
-    public RegLog(String email, String name, Boolean cukorbetegseg, Boolean liszterzekenyseg, Boolean laktozerzekenyseg, Integer weight, Integer height, Boolean gender, Double bmiindex, Boolean acctype) {
+    public RegLog(String email, String name, Boolean cukorbetegseg, Boolean liszterzekenyseg, Boolean laktozerzekenyseg, Long weight, Long height, Boolean gender, Double bmiindex, Boolean acctype) {
         this.email = email;
         this.name = name;
         this.cukorbetegseg = cukorbetegseg;

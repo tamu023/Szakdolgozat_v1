@@ -1,7 +1,5 @@
 package com.example.bloodline.szakdolgozat_v1;
 
-import android.widget.Toast;
-
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -22,12 +20,9 @@ public class AddProducts {
     private Boolean siker;
 
     //Finished food add
-    public AddProducts(String megnevezes, Integer carbohydrate, Boolean flour, Boolean milk, Boolean meat, String recept, String[] ingredients) {
+    public AddProducts(String megnevezes, Integer carbohydrate, String recept, String[] ingredients) {
         this.megnevezes = megnevezes;
         this.carbohydrate = carbohydrate;
-        this.flour = flour;
-        this.milk = milk;
-        this.meat = meat;
         this.recept = recept;
         this.ingredients = ingredients;
     }
@@ -75,6 +70,7 @@ public class AddProducts {
     }
 
     //ellenörzés hogy létezik e már az item az adatbázisban
+    //TODO leellenőrizni hogy miért megy át rajta mindig annak ellenére hogy már benne van a listában
     private boolean check_exist(Firebase ref) {
         ref.addValueEventListener(new ValueEventListener() {
             @Override

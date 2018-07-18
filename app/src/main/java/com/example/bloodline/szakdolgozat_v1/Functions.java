@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class Functions {
+    //nem szabad Integert használni mert Firebase Longként tárolja a számokat
     private static String email;
     private static String UID;
     private static FirebaseUser user;
@@ -16,8 +17,8 @@ public class Functions {
     private static Boolean cukorbetegseg;
     private static Boolean liszterzekenyseg;
     private static Boolean laktozerzekenyseg;
-    private static Integer weight;
-    private static Integer height;
+    private static Long weight;
+    private static Long height;
     private static Boolean gender; //true = man, false = woman
     private static Double bmiindex;
     private static Boolean acctype; //true = admin, false = use
@@ -54,11 +55,11 @@ public class Functions {
         return laktozerzekenyseg;
     }
 
-    public static Integer getWeight() {
+    public static Long getWeight() {
         return weight;
     }
 
-    public static Integer getHeight() {
+    public static Long getHeight() {
         return height;
     }
 
@@ -106,11 +107,11 @@ public class Functions {
         Functions.laktozerzekenyseg = laktozerzekenyseg;
     }
 
-    public static void setWeight(Integer weight) {
+    public static void setWeight(Long weight) {
         Functions.weight = weight;
     }
 
-    public static void setHeight(Integer height) {
+    public static void setHeight(Long height) {
         Functions.height = height;
     }
 
@@ -126,7 +127,6 @@ public class Functions {
         Functions.acctype = acctype;
     }
 
-    //TODO Letesztelni miért nem működik
     public static void readAccdata() {
         Firebase ref = new Firebase(Global_Vars.usersRef);
         ref.addValueEventListener(new ValueEventListener() {
@@ -149,10 +149,10 @@ public class Functions {
                                     Functions.setLiszterzekenyseg((boolean) masodikszint.getValue());
                                     break;
                                 case "weight":
-                                    Functions.setWeight((int) masodikszint.getValue());
+                                    Functions.setWeight((long) masodikszint.getValue());
                                     break;
                                 case "height":
-                                    Functions.setHeight((int) masodikszint.getValue());
+                                    Functions.setHeight((long) masodikszint.getValue());
                                     break;
                                 case "gender":
                                     Functions.setGender((boolean) masodikszint.getValue());
