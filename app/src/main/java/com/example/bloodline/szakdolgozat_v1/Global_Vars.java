@@ -7,4 +7,5 @@ public interface Global_Vars {
     String rawProdRef = rootRef + "/Products/Raw Ingredients";
     String finpendingProdRef = rootRef + "/Pending Products/Finished Products";
     String rawpendingProdRef = rootRef + "/Pending Products/Raw Ingredients";
+    String pendingUserRef = rootRef + "/Pending Admin Users";
 }

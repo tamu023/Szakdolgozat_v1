@@ -47,6 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20sp"
+            android:drawableStart="@drawable/twotone_email_24"
             android:hint="E-mail"
             android:inputType="textEmailAddress" />
 
@@ -55,6 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20sp"
+            android:drawableStart="@drawable/twotone_pass"
             android:hint="Password"
             android:inputType="textPassword" />
 
@@ -128,6 +130,7 @@
             android:id="@+id/regName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableStart="@drawable/twotone_person"
             android:hint="Name" />
 
         <EditText

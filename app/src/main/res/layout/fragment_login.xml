@@ -19,6 +19,7 @@
             android:id="@+id/loginEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableStart="@drawable/twotone_email_24"
             android:hint="E-mail"
             android:inputType="textEmailAddress" />
     </LinearLayout>
@@ -35,6 +36,7 @@
             android:id="@+id/loginPassw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableStart="@drawable/twotone_pass"
             android:hint="Password"
             android:inputType="textPassword" />
     </LinearLayout>

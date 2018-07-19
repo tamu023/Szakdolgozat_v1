@@ -1,5 +1,7 @@
 package com.example.bloodline.szakdolgozat_v1;
 
+import android.arch.core.util.Function;
+
 import com.firebase.client.Firebase;
 
 public class RegLog {
@@ -31,7 +33,13 @@ public class RegLog {
     //adatbázisba beírás
     public void write_database() {
         Firebase ref = new Firebase(Global_Vars.usersRef);
-        RegLog uj = new RegLog(email, name, cukorbetegseg, liszterzekenyseg, laktozerzekenyseg, weight, height, gender, bmiindex, acctype);
+        //acctypenak regisztrációkor mindig falset ír de el lesz bírálva amennyiben a felhasználó Admin jogot szeretne
+        RegLog uj = new RegLog(email, name, cukorbetegseg, liszterzekenyseg, laktozerzekenyseg, weight, height, gender, bmiindex, false);
+        if (acctype) {
+            Functions.setAcctype(false);
+            Firebase aref = new Firebase(Global_Vars.pendingUserRef);
+            aref.child(Functions.getUID()).setValue(Functions.getName());
+        }
         ref.child(Functions.getUID()).setValue(uj);
     }
 }

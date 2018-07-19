@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -70,6 +71,13 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.mainframeplace, fragment);
             ft.commit();
+        } else if (id ==R.id.nav_verify) {
+            if(Functions.getAcctype()){
+                //TODO elkészíteni az admin verifikációs fragmentet recycle view balra huzva elutasítva jobbra huzva elfogadva
+            }else{
+                Toast.makeText(MainActivity.this, "Not Authorized.", Toast.LENGTH_SHORT).show();
+            }
+
         } else if (id == R.id.nav_logout) {
             Functions.getmAuth().signOut();
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
