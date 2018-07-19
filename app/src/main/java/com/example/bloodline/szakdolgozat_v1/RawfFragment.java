@@ -1,7 +1,9 @@
 package com.example.bloodline.szakdolgozat_v1;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
@@ -42,19 +44,36 @@ public class RawfFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (check_params()) {
-                    //TODO alert dialog ami megkérdezi hogy biztosan hozzáadjuk
-                    AddProducts uj = new AddProducts(edtMegnev.getText().toString(), Integer.parseInt(edtCarb.getText().toString()), swFlour.isChecked(), swMilk.isChecked(), swMeat.isChecked());
-                    if (uj.add_raw()) {
-                        //hozzáadás után visszalépünk az előző képernyőre
-                        Fragment fragm = new ProductTypeFragment();
-                        FragmentManager fm = getFragmentManager();
-                        FragmentTransaction ft = fm.beginTransaction();
-                        ft.replace(R.id.mainframeplace, fragm);
-                        ft.commit();
-                        Toast.makeText(getActivity().getApplicationContext(), "Added to database", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getActivity().getApplicationContext(), "Failed to add to the database", Toast.LENGTH_SHORT).show();
-                    }
+                    //Alert Dialog ami megkérdezi hogy biztosan hozzáadjuk e
+                    AlertDialog.Builder a_builder = new AlertDialog.Builder(getActivity().getApplicationContext());
+                    a_builder.setMessage("Do you want to add this Ingredient?").setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            AddProducts uj = new AddProducts(edtMegnev.getText().toString(), Integer.parseInt(edtCarb.getText().toString()), swFlour.isChecked(), swMilk.isChecked(), swMeat.isChecked());
+                            if (uj.add_raw()) {
+                                //hozzáadás után visszalépünk az előző képernyőre
+                                Fragment fragm = new ProductTypeFragment();
+                                FragmentManager fm = getFragmentManager();
+                                FragmentTransaction ft = fm.beginTransaction();
+                                ft.replace(R.id.mainframeplace, fragm);
+                                ft.commit();
+                                Toast.makeText(getActivity().getApplicationContext(), "Added to database", Toast.LENGTH_SHORT).show();
+                                dialog.cancel();
+                            } else {
+                                Toast.makeText(getActivity().getApplicationContext(), "Failed to add to the database", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = a_builder.create();
+                    alert.setTitle("New Item");
+                    alert.show();
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Please fill Name and Carbohydrate fields", Toast.LENGTH_SHORT).show();
                 }
@@ -64,7 +83,7 @@ public class RawfFragment extends Fragment {
 
     //ellenörzi hogy nev és szénhidrát mezők ki vannak e töltve
     private boolean check_params() {
-        Boolean ok = true;
+        boolean ok = true;
         if (edtMegnev.getText().toString().isEmpty() || edtCarb.getText().toString().isEmpty()) {
             ok = false;
         }

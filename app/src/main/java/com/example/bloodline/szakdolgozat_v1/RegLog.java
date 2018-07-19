@@ -8,16 +8,16 @@ public class RegLog {
     //nem lehetnek privát változók mert a Firebaseba való beíráskor nem fog működni
     String email;
     String name;
-    Boolean cukorbetegseg;
-    Boolean liszterzekenyseg;
-    Boolean laktozerzekenyseg;
-    Long weight;
-    Long height;
-    Boolean gender; //true = man, false = woman
-    Double bmiindex;
-    Boolean acctype; //true = admin, false = use
+    boolean cukorbetegseg;
+    boolean liszterzekenyseg;
+    boolean laktozerzekenyseg;
+    long weight;
+    long height;
+    boolean gender; //true = man, false = woman
+    double bmiindex;
+    boolean acctype; //true = admin, false = use
 
-    public RegLog(String email, String name, Boolean cukorbetegseg, Boolean liszterzekenyseg, Boolean laktozerzekenyseg, Long weight, Long height, Boolean gender, Double bmiindex, Boolean acctype) {
+    public RegLog(String email, String name, boolean cukorbetegseg, boolean liszterzekenyseg, boolean laktozerzekenyseg, long weight, long height, boolean gender, double bmiindex, boolean acctype) {
         this.email = email;
         this.name = name;
         this.cukorbetegseg = cukorbetegseg;

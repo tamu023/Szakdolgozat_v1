@@ -7,20 +7,20 @@ import com.firebase.client.ValueEventListener;
 
 public class AddProducts {
     String megnevezes;
-    Integer carbohydrate;
-    Boolean flour;
-    Boolean milk;
-    Boolean meat;
+    int carbohydrate;
+    boolean flour;
+    boolean milk;
+    boolean meat;
     String recept;
     String[] ingredients;
 
     //seged valtozok
-    private Boolean exist = false;
+    private boolean exist = false;
     private Firebase ref;
-    private Boolean siker;
+    private boolean siker;
 
     //Finished food add
-    public AddProducts(String megnevezes, Integer carbohydrate, String recept, String[] ingredients) {
+    public AddProducts(String megnevezes, int carbohydrate, String recept, String[] ingredients) {
         this.megnevezes = megnevezes;
         this.carbohydrate = carbohydrate;
         this.recept = recept;
@@ -28,7 +28,7 @@ public class AddProducts {
     }
 
     //Raw food add
-    public AddProducts(String megnevezes, Integer carbohydrate, Boolean flour, Boolean milk, Boolean meat) {
+    public AddProducts(String megnevezes, int carbohydrate, boolean flour, boolean milk, boolean meat) {
         this.megnevezes = megnevezes;
         this.carbohydrate = carbohydrate;
         this.flour = flour;

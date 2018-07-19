@@ -8,20 +8,20 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class Functions {
-    //nem szabad Integert használni mert Firebase Longként tárolja a számokat
+    //nem szabad int-et használni mert Firebase long-ként tárolja a számokat
     private static String email;
     private static String UID;
     private static FirebaseUser user;
     private static FirebaseAuth mAuth;
     private static String name;
-    private static Boolean cukorbetegseg;
-    private static Boolean liszterzekenyseg;
-    private static Boolean laktozerzekenyseg;
-    private static Long weight;
-    private static Long height;
-    private static Boolean gender; //true = man, false = woman
-    private static Double bmiindex;
-    private static Boolean acctype; //true = admin, false = use
+    private static boolean cukorbetegseg;
+    private static boolean liszterzekenyseg;
+    private static boolean laktozerzekenyseg;
+    private static long weight;
+    private static long height;
+    private static boolean gender; //true = man, false = woman
+    private static double bmiindex;
+    private static boolean acctype; //true = admin, false = use
 
     public static String getEmail() {
         return email;
@@ -43,35 +43,35 @@ public class Functions {
         return name;
     }
 
-    public static Boolean getCukorbetegseg() {
+    public static boolean getCukorbetegseg() {
         return cukorbetegseg;
     }
 
-    public static Boolean getLiszterzekenyseg() {
+    public static boolean getLiszterzekenyseg() {
         return liszterzekenyseg;
     }
 
-    public static Boolean getLaktozerzekenyseg() {
+    public static boolean getLaktozerzekenyseg() {
         return laktozerzekenyseg;
     }
 
-    public static Long getWeight() {
+    public static long getWeight() {
         return weight;
     }
 
-    public static Long getHeight() {
+    public static long getHeight() {
         return height;
     }
 
-    public static Boolean getGender() {
+    public static boolean getGender() {
         return gender;
     }
 
-    public static Double getBmiindex() {
+    public static double getBmiindex() {
         return bmiindex;
     }
 
-    public static Boolean getAcctype() {
+    public static boolean getAcctype() {
         return acctype;
     }
 
@@ -95,35 +95,35 @@ public class Functions {
         Functions.name = name;
     }
 
-    public static void setCukorbetegseg(Boolean cukorbetegseg) {
+    public static void setCukorbetegseg(boolean cukorbetegseg) {
         Functions.cukorbetegseg = cukorbetegseg;
     }
 
-    public static void setLiszterzekenyseg(Boolean liszterzekenyseg) {
+    public static void setLiszterzekenyseg(boolean liszterzekenyseg) {
         Functions.liszterzekenyseg = liszterzekenyseg;
     }
 
-    public static void setLaktozerzekenyseg(Boolean laktozerzekenyseg) {
+    public static void setLaktozerzekenyseg(boolean laktozerzekenyseg) {
         Functions.laktozerzekenyseg = laktozerzekenyseg;
     }
 
-    public static void setWeight(Long weight) {
+    public static void setWeight(long weight) {
         Functions.weight = weight;
     }
 
-    public static void setHeight(Long height) {
+    public static void setHeight(long height) {
         Functions.height = height;
     }
 
-    public static void setGender(Boolean gender) {
+    public static void setGender(boolean gender) {
         Functions.gender = gender;
     }
 
-    public static void setBmiindex(Double bmiindex) {
+    public static void setBmiindex(double bmiindex) {
         Functions.bmiindex = bmiindex;
     }
 
-    public static void setAcctype(Boolean acctype) {
+    public static void setAcctype(boolean acctype) {
         Functions.acctype = acctype;
     }
 

@@ -201,7 +201,7 @@ public class RegisterFragment extends Fragment {
         Functions.setAcctype(type);
     }
 
-    private double calcBMI(Long height, Long weight) {
+    private double calcBMI(long height, long weight) {
         return  (double)weight / Math.pow((double)height, 2);
     }
 }
