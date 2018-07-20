@@ -137,6 +137,7 @@
             android:id="@+id/regHeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableStart="@drawable/height"
             android:hint="Height (cm)"
             android:inputType="number" />
 
@@ -144,6 +145,7 @@
             android:id="@+id/regWeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableStart="@drawable/weight"
             android:hint="Weight (kg)"
             android:inputType="number" />
 
@@ -163,6 +165,7 @@
                 android:id="@+id/regMale"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:drawableStart="@drawable/gender_male"
                 android:layout_weight="1"
                 android:text="Male" />
 
@@ -170,6 +173,7 @@
                 android:id="@+id/regFemale"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:drawableStart="@drawable/gender_female"
                 android:layout_weight="1"
                 android:text="Female" />
 

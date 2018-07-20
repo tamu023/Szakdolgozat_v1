@@ -71,10 +71,14 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.mainframeplace, fragment);
             ft.commit();
-        } else if (id ==R.id.nav_verify) {
-            if(Functions.getAcctype()){
-                //TODO elkészíteni az admin verifikációs fragmentet recycle view balra huzva elutasítva jobbra huzva elfogadva
-            }else{
+        } else if (id == R.id.nav_verify) {
+            if (Functions.getAcctype()) {
+                Fragment fragment = new AdminVerifyFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.mainframeplace, fragment);
+                ft.commit();
+            } else {
                 Toast.makeText(MainActivity.this, "Not Authorized.", Toast.LENGTH_SHORT).show();
             }
 
