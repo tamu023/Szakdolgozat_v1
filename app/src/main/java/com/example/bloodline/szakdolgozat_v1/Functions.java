@@ -1,5 +1,7 @@
 package com.example.bloodline.szakdolgozat_v1;
 
+import android.util.Log;
+
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -127,8 +129,25 @@ public class Functions {
         Functions.acctype = acctype;
     }
 
+    public static void clearAccdata() {
+        name = null;
+        email = null;
+        UID = null;
+        user = null;
+        cukorbetegseg = false;
+        liszterzekenyseg = false;
+        laktozerzekenyseg = false;
+        weight = 0;
+        height = 0;
+        gender = false;
+        bmiindex = 0;
+        acctype = false;
+
+    }
+
     public static void readAccdata() {
         Firebase ref = new Firebase(Global_Vars.usersRef);
+        //Firebase rulsenél auth read = true nem olvassa be az adatokat
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

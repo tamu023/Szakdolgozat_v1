@@ -37,6 +37,13 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //Alapértelmezettként a profilt jeleníti meg
+        Fragment fragment = new ProfileFragment();
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.mainframeplace, fragment);
+        ft.commit();
+
         //Reklám
         AdView mAdView = findViewById(R.id.adView2);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -59,8 +66,12 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
+        if (id == R.id.nav_profile) {
+            Fragment fragment = new ProfileFragment();
+            FragmentManager fm = getFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.mainframeplace, fragment);
+            ft.commit();
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -83,6 +94,8 @@ public class MainActivity extends AppCompatActivity
             }
 
         } else if (id == R.id.nav_logout) {
+            //kijelentkezéskor törölje az osztályba betöltött adatokat
+            Functions.clearAccdata();
             Functions.getmAuth().signOut();
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
