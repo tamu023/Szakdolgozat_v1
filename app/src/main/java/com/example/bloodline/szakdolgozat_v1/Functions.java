@@ -146,48 +146,44 @@ public class Functions {
     }
 
     public static void readAccdata() {
-        Firebase ref = new Firebase(Global_Vars.usersRef);
+        Firebase ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID());
         //Firebase rulsenél auth read = true nem olvassa be az adatokat
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {
-                    if (elsoszint.getKey().equals(Functions.getUID())) {
-                        for (DataSnapshot masodikszint : elsoszint.getChildren()) {
-                            switch (masodikszint.getKey()) {
-                                case "name":
-                                    Functions.setName(masodikszint.getValue().toString());
-                                    break;
-                                case "email":
-                                    Functions.setEmail(masodikszint.getValue().toString());
-                                    break;
-                                case "cukorbetegseg":
-                                    Functions.setCukorbetegseg((boolean) masodikszint.getValue());
-                                    break;
-                                case "liszterzekenyeg":
-                                    Functions.setLiszterzekenyseg((boolean) masodikszint.getValue());
-                                    break;
-                                case "weight":
-                                    Functions.setWeight((long) masodikszint.getValue());
-                                    break;
-                                case "height":
-                                    Functions.setHeight((long) masodikszint.getValue());
-                                    break;
-                                case "gender":
-                                    Functions.setGender((boolean) masodikszint.getValue());
-                                    break;
-                                case "bmiindex":
-                                    Functions.setBmiindex((double) masodikszint.getValue());
-                                    break;
-                                case "laktozerzekenyseg":
-                                    Functions.setLaktozerzekenyseg((boolean) masodikszint.getValue());
-                                    break;
-                                case "acctype":
-                                    Functions.setAcctype((boolean) masodikszint.getValue());
-                                    break;
-                                default:
-                            }
-                        }
+                for (DataSnapshot masodikszint : dataSnapshot.getChildren()) {
+                    switch (masodikszint.getKey()) {
+                        case "name":
+                            Functions.setName(masodikszint.getValue().toString());
+                            break;
+                        case "email":
+                            Functions.setEmail(masodikszint.getValue().toString());
+                            break;
+                        case "cukorbetegseg":
+                            Functions.setCukorbetegseg((boolean) masodikszint.getValue());
+                            break;
+                        case "liszterzekenyeg":
+                            Functions.setLiszterzekenyseg((boolean) masodikszint.getValue());
+                            break;
+                        case "weight":
+                            Functions.setWeight((long) masodikszint.getValue());
+                            break;
+                        case "height":
+                            Functions.setHeight((long) masodikszint.getValue());
+                            break;
+                        case "gender":
+                            Functions.setGender((boolean) masodikszint.getValue());
+                            break;
+                        case "bmiindex":
+                            Functions.setBmiindex((double) masodikszint.getValue());
+                            break;
+                        case "laktozerzekenyseg":
+                            Functions.setLaktozerzekenyseg((boolean) masodikszint.getValue());
+                            break;
+                        case "acctype":
+                            Functions.setAcctype((boolean) masodikszint.getValue());
+                            break;
+                        default:
                     }
                 }
             }

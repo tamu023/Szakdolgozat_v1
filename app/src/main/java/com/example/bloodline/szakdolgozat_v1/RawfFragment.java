@@ -45,9 +45,8 @@ public class RawfFragment extends Fragment {
             public void onClick(View v) {
                 if (check_params()) {
                     //Alert Dialog ami megkérdezi hogy biztosan hozzáadjuk e
-
-                    //TODO letesztelni
-                    AlertDialog.Builder a_builder = new AlertDialog.Builder(getActivity().getApplicationContext());
+                    //ebben az esetben a getactivity().get.... helyett getcontext() kell használni
+                    AlertDialog.Builder a_builder = new AlertDialog.Builder(getContext());
                     a_builder.setMessage("Do you want to add this Ingredient?").setCancelable(false)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override

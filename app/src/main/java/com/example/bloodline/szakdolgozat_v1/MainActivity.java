@@ -44,10 +44,12 @@ public class MainActivity extends AppCompatActivity
         ft.replace(R.id.mainframeplace, fragment);
         ft.commit();
 
+
         //Reklám
         AdView mAdView = findViewById(R.id.adView2);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+
     }
 
     @Override
