@@ -72,7 +72,7 @@ public class AddProducts {
     //ellenörzés hogy létezik e már az item az adatbázisban
     //TODO leellenőrizni hogy miért megy át rajta mindig annak ellenére hogy már benne van a listában
     private boolean check_exist(Firebase ref) {
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {

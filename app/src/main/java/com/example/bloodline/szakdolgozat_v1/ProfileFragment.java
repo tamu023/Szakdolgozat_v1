@@ -2,7 +2,6 @@ package com.example.bloodline.szakdolgozat_v1;
 
 import android.os.Bundle;
 import android.app.Fragment;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,6 +12,13 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
+import android.widget.Toast;
+
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
 
 public class ProfileFragment extends Fragment {
 
@@ -67,7 +73,19 @@ public class ProfileFragment extends Fragment {
                     btnModify.setText("Confirm");
                     btnCancel.setVisibility(View.VISIBLE);
                 } else if (btnModify.getText().equals("Confirm")) {
-                    //TODO módosítások elmentése az adatbázisba
+                    if (check_Parameters()) {
+                        //elfogadott adatok beírása az osztályba
+                        Functions.setName(edtName.getText().toString());
+                        Functions.setHeight(Long.parseLong(edtHeight.getText().toString()));
+                        Functions.setWeight(Long.parseLong(edtWeight.getText().toString()));
+                        Functions.setBmiindex(Functions.calcBMI(Functions.getWeight(), Functions.getHeight()));
+                        //adatok beírása adatbázisba
+                        Functions.UpdateUserinfo(false);
+                        btnCancel.callOnClick();
+                        Toast.makeText(getActivity().getApplicationContext(), "Updating User Informations are completed.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), "Please fill all the fields.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -88,21 +106,60 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        //Késleltetés mert a Firebase olvasás aszinkron ütemű és enélkül gyorsan lefut és üres mezőket tölt be
-        new Handler().postDelayed(new Runnable() {
+        //adatok lekérése adatbázisból
+        Firebase ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID());
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void run() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot masodikszint : dataSnapshot.getChildren()) {
+                    switch (masodikszint.getKey()) {
+                        case "name":
+                            Functions.setName(masodikszint.getValue().toString());
+                            break;
+                        case "email":
+                            Functions.setEmail(masodikszint.getValue().toString());
+                            break;
+                        case "cukorbetegseg":
+                            Functions.setCukorbetegseg((boolean) masodikszint.getValue());
+                            break;
+                        case "liszterzekenyeg":
+                            Functions.setLiszterzekenyseg((boolean) masodikszint.getValue());
+                            break;
+                        case "weight":
+                            Functions.setWeight((long) masodikszint.getValue());
+                            break;
+                        case "height":
+                            Functions.setHeight((long) masodikszint.getValue());
+                            break;
+                        case "gender":
+                            Functions.setGender((boolean) masodikszint.getValue());
+                            break;
+                        case "bmiindex":
+                            Functions.setBmiindex((double) masodikszint.getValue());
+                            break;
+                        case "laktozerzekenyseg":
+                            Functions.setLaktozerzekenyseg((boolean) masodikszint.getValue());
+                            break;
+                        case "acctype":
+                            Functions.setAcctype((boolean) masodikszint.getValue());
+                            break;
+                        default:
+                    }
+                }
                 set_Variables();
             }
-        }, 1000);  //setting 10 second delay : 1000 = 1 second
 
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
 
+            }
+        });
     }
 
     private void set_Variables() {
         edtName.setText(Functions.getName());
-        edtHeight.setText(Functions.getHeight() + " cm");
-        edtWeight.setText(Functions.getWeight() + " kg");
+        edtHeight.setText(Functions.getHeight() + "");
+        edtWeight.setText(Functions.getWeight() + "");
         if (Functions.getGender()) {
             rbgGender.check(R.id.prfMale);
         } else {
@@ -117,5 +174,13 @@ public class ProfileFragment extends Fragment {
         if (Functions.getLaktozerzekenyseg()) {
             swLaktoz.setChecked(true);
         }
+    }
+
+    private boolean check_Parameters() {
+        boolean ok = true;
+        if (edtName.getText().toString().isEmpty() || edtHeight.getText().toString().isEmpty() || edtWeight.getText().toString().isEmpty()) {
+            ok = false;
+        }
+        return ok;
     }
 }

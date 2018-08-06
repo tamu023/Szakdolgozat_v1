@@ -84,9 +84,7 @@ public class LoginFragment extends Fragment {
                         if (task.isSuccessful()) {
                             Functions.setUser(Functions.getmAuth().getCurrentUser());
                             Functions.setUID(Functions.getUser().getUid());
-                            //adatok lekérése adatbázisból
                             Firebase.setAndroidContext(getActivity().getApplicationContext());
-                            Functions.readAccdata();
                             Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                             getActivity().finish();

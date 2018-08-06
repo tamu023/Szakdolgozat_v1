@@ -175,8 +175,7 @@ public class RegisterFragment extends Fragment {
                             Functions.setUID(Functions.getUser().getUid());
                             //adatbázisba beírás
                             Firebase.setAndroidContext(getActivity().getApplicationContext());
-                            RegLog reg = new RegLog(Functions.getEmail(), Functions.getName(), Functions.getCukorbetegseg(), Functions.getLiszterzekenyseg(), Functions.getLaktozerzekenyseg(), Functions.getWeight(), Functions.getHeight(), Functions.getGender(), Functions.getBmiindex(), Functions.getAcctype());
-                            reg.write_database();
+                            Functions.UpdateUserinfo(true);
                             //------------------
                             Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                             startActivity(intent);
@@ -197,11 +196,7 @@ public class RegisterFragment extends Fragment {
         Functions.setWeight(Long.parseLong(edtWeight.getText().toString()));
         Functions.setHeight(Long.parseLong(edtHeight.getText().toString()));
         Functions.setGender(gender);
-        Functions.setBmiindex(calcBMI(Functions.getHeight(), Functions.getWeight()));
+        Functions.setBmiindex(Functions.calcBMI(Functions.getHeight(), Functions.getWeight()));
         Functions.setAcctype(type);
-    }
-
-    private double calcBMI(long height, long weight) {
-        return  (double)weight / Math.pow((double)height, 2);
     }
 }

@@ -1,11 +1,5 @@
 package com.example.bloodline.szakdolgozat_v1;
 
-import android.util.Log;
-
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -145,53 +139,18 @@ public class Functions {
 
     }
 
-    public static void readAccdata() {
-        Firebase ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID());
-        //Firebase rulsenél auth read = true nem olvassa be az adatokat
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot masodikszint : dataSnapshot.getChildren()) {
-                    switch (masodikszint.getKey()) {
-                        case "name":
-                            Functions.setName(masodikszint.getValue().toString());
-                            break;
-                        case "email":
-                            Functions.setEmail(masodikszint.getValue().toString());
-                            break;
-                        case "cukorbetegseg":
-                            Functions.setCukorbetegseg((boolean) masodikszint.getValue());
-                            break;
-                        case "liszterzekenyeg":
-                            Functions.setLiszterzekenyseg((boolean) masodikszint.getValue());
-                            break;
-                        case "weight":
-                            Functions.setWeight((long) masodikszint.getValue());
-                            break;
-                        case "height":
-                            Functions.setHeight((long) masodikszint.getValue());
-                            break;
-                        case "gender":
-                            Functions.setGender((boolean) masodikszint.getValue());
-                            break;
-                        case "bmiindex":
-                            Functions.setBmiindex((double) masodikszint.getValue());
-                            break;
-                        case "laktozerzekenyseg":
-                            Functions.setLaktozerzekenyseg((boolean) masodikszint.getValue());
-                            break;
-                        case "acctype":
-                            Functions.setAcctype((boolean) masodikszint.getValue());
-                            break;
-                        default:
-                    }
-                }
-            }
+    //false current User, true new User
+    public static void UpdateUserinfo(boolean NewOrOld) {
+        RegLog reg = new RegLog(Functions.getEmail(), Functions.getName(), Functions.getCukorbetegseg(), Functions.getLiszterzekenyseg(), Functions.getLaktozerzekenyseg(), Functions.getWeight(), Functions.getHeight(), Functions.getGender(), Functions.getBmiindex(), Functions.getAcctype());
+        if (NewOrOld) {
+            reg.newUserADD();
+        } else if (!NewOrOld) {
+            reg.currUserMOD();
+        }
 
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
+    }
 
-            }
-        });
+    public static double calcBMI(long height, long weight) {
+        return (double) weight / Math.pow((double) height, 2);
     }
 }
