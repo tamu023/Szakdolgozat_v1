@@ -1,4 +1,4 @@
-package com.example.bloodline.szakdolgozat_v1;
+package com.example.bloodline.szakdolgozat_v1.Fragments;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -15,6 +15,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bloodline.szakdolgozat_v1.Activities.MainActivity;
+import com.example.bloodline.szakdolgozat_v1.Classes.Functions;
+import com.example.bloodline.szakdolgozat_v1.R;
 import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

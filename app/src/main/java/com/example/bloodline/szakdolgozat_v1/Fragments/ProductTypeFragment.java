@@ -1,4 +1,4 @@
-package com.example.bloodline.szakdolgozat_v1;
+package com.example.bloodline.szakdolgozat_v1.Fragments;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+
+import com.example.bloodline.szakdolgozat_v1.R;
 
 
 public class ProductTypeFragment extends Fragment {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".Activities.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
     <LinearLayout
@@ -15,7 +15,7 @@
         <FrameLayout
             android:id="@+id/mainframeplace"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
         </FrameLayout>
 

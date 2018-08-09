@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import com.example.bloodline.szakdolgozat_v1.Adapters.AdminListAdapter;
 import com.example.bloodline.szakdolgozat_v1.Classes.AdminUser;
-import com.example.bloodline.szakdolgozat_v1.Global_Vars;
+import com.example.bloodline.szakdolgozat_v1.Classes.Global_Vars;
 import com.example.bloodline.szakdolgozat_v1.R;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -40,7 +40,6 @@ public class AdminVerifyFragment extends Fragment {
 
         listView = view.findViewById(R.id.listAdmin);
         adminList = new ArrayList<>();
-        //TODO letesztelni és megnéznimi van ha üres a lista
         Firebase ref = new Firebase(Global_Vars.pendingUserRef);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

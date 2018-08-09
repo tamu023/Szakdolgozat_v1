@@ -1,4 +1,4 @@
-package com.example.bloodline.szakdolgozat_v1;
+package com.example.bloodline.szakdolgozat_v1.Fragments;
 
 import android.app.AlertDialog;
 import android.app.FragmentManager;
@@ -16,6 +16,11 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.bloodline.szakdolgozat_v1.Classes.AddProducts;
+import com.example.bloodline.szakdolgozat_v1.Classes.Functions;
+import com.example.bloodline.szakdolgozat_v1.Classes.Global_Vars;
+import com.example.bloodline.szakdolgozat_v1.Fragments.ProductTypeFragment;
+import com.example.bloodline.szakdolgozat_v1.R;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;

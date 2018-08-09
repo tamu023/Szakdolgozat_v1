@@ -1,4 +1,4 @@
-package com.example.bloodline.szakdolgozat_v1;
+package com.example.bloodline.szakdolgozat_v1.Classes;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

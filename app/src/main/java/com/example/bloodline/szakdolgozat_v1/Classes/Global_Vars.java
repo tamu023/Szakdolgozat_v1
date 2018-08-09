@@ -1,4 +1,4 @@
-package com.example.bloodline.szakdolgozat_v1;
+package com.example.bloodline.szakdolgozat_v1.Classes;
 
 public interface Global_Vars {
     String rootRef = "https://szakdolgozatv1.firebaseio.com";

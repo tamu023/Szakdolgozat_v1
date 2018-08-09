@@ -1,4 +1,4 @@
-package com.example.bloodline.szakdolgozat_v1;
+package com.example.bloodline.szakdolgozat_v1.Activities;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -14,6 +14,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.bloodline.szakdolgozat_v1.Fragments.AdminVerifyFragment;
+import com.example.bloodline.szakdolgozat_v1.Classes.Functions;
+import com.example.bloodline.szakdolgozat_v1.Fragments.ProductTypeFragment;
+import com.example.bloodline.szakdolgozat_v1.Fragments.ProfileFragment;
+import com.example.bloodline.szakdolgozat_v1.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -86,11 +91,11 @@ public class MainActivity extends AppCompatActivity
             ft.commit();
         } else if (id == R.id.nav_verify) {
             if (Functions.getAcctype()) {
-                /*Fragment fragment = new AdminVerifyFragment();
+                Fragment fragment = new AdminVerifyFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.mainframeplace, fragment);
-                ft.commit();*/
+                ft.commit();
             } else {
                 Toast.makeText(MainActivity.this, "Not Authorized.", Toast.LENGTH_SHORT).show();
             }
