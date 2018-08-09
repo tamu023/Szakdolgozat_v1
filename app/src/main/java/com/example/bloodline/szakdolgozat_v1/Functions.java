@@ -17,7 +17,7 @@ public class Functions {
     private static long height;
     private static boolean gender; //true = man, false = woman
     private static double bmiindex;
-    private static boolean acctype; //true = admin, false = use
+    private static boolean acctype; //true = admin, false = user
 
     public static String getEmail() {
         return email;

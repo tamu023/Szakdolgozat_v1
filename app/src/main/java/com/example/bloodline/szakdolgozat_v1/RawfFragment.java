@@ -51,94 +51,69 @@ public class RawfFragment extends Fragment {
             public void onClick(View v) {
                 if (check_params()) {
                     //létezik e már a listában a termék
-                    if (exist) {
-                        //Alert Dialog ami megkérdezi hogy biztosan hozzáadjuk e ebben az esetben a getactivity().get.... helyett getcontext() kell használni
-                        AlertDialog.Builder a_builder = new AlertDialog.Builder(getContext());
-                        a_builder.setMessage("Do you want to add this Ingredient?").setCancelable(false)
-                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        AddProducts uj = new AddProducts(edtMegnev.getText().toString(), Integer.parseInt(edtCarb.getText().toString()), swFlour.isChecked(), swMilk.isChecked(), swMeat.isChecked());
-                                        if (uj.add_raw()) {
-                                            //hozzáadás után visszalépünk az előző képernyőre
-                                            Fragment fragm = new ProductTypeFragment();
-                                            FragmentManager fm = getFragmentManager();
-                                            FragmentTransaction ft = fm.beginTransaction();
-                                            ft.replace(R.id.mainframeplace, fragm);
-                                            ft.commit();
-                                            Toast.makeText(getActivity().getApplicationContext(), "Added to database", Toast.LENGTH_SHORT).show();
-                                            dialog.cancel();
-                                        } else {
-                                            Toast.makeText(getActivity().getApplicationContext(), "Failed to add to the database", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                })
-                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.cancel();
-                                    }
-                                });
-                        AlertDialog alert = a_builder.create();
-                        alert.setTitle("New Item");
-                        alert.show();
+                    final Firebase ref;
+                    if (Functions.getAcctype()) {
+                        ref = new Firebase(Global_Vars.rawProdRef);
                     } else {
-                        Toast.makeText(getActivity().getApplicationContext(), "This ingredient is already in the database", Toast.LENGTH_SHORT).show();
+                        ref = new Firebase(Global_Vars.rawpendingProdRef);
                     }
+                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            exist = false;
+                            for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {
+                                if (elsoszint.getKey().equals(edtMegnev.getText().toString())) {
+                                    exist = true;
+                                    break;
+                                }
+                            }
+                            //miután lefutott a keresés az adatbázisban utána fut csak le a kiértékelés
+                            if (!exist) {
+                                //Alert Dialog ami megkérdezi hogy biztosan hozzáadjuk e ebben az esetben a getactivity().get.... helyett getcontext() kell használni
+                                AlertDialog.Builder a_builder = new AlertDialog.Builder(getContext());
+                                a_builder.setMessage("Do you want to add this Ingredient?").setCancelable(false)
+                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                AddProducts uj = new AddProducts(edtMegnev.getText().toString(), Integer.parseInt(edtCarb.getText().toString()), swFlour.isChecked(), swMilk.isChecked(), swMeat.isChecked());
+                                                //adatbázisba beírás
+                                                ref.child(edtMegnev.getText().toString()).setValue(uj);
+                                                //hozzáadás után visszalépünk az előző képernyőre
+                                                Fragment fragm = new ProductTypeFragment();
+                                                FragmentManager fm = getFragmentManager();
+                                                FragmentTransaction ft = fm.beginTransaction();
+                                                ft.replace(R.id.mainframeplace, fragm);
+                                                ft.commit();
+                                                Toast.makeText(getActivity().getApplicationContext(), "Added to database", Toast.LENGTH_SHORT).show();
+                                                dialog.cancel();
+                                            }
+                                        })
+                                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                                AlertDialog alert = a_builder.create();
+                                alert.setTitle("New Item");
+                                alert.show();
+                            } else {
+                                Toast.makeText(getActivity().getApplicationContext(), "This ingredient is already in the database", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
+
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Please fill Name and Carbohydrate fields", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
-
-/*    private void check_exist(){
-        Firebase ref;
-        if (Functions.getAcctype()) {
-            ref = new Firebase(Global_Vars.rawProdRef);
-        } else {
-            ref = new Firebase(Global_Vars.rawpendingProdRef);
-        }
-        readData(ref, new OnGetDataListener() {
-            @Override
-            public void onSuccess() {
-
-            }
-
-            @Override
-            public void onFailure() {
-
-            }
-        });
-    }
-    private void readData(Firebase ref, final OnGetDataListener listener) {
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                boolean ok = false;
-                exist = false;
-                for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {
-                    if (elsoszint.getValue().toString().equals(edtMegnev.getText().toString())) {
-                        exist = true;
-                        ok = true;
-                        break;
-                    } else {
-                        ok = false;
-                    }
-                }
-                if (ok) {
-                    listener.onSuccess();
-                } else {
-                    listener.onFailure();
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-    }*/
 
     //ellenörzi hogy nev és szénhidrát mezők ki vannak e töltve
     private boolean check_params() {
