@@ -21,8 +21,4 @@ public class AdminUser {
         return UID;
     }
 
-    public void setUID(String UID) {
-        this.UID = UID;
-    }
-
 }

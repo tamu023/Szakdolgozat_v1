@@ -26,4 +26,59 @@ public class AddProducts {
         this.meat = meat;
     }
 
+    public String getMegnevezes() {
+        return megnevezes;
+    }
+
+    public int getCarbohydrate() {
+        return carbohydrate;
+    }
+
+    public boolean getFlour() {
+        return flour;
+    }
+
+    public boolean getMilk() {
+        return milk;
+    }
+
+    public boolean getMeat() {
+        return meat;
+    }
+
+    public String getRecept() {
+        return recept;
+    }
+
+    public String[] getIngredients() {
+        return ingredients;
+    }
+
+    public void setMegnevezes(String megnevezes) {
+        this.megnevezes = megnevezes;
+    }
+
+    public void setCarbohydrate(int carbohydrate) {
+        this.carbohydrate = carbohydrate;
+    }
+
+    public void setFlour(boolean flour) {
+        this.flour = flour;
+    }
+
+    public void setMilk(boolean milk) {
+        this.milk = milk;
+    }
+
+    public void setMeat(boolean meat) {
+        this.meat = meat;
+    }
+
+    public void setRecept(String recept) {
+        this.recept = recept;
+    }
+
+    public void setIngredients(String[] ingredients) {
+        this.ingredients = ingredients;
+    }
 }

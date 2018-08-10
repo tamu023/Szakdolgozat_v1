@@ -202,4 +202,11 @@
         android:text="Cancel"
         android:visibility="gone" />
 
+    <Button
+        android:id="@+id/prfDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Account"
+        android:visibility="gone" />
+
 </LinearLayout>

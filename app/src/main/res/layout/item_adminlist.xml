@@ -2,10 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:layout_marginBottom="15sp"
     android:layout_marginTop="10sp"
-    android:id="@+id/teszts"
-    android:layout_marginBottom="15sp">
+    android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -16,8 +15,8 @@
             android:id="@+id/admtxtName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="teszt"
             android:gravity="center_vertical"
+            android:text="teszt"
             android:textSize="30sp" />
     </LinearLayout>
 
@@ -31,16 +30,22 @@
             android:id="@+id/admbtnYes"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginBottom="10sp"
             android:layout_weight="1"
             android:background="#049100"
-            android:layout_marginBottom="10sp"/>
+            android:text="Accept"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/admbtnNo"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="#a80000"/>
+            android:background="#a80000"
+            android:text="Cancel"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

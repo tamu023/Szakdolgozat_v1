@@ -6,6 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_profile"
+            android:icon="@drawable/profile"
             android:title="Profile" />
         <item
             android:id="@+id/nav_gallery"
@@ -17,12 +18,12 @@
             android:title="Slideshow" />
         <item
             android:id="@+id/nav_addfood"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/add_food"
             android:title="Add Food" />
         <item
             android:id="@+id/nav_verify"
-            android:icon="@drawable/twotone_supervisor_account_24"
-            android:title="Verify Admin Request" />
+            android:icon="@drawable/admin_panel"
+            android:title="Admin Panel" />
     </group>
 
     <item android:title="Quit">

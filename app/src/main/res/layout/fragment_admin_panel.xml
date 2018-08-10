@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#454545"
+    android:orientation="vertical"
+    tools:context=".Fragments.AdminPanelFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Admin Panel"
+        android:textAlignment="center"
+        android:textColor="#fff59c"
+        android:textSize="35sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="10sp"
+        android:layout_marginStart="10sp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/admbtnPendingRaw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15sp"
+            android:background="#098f26"
+            android:text="Pending Raw Food List"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/admbtnPendingFinished"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15sp"
+            android:background="#948302"
+            android:text="Pending Finished Food List"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/admbtnRaw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15sp"
+            android:background="#00807b"
+            android:text="Raw Food List"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/admbtnFinished"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15sp"
+            android:background="#ab1c00"
+            android:text="Finished Food List"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/admbtnUserVerify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15sp"
+            android:background="#726ffc"
+            android:text="Admin User Verification"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+
+
+</LinearLayout>

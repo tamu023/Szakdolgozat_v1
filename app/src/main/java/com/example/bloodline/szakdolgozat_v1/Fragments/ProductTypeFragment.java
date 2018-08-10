@@ -35,6 +35,8 @@ public class ProductTypeFragment extends Fragment {
         btnRaw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO letesztelni, ha működik mindenhol kicserélni
+                //xy(R.id.mainframeplace,new RawfFragment());
                 Fragment startfragment = new RawfFragment();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -50,5 +52,12 @@ public class ProductTypeFragment extends Fragment {
 
             }
         });
+    }
+    public void xy(int position,Fragment fr){
+        Fragment startfragment = fr;
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(position, startfragment);
+        ft.commit();
     }
 }

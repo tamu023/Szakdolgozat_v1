@@ -1,10 +1,14 @@
 package com.example.bloodline.szakdolgozat_v1.Fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -14,6 +18,7 @@ import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.bloodline.szakdolgozat_v1.Activities.LoginActivity;
 import com.example.bloodline.szakdolgozat_v1.Classes.Functions;
 import com.example.bloodline.szakdolgozat_v1.Classes.Global_Vars;
 import com.example.bloodline.szakdolgozat_v1.R;
@@ -36,6 +41,7 @@ public class ProfileFragment extends Fragment {
     private Switch swLaktoz;
     private Button btnModify;
     private Button btnCancel;
+    private Button btnDelete;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -60,6 +66,7 @@ public class ProfileFragment extends Fragment {
         swLaktoz = view.findViewById(R.id.prfLaktoz);
         btnModify = view.findViewById(R.id.prfModify);
         btnCancel = view.findViewById(R.id.prfCancel);
+        btnDelete = view.findViewById(R.id.prfDelete);
 
         btnModify.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +82,7 @@ public class ProfileFragment extends Fragment {
                     swLaktoz.setEnabled(true);
                     btnModify.setText("Confirm");
                     btnCancel.setVisibility(View.VISIBLE);
+                    btnDelete.setVisibility(View.VISIBLE);
                 } else if (btnModify.getText().equals("Confirm")) {
                     if (check_Parameters()) {
                         //elfogadott adatok beírása az osztályba
@@ -106,6 +114,41 @@ public class ProfileFragment extends Fragment {
                 swLaktoz.setEnabled(false);
                 btnModify.setText("Modify");
                 btnCancel.setVisibility(View.GONE);
+                btnDelete.setVisibility(View.GONE);
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder a_builder = new AlertDialog.Builder(getContext());
+                a_builder.setMessage("Do you want to remove this account?").setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //TODO account törlésének tesztelése
+                                Firebase ref = new Firebase(Global_Vars.usersRef);
+                                //Adatbázisból való törlés
+                                ref.child(Functions.getUID()).removeValue();
+                                Functions.getUser().delete();
+                                Functions.getmAuth().signOut();
+                                Functions.clearAccdata();
+                                Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
+                                startActivity(intent);
+                                getActivity().finish();
+                                dialog.cancel();
+                                Toast.makeText(getActivity().getApplicationContext(), "Account deleted successfully.", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = a_builder.create();
+                alert.setTitle("Account Delete");
+                alert.show();
             }
         });
 
