@@ -2,7 +2,7 @@ package com.example.bloodline.szakdolgozat_v1.Classes;
 
 public class AddProducts {
     String megnevezes;
-    int carbohydrate;
+    long carbohydrate;
     boolean flour;
     boolean milk;
     boolean meat;
@@ -10,7 +10,7 @@ public class AddProducts {
     String[] ingredients;
 
     //Finished food add
-    public AddProducts(String megnevezes, int carbohydrate, String recept, String[] ingredients) {
+    public AddProducts(String megnevezes, long carbohydrate, String recept, String[] ingredients) {
         this.megnevezes = megnevezes;
         this.carbohydrate = carbohydrate;
         this.recept = recept;
@@ -18,7 +18,8 @@ public class AddProducts {
     }
 
     //Raw food add
-    public AddProducts(String megnevezes, int carbohydrate, boolean flour, boolean milk, boolean meat) {
+    //TODO átgondolni hogy szükséges-e megadni szénhidrátot alapanyagokhoz
+    public AddProducts(String megnevezes, long carbohydrate, boolean flour, boolean milk, boolean meat) {
         this.megnevezes = megnevezes;
         this.carbohydrate = carbohydrate;
         this.flour = flour;
@@ -30,7 +31,7 @@ public class AddProducts {
         return megnevezes;
     }
 
-    public int getCarbohydrate() {
+    public long getCarbohydrate() {
         return carbohydrate;
     }
 
@@ -58,7 +59,7 @@ public class AddProducts {
         this.megnevezes = megnevezes;
     }
 
-    public void setCarbohydrate(int carbohydrate) {
+    public void setCarbohydrate(long carbohydrate) {
         this.carbohydrate = carbohydrate;
     }
 

@@ -15,13 +15,10 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.bloodline.szakdolgozat_v1.Fragments.AdminPanelFragment;
-import com.example.bloodline.szakdolgozat_v1.Fragments.AdminVerifyFragment;
 import com.example.bloodline.szakdolgozat_v1.Classes.Functions;
 import com.example.bloodline.szakdolgozat_v1.Fragments.ProductTypeFragment;
 import com.example.bloodline.szakdolgozat_v1.Fragments.ProfileFragment;
 import com.example.bloodline.szakdolgozat_v1.R;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -44,16 +41,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //Alapértelmezettként a profilt jeleníti meg
-        Fragment fragment = new ProfileFragment();
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.mainframeplace, fragment);
-        ft.commit();
-
-        //Reklám
-        AdView mAdView = findViewById(R.id.adView2);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        ChangeFragment(R.id.mainframeplace, new ProfileFragment());
 
     }
 
@@ -74,28 +62,16 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) {
-            Fragment fragment = new ProfileFragment();
-            FragmentManager fm = getFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.mainframeplace, fragment);
-            ft.commit();
+            ChangeFragment(R.id.mainframeplace, new ProfileFragment());
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_addfood) {
-            Fragment fragment = new ProductTypeFragment();
-            FragmentManager fm = getFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.mainframeplace, fragment);
-            ft.commit();
+            ChangeFragment(R.id.mainframeplace, new ProductTypeFragment());
         } else if (id == R.id.nav_verify) {
             if (Functions.getAcctype()) {
-                Fragment fragment = new AdminPanelFragment();
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.mainframeplace, fragment);
-                ft.commit();
+                ChangeFragment(R.id.mainframeplace, new AdminPanelFragment());
             } else {
                 Toast.makeText(MainActivity.this, "Not Authorized.", Toast.LENGTH_SHORT).show();
             }
@@ -114,5 +90,13 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void ChangeFragment(int position, Fragment fr) {
+        Fragment startfragment = fr;
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(position, startfragment);
+        ft.commit();
     }
 }

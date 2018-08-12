@@ -33,10 +33,11 @@ public class AdminPanelFragment extends Fragment {
         Button btnFinished = view.findViewById(R.id.admbtnFinished);
         Button btnAdmin = view.findViewById(R.id.admbtnUserVerify);
 
+
         btnPendingRaw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ChangeFragment(R.id.mainframeplace,new AdminPenRawIngredientFragment());
             }
         });
 
@@ -64,12 +65,15 @@ public class AdminPanelFragment extends Fragment {
         btnAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment startfragment = new AdminVerifyFragment();
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.mainframeplace, startfragment);
-                ft.commit();
+                ChangeFragment(R.id.mainframeplace,new AdminVerifyFragment());
             }
         });
+    }
+    private void ChangeFragment(int position, Fragment fr) {
+        Fragment startfragment = fr;
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(position, startfragment);
+        ft.commit();
     }
 }

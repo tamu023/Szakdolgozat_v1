@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bloodline.szakdolgozat_v1.Activities.LoginActivity;
@@ -26,6 +27,9 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.ads.mediation.AbstractAdViewAdapter;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 
 public class ProfileFragment extends Fragment {
@@ -42,6 +46,8 @@ public class ProfileFragment extends Fragment {
     private Button btnModify;
     private Button btnCancel;
     private Button btnDelete;
+    private TextView txtName;
+    private TextView txtEmail;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -67,6 +73,13 @@ public class ProfileFragment extends Fragment {
         btnModify = view.findViewById(R.id.prfModify);
         btnCancel = view.findViewById(R.id.prfCancel);
         btnDelete = view.findViewById(R.id.prfDelete);
+        txtName = view.findViewById(R.id.navName);
+        txtEmail = view.findViewById(R.id.namEmail);
+
+        //Reklám
+        AdView mAdView = view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         btnModify.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,9 +139,10 @@ public class ProfileFragment extends Fragment {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //TODO account törlésének tesztelése
                                 Firebase ref = new Firebase(Global_Vars.usersRef);
                                 //Adatbázisból való törlés
+                                ref.child(Functions.getUID()).removeValue();
+                                ref = new Firebase(Global_Vars.pendingUserRef);
                                 ref.child(Functions.getUID()).removeValue();
                                 Functions.getUser().delete();
                                 Functions.getmAuth().signOut();
@@ -220,6 +234,9 @@ public class ProfileFragment extends Fragment {
         if (Functions.getLaktozerzekenyseg()) {
             swLaktoz.setChecked(true);
         }
+        //TODO kiiratni a navigation barra a nevet és email címet
+        //txtName.setText(Functions.getName());
+        //txtEmail.setText(Functions.getEmail());
     }
 
     private boolean check_Parameters() {

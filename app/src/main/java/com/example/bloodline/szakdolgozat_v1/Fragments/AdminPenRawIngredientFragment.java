@@ -1,17 +1,17 @@
 package com.example.bloodline.szakdolgozat_v1.Fragments;
 
+
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.bloodline.szakdolgozat_v1.Adapters.AdminListAdapter;
-import com.example.bloodline.szakdolgozat_v1.Classes.AdminUser;
+import com.example.bloodline.szakdolgozat_v1.Adapters.PendingRawIngredientAdapter;
 import com.example.bloodline.szakdolgozat_v1.Classes.Global_Vars;
+import com.example.bloodline.szakdolgozat_v1.Classes.RawIngredient;
 import com.example.bloodline.szakdolgozat_v1.R;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -22,31 +22,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AdminVerifyFragment extends Fragment {
+public class AdminPenRawIngredientFragment extends Fragment {
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_verify, null);
+        return inflater.inflate(R.layout.fragment_admin_pen_raw_ingredient, null);
     }
 
-    private List<AdminUser> adminList;
+    private List<RawIngredient> rawIngredientList;
     private ListView listView;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        listView = view.findViewById(R.id.listAdmin);
-        adminList = new ArrayList<>();
-        Firebase ref = new Firebase(Global_Vars.pendingUserRef);
+        listView = view.findViewById(R.id.listPendingRaw);
+        rawIngredientList = new ArrayList<>();
+        Firebase ref = new Firebase(Global_Vars.rawpendingProdRef);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {
-                    adminList.add(new AdminUser(elsoszint.getValue().toString(), elsoszint.getKey()));
-                    AdminListAdapter adapter = new AdminListAdapter(getActivity().getApplicationContext(), R.layout.item_adminlist, adminList);
+                    rawIngredientList.add(new RawIngredient(elsoszint.child("megnevezes").getValue().toString(), (long) elsoszint.child("carbohydrate").getValue(), (boolean) elsoszint.child("flour").getValue(), (boolean) elsoszint.child("milk").getValue(), (boolean) elsoszint.child("meat").getValue()));
+                    PendingRawIngredientAdapter adapter = new PendingRawIngredientAdapter(getActivity().getApplicationContext(), R.layout.item_pendingrawingredient, rawIngredientList);
                     listView.setAdapter(adapter);
                 }
             }
