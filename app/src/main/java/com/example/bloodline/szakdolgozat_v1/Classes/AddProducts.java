@@ -1,5 +1,7 @@
 package com.example.bloodline.szakdolgozat_v1.Classes;
 
+import java.util.List;
+
 public class AddProducts {
     String megnevezes;
     long carbohydrate;
@@ -7,10 +9,10 @@ public class AddProducts {
     boolean milk;
     boolean meat;
     String recept;
-    String[] ingredients;
+    List<String> ingredients;
 
     //Finished food add
-    public AddProducts(String megnevezes, long carbohydrate, String recept, String[] ingredients) {
+    public AddProducts(String megnevezes, long carbohydrate, String recept, List<String> ingredients) {
         this.megnevezes = megnevezes;
         this.carbohydrate = carbohydrate;
         this.recept = recept;
@@ -18,10 +20,8 @@ public class AddProducts {
     }
 
     //Raw food add
-    //TODO átgondolni hogy szükséges-e megadni szénhidrátot alapanyagokhoz
-    public AddProducts(String megnevezes, long carbohydrate, boolean flour, boolean milk, boolean meat) {
+    public AddProducts(String megnevezes, boolean flour, boolean milk, boolean meat) {
         this.megnevezes = megnevezes;
-        this.carbohydrate = carbohydrate;
         this.flour = flour;
         this.milk = milk;
         this.meat = meat;
@@ -51,7 +51,7 @@ public class AddProducts {
         return recept;
     }
 
-    public String[] getIngredients() {
+    public List<String> getIngredients() {
         return ingredients;
     }
 
@@ -79,7 +79,7 @@ public class AddProducts {
         this.recept = recept;
     }
 
-    public void setIngredients(String[] ingredients) {
+    public void setIngredients(List<String> ingredients) {
         this.ingredients = ingredients;
     }
 }

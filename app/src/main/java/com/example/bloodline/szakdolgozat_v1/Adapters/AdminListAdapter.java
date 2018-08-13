@@ -45,7 +45,9 @@ public class AdminListAdapter extends ArrayAdapter<AdminUser> {
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Firebase ref = new Firebase(Global_Vars.usersRef);
+                Firebase ref = new Firebase(Global_Vars.pendingUserRef);
+                ref.child(adminUser.getUID()).removeValue();
+                ref = new Firebase(Global_Vars.usersRef);
                 ref.child(adminUser.getUID()).child("acctype").setValue(true);
                 adminUserList.remove(position);
                 notifyDataSetChanged();

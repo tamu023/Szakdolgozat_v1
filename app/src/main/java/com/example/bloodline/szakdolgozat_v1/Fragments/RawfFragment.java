@@ -29,7 +29,6 @@ import com.firebase.client.ValueEventListener;
 public class RawfFragment extends Fragment {
 
     private EditText edtMegnev;
-    private EditText edtCarb;
     private boolean exist;
 
     @Override
@@ -44,7 +43,6 @@ public class RawfFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         edtMegnev = view.findViewById(R.id.rawName);
-        edtCarb = view.findViewById(R.id.rawCarb);
 
         final Switch swFlour = view.findViewById(R.id.rawFluor);
         final Switch swMilk = view.findViewById(R.id.rawMilk);
@@ -80,7 +78,7 @@ public class RawfFragment extends Fragment {
                                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                AddProducts uj = new AddProducts(edtMegnev.getText().toString(), Integer.parseInt(edtCarb.getText().toString()), swFlour.isChecked(), swMilk.isChecked(), swMeat.isChecked());
+                                                AddProducts uj = new AddProducts(edtMegnev.getText().toString(), swFlour.isChecked(), swMilk.isChecked(), swMeat.isChecked());
                                                 //adatbázisba beírás
                                                 ref.child(edtMegnev.getText().toString()).setValue(uj);
                                                 //hozzáadás után visszalépünk az előző képernyőre
@@ -120,10 +118,10 @@ public class RawfFragment extends Fragment {
         });
     }
 
-    //ellenörzi hogy nev és szénhidrát mezők ki vannak e töltve
+    //ellenörzi hogy nev mező ki vannak e töltve
     private boolean check_params() {
         boolean ok = true;
-        if (edtMegnev.getText().toString().isEmpty() || edtCarb.getText().toString().isEmpty()) {
+        if (edtMegnev.getText().toString().isEmpty()) {
             ok = false;
         }
         return ok;

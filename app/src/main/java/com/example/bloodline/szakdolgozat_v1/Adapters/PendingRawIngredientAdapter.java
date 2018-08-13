@@ -1,6 +1,7 @@
 package com.example.bloodline.szakdolgozat_v1.Adapters;
 
 import android.content.Context;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,9 +10,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.bloodline.szakdolgozat_v1.Activities.MainActivity;
+import com.example.bloodline.szakdolgozat_v1.Classes.AddProducts;
+import com.example.bloodline.szakdolgozat_v1.Classes.Global_Vars;
 import com.example.bloodline.szakdolgozat_v1.Classes.RawIngredient;
 import com.example.bloodline.szakdolgozat_v1.R;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.List;
 
@@ -19,6 +28,8 @@ public class PendingRawIngredientAdapter extends ArrayAdapter<RawIngredient> {
     private Context context;
     private int resource;
     private List<RawIngredient> rawIngredientList;
+
+    private boolean exist;
 
     public PendingRawIngredientAdapter(Context context, int resource, List<RawIngredient> rawIngredientList) {
         super(context, resource, rawIngredientList);
@@ -29,14 +40,13 @@ public class PendingRawIngredientAdapter extends ArrayAdapter<RawIngredient> {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(resource, null);
         final RawIngredient rawIngredient = rawIngredientList.get(position);
 
         TextView txtName = view.findViewById(R.id.itmPenRawTxtName);
-        TextView txtKcal = view.findViewById(R.id.itmPenRawTxtKcal);
-        TextView txtFluor = view.findViewById(R.id.itmPenRawTxtFluor);
+        TextView txtFlour = view.findViewById(R.id.itmPenRawTxtFluor);
         TextView txtMilk = view.findViewById(R.id.itmPenRawTxtMilk);
         TextView txtMeat = view.findViewById(R.id.itmPenRawTxtMeat);
         Button btnMod = view.findViewById(R.id.itmPenRawBtnMod);
@@ -44,9 +54,8 @@ public class PendingRawIngredientAdapter extends ArrayAdapter<RawIngredient> {
         Button btnDecline = view.findViewById(R.id.itmPenRawBtnDecline);
 
         txtName.setText(rawIngredient.getIngredientName());
-        txtKcal.setText(rawIngredient.getCarbohydrate() + " Kcal");
         if (rawIngredient.getFlour()) {
-            txtFluor.setBackgroundColor(0xFFFF4A4D);
+            txtFlour.setBackgroundColor(0xFFFF4A4D);
         }
         if (rawIngredient.getMilk()) {
             txtMilk.setBackgroundColor(0xFFFF4A4D);
@@ -62,17 +71,47 @@ public class PendingRawIngredientAdapter extends ArrayAdapter<RawIngredient> {
             }
         });
 
+
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                exist = false;
+                Firebase ref = new Firebase(Global_Vars.rawpendingProdRef);
+                ref.child(rawIngredient.getIngredientName()).removeValue();
+                ref = new Firebase(Global_Vars.rawProdRef);
+                final Firebase finalRef = ref;
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {
+                            if (elsoszint.getKey().equals(rawIngredient.getIngredientName())) {
+                                exist = true;
+                                break;
+                            }
+                        }
+                        if (!exist) {
+                            AddProducts uj = new AddProducts(rawIngredient.getIngredientName(), rawIngredient.getFlour(), rawIngredient.getMilk(), rawIngredient.getMeat());
+                            finalRef.child(rawIngredient.getIngredientName()).setValue(uj);
+                        }
+                        rawIngredientList.remove(position);
+                        notifyDataSetChanged();
+                    }
 
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
             }
         });
 
         btnDecline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Firebase ref = new Firebase(Global_Vars.rawpendingProdRef);
+                ref.child(rawIngredient.getIngredientName()).removeValue();
+                rawIngredientList.remove(position);
+                notifyDataSetChanged();
             }
         });
 

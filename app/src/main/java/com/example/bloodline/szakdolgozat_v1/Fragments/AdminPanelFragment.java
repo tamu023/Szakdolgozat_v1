@@ -37,7 +37,7 @@ public class AdminPanelFragment extends Fragment {
         btnPendingRaw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChangeFragment(R.id.mainframeplace,new AdminPenRawIngredientFragment());
+                ChangeFragment(R.id.mainframeplace, new AdminPenRawIngredientFragment());
             }
         });
 
@@ -65,10 +65,11 @@ public class AdminPanelFragment extends Fragment {
         btnAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChangeFragment(R.id.mainframeplace,new AdminVerifyFragment());
+                ChangeFragment(R.id.mainframeplace, new AdminVerifyFragment());
             }
         });
     }
+
     private void ChangeFragment(int position, Fragment fr) {
         Fragment startfragment = fr;
         FragmentManager fm = getFragmentManager();

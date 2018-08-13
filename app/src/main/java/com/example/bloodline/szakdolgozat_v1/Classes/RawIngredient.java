@@ -2,14 +2,12 @@ package com.example.bloodline.szakdolgozat_v1.Classes;
 
 public class RawIngredient {
     private String ingredientName;
-    private long carbohydrate;
     private boolean flour;
     private boolean milk;
     private boolean meat;
 
-    public RawIngredient(String ingredientName, long carbohydrate, boolean flour, boolean milk, boolean meat) {
+    public RawIngredient(String ingredientName, boolean flour, boolean milk, boolean meat) {
         this.ingredientName = ingredientName;
-        this.carbohydrate = carbohydrate;
         this.flour = flour;
         this.milk = milk;
         this.meat = meat;
@@ -17,10 +15,6 @@ public class RawIngredient {
 
     public String getIngredientName() {
         return ingredientName;
-    }
-
-    public long getCarbohydrate() {
-        return carbohydrate;
     }
 
     public boolean getFlour() {
@@ -37,10 +31,6 @@ public class RawIngredient {
 
     public void setIngredientName(String ingredientName) {
         this.ingredientName = ingredientName;
-    }
-
-    public void setCarbohydrate(long carbohydrate) {
-        this.carbohydrate = carbohydrate;
     }
 
     public void setFlour(boolean flour) {

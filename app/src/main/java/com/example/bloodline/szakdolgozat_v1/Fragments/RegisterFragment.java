@@ -3,6 +3,7 @@ package com.example.bloodline.szakdolgozat_v1.Fragments;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -183,6 +185,7 @@ public class RegisterFragment extends Fragment {
                             //------------------
                             Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                             startActivity(intent);
+                            closeKeyboard();
                             getActivity().finish();
                         } else {
                             Toast.makeText(getActivity().getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
@@ -202,5 +205,13 @@ public class RegisterFragment extends Fragment {
         Functions.setGender(gender);
         Functions.setBmiindex(Functions.calcBMI(Functions.getHeight(), Functions.getWeight()));
         Functions.setAcctype(type);
+    }
+
+    private void closeKeyboard() {
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

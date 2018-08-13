@@ -194,6 +194,30 @@
                 android:enabled="false" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Account Type"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/prfAccType"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="User"
+                android:textSize="20sp"
+                android:textStyle="italic" />
+        </LinearLayout>
+
         <Button
             android:id="@+id/prfModify"
             android:layout_width="match_parent"
@@ -219,7 +243,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             ads:adSize="SMART_BANNER"
-            ads:adUnitId="@string/banner_ad_unit_id">
-        </com.google.android.gms.ads.AdView>
+            ads:adUnitId="@string/banner_ad_unit_id"></com.google.android.gms.ads.AdView>
     </LinearLayout>
 </ScrollView>

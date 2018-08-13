@@ -48,6 +48,7 @@ public class ProfileFragment extends Fragment {
     private Button btnDelete;
     private TextView txtName;
     private TextView txtEmail;
+    private TextView txtAccType;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -75,6 +76,7 @@ public class ProfileFragment extends Fragment {
         btnDelete = view.findViewById(R.id.prfDelete);
         txtName = view.findViewById(R.id.navName);
         txtEmail = view.findViewById(R.id.namEmail);
+        txtAccType = view.findViewById(R.id.prfAccType);
 
         //Reklám
         AdView mAdView = view.findViewById(R.id.adView);
@@ -220,6 +222,9 @@ public class ProfileFragment extends Fragment {
         edtName.setText(Functions.getName());
         edtHeight.setText(Functions.getHeight() + "");
         edtWeight.setText(Functions.getWeight() + "");
+        if (Functions.getAcctype()) {
+            txtAccType.setText("Admin");
+        }
         if (Functions.getGender()) {
             rbgGender.check(R.id.prfMale);
         } else {
