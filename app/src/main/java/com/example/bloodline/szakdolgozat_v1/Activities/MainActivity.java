@@ -18,6 +18,7 @@ import com.example.bloodline.szakdolgozat_v1.Fragments.AdminPanelFragment;
 import com.example.bloodline.szakdolgozat_v1.Classes.Functions;
 import com.example.bloodline.szakdolgozat_v1.Fragments.ProductTypeFragment;
 import com.example.bloodline.szakdolgozat_v1.Fragments.ProfileFragment;
+import com.example.bloodline.szakdolgozat_v1.Fragments.StorageFragment;
 import com.example.bloodline.szakdolgozat_v1.R;
 
 public class MainActivity extends AppCompatActivity
@@ -63,9 +64,9 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_profile) {
             ChangeFragment(R.id.mainframeplace, new ProfileFragment());
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_storage) {
+            ChangeFragment(R.id.mainframeplace, new StorageFragment());
+        } else if (id == R.id.nav_shoppingcart) {
 
         } else if (id == R.id.nav_addfood) {
             ChangeFragment(R.id.mainframeplace, new ProductTypeFragment());
@@ -84,6 +85,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_exit) {
+            Functions.clearAccdata();
+            Functions.getmAuth().signOut();
             finish();
         }
 

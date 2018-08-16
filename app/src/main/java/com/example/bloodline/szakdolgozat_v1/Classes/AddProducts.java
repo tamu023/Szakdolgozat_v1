@@ -4,14 +4,14 @@ import java.util.List;
 
 public class AddProducts {
     String megnevezes;
-    long carbohydrate;
     boolean flour;
     boolean milk;
     boolean meat;
     boolean unit; //True = solid(KG), False = liquid(L)
-    long quantity;
+    double quantity;
     String recept;
     List<String> ingredients;
+    long carbohydrate;
 
     //Finished food add
     public AddProducts(String megnevezes, long carbohydrate, String recept, List<String> ingredients) {
@@ -31,10 +31,16 @@ public class AddProducts {
     }
 
     //Storage Constructor
-    public AddProducts(String megnevezes, boolean unit, long quantity) {
+    public AddProducts(String megnevezes, boolean unit, double quantity) {
         this.megnevezes = megnevezes;
         this.unit = unit;
         this.quantity = quantity;
+    }
+
+    //Storage Add Item
+    public AddProducts(String megnevezes, boolean unit) {
+        this.megnevezes = megnevezes;
+        this.unit = unit;
     }
 
     public String getMegnevezes() {
@@ -69,7 +75,7 @@ public class AddProducts {
         return unit;
     }
 
-    public long getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
@@ -105,7 +111,7 @@ public class AddProducts {
         this.unit = unit;
     }
 
-    public void setQuantity(long quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 }

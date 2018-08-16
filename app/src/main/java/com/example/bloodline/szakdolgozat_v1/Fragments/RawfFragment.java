@@ -91,7 +91,8 @@ public class RawfFragment extends Fragment {
                                                 AddProducts uj = new AddProducts(edtMegnev.getText().toString(), swFlour.isChecked(), swMilk.isChecked(), swMeat.isChecked(), unit);
                                                 //adatbázisba beírás
                                                 ref.child(edtMegnev.getText().toString()).setValue(uj);
-                                                //TODO letesztelni hogy miért rakja bele a carbohydratet
+                                                //TODO rájönni hogy miért rakja bele a carbohydratet mikor nincs is a konstruktorban
+                                                //ideiglenes megoldás
                                                 ref.child(edtMegnev.getText().toString()).child("carbohydrate").removeValue();
                                                 //hozzáadás után visszalépünk az előző képernyőre
                                                 Fragment fragm = new ProductTypeFragment();

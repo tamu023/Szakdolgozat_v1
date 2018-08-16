@@ -36,7 +36,7 @@ public class StorageAdapter extends ArrayAdapter<AddProducts> {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(resource, null);
         final AddProducts storageItem = storageList.get(position);
@@ -44,7 +44,7 @@ public class StorageAdapter extends ArrayAdapter<AddProducts> {
         txtName = view.findViewById(R.id.storageitemTxtName);
         TextView txtUnit = view.findViewById(R.id.storageitemTxtUnit);
         Button btnMod = view.findViewById(R.id.storageitemBtnMod);
-        Button btnDelete= view.findViewById(R.id.storageitemBtnDelete);
+        Button btnDelete = view.findViewById(R.id.storageitemBtnDelete);
 
         String seged = " ";
         if (storageItem.getUnit()) {
@@ -54,6 +54,7 @@ public class StorageAdapter extends ArrayAdapter<AddProducts> {
         }
         txtName.setText(storageItem.getMegnevezes());
         txtUnit.setText(storageItem.getQuantity() + seged);
+        //txtUnit.setText(String.format("%.3f", storageItem.getQuantity()) + seged);
         //TODO elkészíteni a gombokat
         btnMod.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +68,8 @@ public class StorageAdapter extends ArrayAdapter<AddProducts> {
             public void onClick(View v) {
                 Firebase ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("storage").child(txtName.getText().toString());
                 ref.removeValue();
+                storageList.remove(position);
+                notifyDataSetChanged();
             }
         });
 
