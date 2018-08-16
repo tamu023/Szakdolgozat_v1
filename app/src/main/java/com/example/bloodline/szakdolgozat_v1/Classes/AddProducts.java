@@ -8,6 +8,8 @@ public class AddProducts {
     boolean flour;
     boolean milk;
     boolean meat;
+    boolean unit; //True = solid(KG), False = liquid(L)
+    long quantity;
     String recept;
     List<String> ingredients;
 
@@ -20,11 +22,19 @@ public class AddProducts {
     }
 
     //Raw food add
-    public AddProducts(String megnevezes, boolean flour, boolean milk, boolean meat) {
+    public AddProducts(String megnevezes, boolean flour, boolean milk, boolean meat, boolean unit) {
         this.megnevezes = megnevezes;
         this.flour = flour;
         this.milk = milk;
         this.meat = meat;
+        this.unit = unit;
+    }
+
+    //Storage Constructor
+    public AddProducts(String megnevezes, boolean unit, long quantity) {
+        this.megnevezes = megnevezes;
+        this.unit = unit;
+        this.quantity = quantity;
     }
 
     public String getMegnevezes() {
@@ -55,6 +65,14 @@ public class AddProducts {
         return ingredients;
     }
 
+    public boolean getUnit() {
+        return unit;
+    }
+
+    public long getQuantity() {
+        return quantity;
+    }
+
     public void setMegnevezes(String megnevezes) {
         this.megnevezes = megnevezes;
     }
@@ -81,5 +99,13 @@ public class AddProducts {
 
     public void setIngredients(List<String> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public void setUnit(boolean unit) {
+        this.unit = unit;
+    }
+
+    public void setQuantity(long quantity) {
+        this.quantity = quantity;
     }
 }

@@ -21,7 +21,7 @@ public class FinishedfFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        //TODO kitalálni hogy a hozzávalók hozzáadása hogyan valósuljon meg
+        //TODO folytatni a kinézet kialakítását
         super.onViewCreated(view, savedInstanceState);
     }
 }

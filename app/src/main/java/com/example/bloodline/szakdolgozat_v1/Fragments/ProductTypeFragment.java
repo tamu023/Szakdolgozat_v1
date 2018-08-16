@@ -35,7 +35,7 @@ public class ProductTypeFragment extends Fragment {
         btnRaw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChangeFragment(R.id.mainframeplace,new RawfFragment());
+                ChangeFragment(R.id.mainframeplace, new RawfFragment());
             }
         });
 
@@ -43,10 +43,11 @@ public class ProductTypeFragment extends Fragment {
         btnFinished.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ChangeFragment(R.id.mainframeplace, new FinishedfFragment());
             }
         });
     }
+
     private void ChangeFragment(int position, Fragment fr) {
         Fragment startfragment = fr;
         FragmentManager fm = getFragmentManager();

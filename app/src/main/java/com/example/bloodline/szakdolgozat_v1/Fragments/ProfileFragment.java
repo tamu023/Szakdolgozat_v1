@@ -1,6 +1,7 @@
 package com.example.bloodline.szakdolgozat_v1.Fragments;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -209,6 +211,7 @@ public class ProfileFragment extends Fragment {
                     }
                 }
                 set_Variables();
+                closeKeyboard();
             }
 
             @Override
@@ -216,6 +219,14 @@ public class ProfileFragment extends Fragment {
 
             }
         });
+    }
+
+    private void closeKeyboard() {
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     private void set_Variables() {

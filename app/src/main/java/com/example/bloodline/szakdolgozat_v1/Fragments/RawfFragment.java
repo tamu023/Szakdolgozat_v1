@@ -13,13 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.bloodline.szakdolgozat_v1.Classes.AddProducts;
 import com.example.bloodline.szakdolgozat_v1.Classes.Functions;
 import com.example.bloodline.szakdolgozat_v1.Classes.Global_Vars;
-import com.example.bloodline.szakdolgozat_v1.Fragments.ProductTypeFragment;
 import com.example.bloodline.szakdolgozat_v1.R;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -30,6 +30,9 @@ public class RawfFragment extends Fragment {
 
     private EditText edtMegnev;
     private boolean exist;
+    private RadioButton rbSolid;
+    private RadioButton rbLiquid;
+    private boolean unit;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -47,6 +50,8 @@ public class RawfFragment extends Fragment {
         final Switch swFlour = view.findViewById(R.id.rawFluor);
         final Switch swMilk = view.findViewById(R.id.rawMilk);
         final Switch swMeat = view.findViewById(R.id.rawMeat);
+        rbSolid = view.findViewById(R.id.rawSolid);
+        rbLiquid = view.findViewById(R.id.rawLiquid);
 
         Button btnAdd = view.findViewById(R.id.rawAdd);
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +64,11 @@ public class RawfFragment extends Fragment {
                         ref = new Firebase(Global_Vars.rawProdRef);
                     } else {
                         ref = new Firebase(Global_Vars.rawpendingProdRef);
+                    }
+                    if (rbLiquid.isChecked()) {
+                        unit = false;
+                    } else if (rbSolid.isChecked()) {
+                        unit = true;
                     }
                     ref.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -78,9 +88,11 @@ public class RawfFragment extends Fragment {
                                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                AddProducts uj = new AddProducts(edtMegnev.getText().toString(), swFlour.isChecked(), swMilk.isChecked(), swMeat.isChecked());
+                                                AddProducts uj = new AddProducts(edtMegnev.getText().toString(), swFlour.isChecked(), swMilk.isChecked(), swMeat.isChecked(), unit);
                                                 //adatbázisba beírás
                                                 ref.child(edtMegnev.getText().toString()).setValue(uj);
+                                                //TODO letesztelni hogy miért rakja bele a carbohydratet
+                                                ref.child(edtMegnev.getText().toString()).child("carbohydrate").removeValue();
                                                 //hozzáadás után visszalépünk az előző képernyőre
                                                 Fragment fragm = new ProductTypeFragment();
                                                 FragmentManager fm = getFragmentManager();
@@ -112,7 +124,7 @@ public class RawfFragment extends Fragment {
                     });
 
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Please fill Name and Carbohydrate fields", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Please fill Name and Pick one Radio Button", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -121,7 +133,7 @@ public class RawfFragment extends Fragment {
     //ellenörzi hogy nev mező ki vannak e töltve
     private boolean check_params() {
         boolean ok = true;
-        if (edtMegnev.getText().toString().isEmpty()) {
+        if (edtMegnev.getText().toString().isEmpty() || (!rbLiquid.isChecked() && !rbSolid.isChecked())) {
             ok = false;
         }
         return ok;

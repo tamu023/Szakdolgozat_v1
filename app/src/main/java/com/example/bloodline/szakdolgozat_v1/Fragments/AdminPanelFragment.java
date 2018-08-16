@@ -33,7 +33,6 @@ public class AdminPanelFragment extends Fragment {
         Button btnFinished = view.findViewById(R.id.admbtnFinished);
         Button btnAdmin = view.findViewById(R.id.admbtnUserVerify);
 
-
         btnPendingRaw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +50,7 @@ public class AdminPanelFragment extends Fragment {
         btnRaw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ChangeFragment(R.id.mainframeplace, new AdminRawIngredientFragment());
             }
         });
 

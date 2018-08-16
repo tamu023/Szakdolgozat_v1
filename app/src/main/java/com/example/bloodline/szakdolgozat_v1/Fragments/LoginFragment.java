@@ -26,6 +26,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginFragment extends Fragment {
 
@@ -99,7 +100,6 @@ public class LoginFragment extends Fragment {
                             Firebase.setAndroidContext(getActivity().getApplicationContext());
                             Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
                             startActivity(intent);
-                            closeKeyboard();
                             getActivity().finish();
                         } else {
                             edtPassw.setText(null);
@@ -109,11 +109,5 @@ public class LoginFragment extends Fragment {
                 });
     }
 
-    private void closeKeyboard() {
-        View view = getActivity().getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
+
 }
