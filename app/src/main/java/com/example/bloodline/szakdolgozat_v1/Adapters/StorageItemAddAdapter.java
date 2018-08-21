@@ -35,6 +35,7 @@ public class StorageItemAddAdapter extends ArrayAdapter<AddProducts> {
     private List<AddProducts> storageItemList;
     private boolean exist;
     private double exchangedQuantity;
+    private Firebase ref;
 
     public StorageItemAddAdapter(Context context, int resource, List<AddProducts> storageItemList) {
         super(context, resource, storageItemList);
@@ -78,6 +79,7 @@ public class StorageItemAddAdapter extends ArrayAdapter<AddProducts> {
                 if (!edtQuantity.getText().toString().isEmpty() && !edtQuantity.getText().toString().equals("0")) {
                     //Beírt összeg átváltása, Solid esetén Kilogrammra ra Liquid esetén Literre
                     //TODO átváltást megcsinálni és javítani mert nem jól adja hozzá
+                    //TODO többi listához is Toast okat hozzáadni hogy informatívabb legyen egy egy sikeres művelet
                     exchangedQuantity = 0;
                     if (unit) {
                         if (spnUnit.getSelectedItem().toString().equals("KG")) {
@@ -98,7 +100,7 @@ public class StorageItemAddAdapter extends ArrayAdapter<AddProducts> {
                             exchangedQuantity = Double.parseDouble(edtQuantity.getText().toString()) / 1000;
                         }
                     }
-                    final Firebase ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("storage");
+                    ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("storage");
                     ref.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -112,14 +114,31 @@ public class StorageItemAddAdapter extends ArrayAdapter<AddProducts> {
                             }
                             //ha olyan terméket adnánk hozzá a storagehoz ami már van benne akkor összeadja a hozzáadni kívánt mennyiséget a bent lévő mennyiséggel
                             if (exist) {
-                                storageQuantity = storageQuantity + exchangedQuantity;
-                                AddProducts uj = new AddProducts(storageAddItem.getMegnevezes(), storageAddItem.getUnit(), storageQuantity);
+                                exchangedQuantity = storageQuantity + exchangedQuantity;
+                                AddProducts uj = new AddProducts(storageAddItem.getMegnevezes(), storageAddItem.getUnit(), exchangedQuantity);
                                 ref.child(storageAddItem.getMegnevezes()).setValue(uj);
                             } else {
                                 AddProducts uj = new AddProducts(storageAddItem.getMegnevezes(), storageAddItem.getUnit(), exchangedQuantity);
                                 ref.child(storageAddItem.getMegnevezes()).setValue(uj);
                             }
-                            //TODO törölni minden olyan childot ami fölöslegesen van benne
+                            //törli az olyan childokat amelyek fölöslegesen vannak benne
+                            ref = ref.child(storageAddItem.getMegnevezes());
+                            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    for(DataSnapshot elsoszint : dataSnapshot.getChildren()){
+                                        if(!elsoszint.getKey().equals("megnevezes") && !elsoszint.getKey().equals("unit") && !elsoszint.getKey().equals("quantity")){
+                                            ref.child(elsoszint.getKey()).removeValue();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(FirebaseError firebaseError) {
+
+                                }
+                            });
+
                             Toast.makeText(getContext(), "Ingredient adding to the Storage was Successful", Toast.LENGTH_SHORT).show();
                             Fragment startfragment = new StorageFragment();
                             final Context context = parent.getContext();

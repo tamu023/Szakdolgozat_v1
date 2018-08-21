@@ -1,6 +1,11 @@
 package com.example.bloodline.szakdolgozat_v1.Adapters;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.bloodline.szakdolgozat_v1.Classes.AddProducts;
 import com.example.bloodline.szakdolgozat_v1.Classes.Global_Vars;
+import com.example.bloodline.szakdolgozat_v1.Fragments.AdminPenRawIngredientModFragment;
 import com.example.bloodline.szakdolgozat_v1.R;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -36,12 +42,12 @@ public class PendingRawIngredientAdapter extends ArrayAdapter<AddProducts> {
 
     @NonNull
     @Override
-    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull final ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(resource, null);
         final AddProducts rawIngredient = rawIngredientList.get(position);
 
-        TextView txtName = view.findViewById(R.id.itmPenRawTxtName);
+        final TextView txtName = view.findViewById(R.id.itmPenRawTxtName);
         TextView txtFlour = view.findViewById(R.id.itmPenRawTxtFluor);
         TextView txtMilk = view.findViewById(R.id.itmPenRawTxtMilk);
         TextView txtMeat = view.findViewById(R.id.itmPenRawTxtMeat);
@@ -63,7 +69,20 @@ public class PendingRawIngredientAdapter extends ArrayAdapter<AddProducts> {
         btnMod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                SharedPreferences prefs = parent.getContext().getSharedPreferences("seged", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("Name", rawIngredient.getMegnevezes());
+                editor.putBoolean("Flour", rawIngredient.getFlour());
+                editor.putBoolean("Milk", rawIngredient.getMilk());
+                editor.putBoolean("Meat", rawIngredient.getMeat());
+                editor.putBoolean("Unit", rawIngredient.getUnit());
+                editor.apply();
+                Fragment startfragment = new AdminPenRawIngredientModFragment();
+                final Context context = parent.getContext();
+                FragmentManager fm = ((Activity) context).getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.mainframeplace, startfragment);
+                ft.commit();
             }
         });
 

@@ -237,9 +237,9 @@ public class ProfileFragment extends Fragment {
             txtAccType.setText("Admin");
         }
         if (Functions.getGender()) {
-            rbgGender.check(R.id.prfMale);
+            rbgGender.check(rbMale.getId());
         } else {
-            rbgGender.check(R.id.prfFemale);
+            rbgGender.check(rbFemale.getId());
         }
         if (Functions.getCukorbetegseg()) {
             swCukor.setChecked(true);

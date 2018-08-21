@@ -45,7 +45,7 @@ public class AdminPenRawIngredientFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {
-                    rawIngredientList.add(new AddProducts(elsoszint.child("megnevezes").getValue().toString(), (boolean) elsoszint.child("flour").getValue(), (boolean) elsoszint.child("milk").getValue(), (boolean) elsoszint.child("meat").getValue(),(boolean)elsoszint.child("meat").getValue()));
+                    rawIngredientList.add(new AddProducts(elsoszint.child("megnevezes").getValue().toString(), (boolean) elsoszint.child("flour").getValue(), (boolean) elsoszint.child("milk").getValue(), (boolean) elsoszint.child("meat").getValue(),(boolean)elsoszint.child("unit").getValue()));
                     PendingRawIngredientAdapter adapter = new PendingRawIngredientAdapter(getActivity().getApplicationContext(), R.layout.item_pendingrawingredient, rawIngredientList);
                     listView.setAdapter(adapter);
                 }

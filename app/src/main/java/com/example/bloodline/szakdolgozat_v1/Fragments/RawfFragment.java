@@ -33,6 +33,7 @@ public class RawfFragment extends Fragment {
     private RadioButton rbSolid;
     private RadioButton rbLiquid;
     private boolean unit;
+    private Firebase ref;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -59,7 +60,6 @@ public class RawfFragment extends Fragment {
             public void onClick(View v) {
                 if (check_params()) {
                     //létezik e már a listában a termék
-                    final Firebase ref;
                     if (Functions.getAcctype()) {
                         ref = new Firebase(Global_Vars.rawProdRef);
                     } else {
@@ -72,7 +72,7 @@ public class RawfFragment extends Fragment {
                     }
                     ref.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+                        public void onDataChange(final DataSnapshot dataSnapshot) {
                             exist = false;
                             for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {
                                 if (elsoszint.getKey().equals(edtMegnev.getText().toString())) {
@@ -91,9 +91,23 @@ public class RawfFragment extends Fragment {
                                                 AddProducts uj = new AddProducts(edtMegnev.getText().toString(), swFlour.isChecked(), swMilk.isChecked(), swMeat.isChecked(), unit);
                                                 //adatbázisba beírás
                                                 ref.child(edtMegnev.getText().toString()).setValue(uj);
-                                                //TODO rájönni hogy miért rakja bele a carbohydratet mikor nincs is a konstruktorban
-                                                //ideiglenes megoldás
-                                                ref.child(edtMegnev.getText().toString()).child("carbohydrate").removeValue();
+                                                ref = ref.child(edtMegnev.getText().toString());
+                                                //törölni azokat a childokat amelyek nem szükségesek
+                                                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                        for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {
+                                                            if (elsoszint.getKey().equals("carbohydrate") || elsoszint.getKey().equals("recept") || elsoszint.getKey().equals("ingredients") || elsoszint.getKey().equals("quantity")) {
+                                                                ref.child(elsoszint.getKey()).removeValue();
+                                                            }
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(FirebaseError firebaseError) {
+
+                                                    }
+                                                });
                                                 //hozzáadás után visszalépünk az előző képernyőre
                                                 Fragment fragm = new ProductTypeFragment();
                                                 FragmentManager fm = getFragmentManager();

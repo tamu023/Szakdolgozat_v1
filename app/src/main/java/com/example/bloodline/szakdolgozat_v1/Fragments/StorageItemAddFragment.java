@@ -40,6 +40,7 @@ public class StorageItemAddFragment extends Fragment {
         listView = view.findViewById(R.id.listStorageItemAdd);
         storageAddItemList = new ArrayList<>();
 
+        //TODO billentyűzet betöltéskor ne nyiljon meg--> üres Linear Layout a legtetejére megcsinálni és tesztelni
         Firebase ref = new Firebase(Global_Vars.rawProdRef);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

@@ -54,7 +54,6 @@ public class StorageAdapter extends ArrayAdapter<AddProducts> {
         }
         txtName.setText(storageItem.getMegnevezes());
         txtUnit.setText(storageItem.getQuantity() + seged);
-        //txtUnit.setText(String.format("%.3f", storageItem.getQuantity()) + seged);
         //TODO elkészíteni a gombokat
         btnMod.setOnClickListener(new View.OnClickListener() {
             @Override
