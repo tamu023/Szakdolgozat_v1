@@ -63,7 +63,9 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_profile) {
+        if (id == R.id.nav_newmeal) {
+
+        } else if (id == R.id.nav_profile) {
             ChangeFragment(R.id.mainframeplace, new ProfileFragment());
         } else if (id == R.id.nav_storage) {
             ChangeFragment(R.id.mainframeplace, new StorageFragment());

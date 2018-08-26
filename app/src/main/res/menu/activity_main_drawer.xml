@@ -5,6 +5,9 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_newmeal"
+            android:title="New Meal" />
+        <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/profile"
             android:title="Profile" />

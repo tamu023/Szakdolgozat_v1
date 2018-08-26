@@ -78,7 +78,6 @@ public class StorageItemAddAdapter extends ArrayAdapter<AddProducts> {
             public void onClick(View v) {
                 if (!edtQuantity.getText().toString().isEmpty() && !edtQuantity.getText().toString().equals("0")) {
                     //Beírt összeg átváltása, Solid esetén Kilogrammra ra Liquid esetén Literre
-                    //TODO átváltást megcsinálni és javítani mert nem jól adja hozzá
                     //TODO többi listához is Toast okat hozzáadni hogy informatívabb legyen egy egy sikeres művelet
                     exchangedQuantity = 0;
                     if (unit) {
@@ -141,7 +140,7 @@ public class StorageItemAddAdapter extends ArrayAdapter<AddProducts> {
 
                             Toast.makeText(getContext(), "Ingredient adding to the Storage was Successful", Toast.LENGTH_SHORT).show();
                             Fragment startfragment = new StorageFragment();
-                            final Context context = parent.getContext();
+                            Context context = parent.getContext();
                             FragmentManager fm = ((Activity) context).getFragmentManager();
                             FragmentTransaction ft = fm.beginTransaction();
                             ft.replace(R.id.mainframeplace, startfragment);

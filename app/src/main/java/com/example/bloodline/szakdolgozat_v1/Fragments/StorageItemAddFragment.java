@@ -1,11 +1,13 @@
 package com.example.bloodline.szakdolgozat_v1.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
 
 import com.example.bloodline.szakdolgozat_v1.Adapters.StorageAdapter;
@@ -40,7 +42,6 @@ public class StorageItemAddFragment extends Fragment {
         listView = view.findViewById(R.id.listStorageItemAdd);
         storageAddItemList = new ArrayList<>();
 
-        //TODO billentyűzet betöltéskor ne nyiljon meg--> üres Linear Layout a legtetejére megcsinálni és tesztelni
         Firebase ref = new Firebase(Global_Vars.rawProdRef);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -50,6 +51,7 @@ public class StorageItemAddFragment extends Fragment {
                     StorageItemAddAdapter adapter = new StorageItemAddAdapter(getActivity().getApplicationContext(), R.layout.item_addstorageingredient, storageAddItemList);
                     listView.setAdapter(adapter);
                 }
+                closeKeyboard();
             }
 
             @Override
@@ -58,5 +60,13 @@ public class StorageItemAddFragment extends Fragment {
             }
         });
 
+    }
+
+    private void closeKeyboard() {
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

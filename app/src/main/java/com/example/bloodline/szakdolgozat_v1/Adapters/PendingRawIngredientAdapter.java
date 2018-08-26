@@ -65,7 +65,7 @@ public class PendingRawIngredientAdapter extends ArrayAdapter<AddProducts> {
         if (rawIngredient.getMeat()) {
             txtMeat.setBackgroundColor(0xFFFF4A4D);
         }
-        //TODO a gombok beállítása
+
         btnMod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
