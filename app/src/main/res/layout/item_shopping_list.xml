@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/itmShpBtnCancel"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#cf1d20"
+        android:text="X"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/itmShpTxtName"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="20sp"
+        android:layout_weight="5"
+        android:gravity="center_vertical"
+        android:text="Name"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/itmShpBtnAdd"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="-" />
+
+    <TextView
+        android:id="@+id/itmShpTxtQuantity"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/itmShpBtnSub"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="20sp"
+        android:layout_weight="1"
+        android:text="+" />
+
+
+    <Button
+        android:id="@+id/itmShpBtnAccept"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#2c7025"
+        android:text="@string/tick"
+        android:textColor="#ffffff" />
+
+</LinearLayout>

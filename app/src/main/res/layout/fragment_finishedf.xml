@@ -88,7 +88,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Raw Ingredients"
+                    android:text="Raw Ingredients (Pick List)"
                     android:textSize="15sp" />
 
                 <ListView
