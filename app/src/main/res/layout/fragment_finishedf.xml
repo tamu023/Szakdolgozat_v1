@@ -53,6 +53,14 @@
                 android:inputType="number" />
 
             <EditText
+                android:id="@+id/finPrepTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15sp"
+                android:hint="Preparation Time in Hour"
+                android:inputType="number" />
+
+            <EditText
                 android:id="@+id/finRecept"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

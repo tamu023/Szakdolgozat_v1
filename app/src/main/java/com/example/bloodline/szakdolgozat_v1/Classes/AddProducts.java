@@ -1,7 +1,5 @@
 package com.example.bloodline.szakdolgozat_v1.Classes;
 
-import java.util.List;
-
 public class AddProducts {
     String megnevezes;
     boolean flour;
@@ -9,17 +7,6 @@ public class AddProducts {
     boolean meat;
     boolean unit; //True = solid(KG), False = liquid(L)
     double quantity;
-    String recept;
-    List<String> ingredients;
-    long carbohydrate;
-
-    //Finished food add
-    public AddProducts(String megnevezes, long carbohydrate, String recept, List<String> ingredients) {
-        this.megnevezes = megnevezes;
-        this.carbohydrate = carbohydrate;
-        this.recept = recept;
-        this.ingredients = ingredients;
-    }
 
     //Raw food add
     public AddProducts(String megnevezes, boolean flour, boolean milk, boolean meat, boolean unit) {
@@ -47,10 +34,6 @@ public class AddProducts {
         return megnevezes;
     }
 
-    public long getCarbohydrate() {
-        return carbohydrate;
-    }
-
     public boolean getFlour() {
         return flour;
     }
@@ -61,14 +44,6 @@ public class AddProducts {
 
     public boolean getMeat() {
         return meat;
-    }
-
-    public String getRecept() {
-        return recept;
-    }
-
-    public List<String> getIngredients() {
-        return ingredients;
     }
 
     public boolean getUnit() {
@@ -83,10 +58,6 @@ public class AddProducts {
         this.megnevezes = megnevezes;
     }
 
-    public void setCarbohydrate(long carbohydrate) {
-        this.carbohydrate = carbohydrate;
-    }
-
     public void setFlour(boolean flour) {
         this.flour = flour;
     }
@@ -97,14 +68,6 @@ public class AddProducts {
 
     public void setMeat(boolean meat) {
         this.meat = meat;
-    }
-
-    public void setRecept(String recept) {
-        this.recept = recept;
-    }
-
-    public void setIngredients(List<String> ingredients) {
-        this.ingredients = ingredients;
     }
 
     public void setUnit(boolean unit) {

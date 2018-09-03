@@ -8,14 +8,13 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -30,7 +29,6 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.google.ads.mediation.AbstractAdViewAdapter;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -65,6 +63,12 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //navigation drawer header text set
+        NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        txtName =  headerView.findViewById(R.id.navName);
+        txtEmail =  headerView.findViewById(R.id.navEmail);
+
         edtName = view.findViewById(R.id.prfName);
         edtHeight = view.findViewById(R.id.prfHeight);
         edtWeight = view.findViewById(R.id.prfWeight);
@@ -77,8 +81,6 @@ public class ProfileFragment extends Fragment {
         btnModify = view.findViewById(R.id.prfModify);
         btnCancel = view.findViewById(R.id.prfCancel);
         btnDelete = view.findViewById(R.id.prfDelete);
-        txtName = view.findViewById(R.id.navName);
-        txtEmail = view.findViewById(R.id.namEmail);
         txtAccType = view.findViewById(R.id.prfAccType);
 
         //Reklám
@@ -251,9 +253,8 @@ public class ProfileFragment extends Fragment {
         if (Functions.getLaktozerzekenyseg()) {
             swLaktoz.setChecked(true);
         }
-        //TODO kiiratni a navigation barra a nevet és email címet
-        //txtName.setText(Functions.getName());
-        //txtEmail.setText(Functions.getEmail());
+        txtName.setText(Functions.getName());
+        txtEmail.setText(Functions.getEmail());
     }
 
     private boolean check_Parameters() {

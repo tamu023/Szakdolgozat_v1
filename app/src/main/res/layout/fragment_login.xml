@@ -11,41 +11,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="40sp">
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/loginEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40sp"
             android:layout_marginEnd="30sp"
             android:layout_marginStart="30sp"
-            android:orientation="horizontal">
+            android:drawableStart="@drawable/twotone_email_24"
+            android:hint="E-mail"
+            android:inputType="textEmailAddress" />
 
-            <EditText
-                android:id="@+id/loginEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/twotone_email_24"
-                android:hint="E-mail"
-                android:inputType="textEmailAddress" />
-        </LinearLayout>
-
-        <LinearLayout
+        <EditText
+            android:id="@+id/loginPassw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40sp"
             android:layout_marginEnd="30sp"
             android:layout_marginStart="30sp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/loginPassw"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/twotone_pass"
-                android:hint="Password"
-                android:inputType="textPassword" />
-        </LinearLayout>
+            android:drawableStart="@drawable/twotone_pass"
+            android:hint="Password"
+            android:inputType="textPassword" />
 
         <ProgressBar
             android:id="@+id/loginprogressBar1"
@@ -54,38 +43,25 @@
             android:layout_gravity="center"
             android:visibility="gone" />
 
-        <LinearLayout
+
+        <Button
+            android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10sp"
             android:layout_marginEnd="30sp"
             android:layout_marginStart="30sp"
-            android:orientation="horizontal">
+            android:text="Login" />
 
-            <Button
-                android:id="@+id/loginButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Login" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/loginRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="30sp"
             android:layout_marginStart="30sp"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:text="No account yet? Create one" />
 
-            <TextView
-                android:id="@+id/loginRegister"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="No account yet? Create one" />
-
-        </LinearLayout>
 
         <com.google.android.gms.ads.AdView
             android:id="@+id/adView"

@@ -10,9 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.bloodline.szakdolgozat_v1.Adapters.FinishedIngredientRawAdapter;
 import com.example.bloodline.szakdolgozat_v1.Classes.AddProducts;
+import com.example.bloodline.szakdolgozat_v1.Classes.Global_Vars;
 import com.example.bloodline.szakdolgozat_v1.R;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FinishedfFragment extends Fragment {
@@ -36,6 +43,9 @@ public class FinishedfFragment extends Fragment {
 
         ingredientListView = view.findViewById(R.id.finlistIngredient);
         rawingredientListView = view.findViewById(R.id.finlistRaw);
+
+        ingredientList = new ArrayList<>();
+        rawingredientList = new ArrayList<>();
 
         ingredientListView.setOnTouchListener(new ListView.OnTouchListener() {
             @Override
@@ -78,6 +88,23 @@ public class FinishedfFragment extends Fragment {
                 // Handle ListView touch events.
                 v.onTouchEvent(event);
                 return true;
+            }
+        });
+        //TODO item_finishedingredientraw és item_finishedingredient elkészítése
+        Firebase ref = new Firebase(Global_Vars.rawProdRef);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {
+                    rawingredientList.add(new AddProducts(elsoszint.getKey(), (boolean) elsoszint.child("flour").getValue(), (boolean) elsoszint.child("milk").getValue(), (boolean) elsoszint.child("meat").getValue(), (boolean) elsoszint.child("unit").getValue()));
+                    FinishedIngredientRawAdapter adapter = new FinishedIngredientRawAdapter(getActivity().getApplicationContext(), R.layout.item_finishedingredientraw, rawingredientList);
+                    rawingredientListView.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
             }
         });
 

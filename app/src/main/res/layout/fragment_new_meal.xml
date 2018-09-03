@@ -32,20 +32,23 @@
                     android:textSize="30sp" />
 
                 <Button
+                    android:id="@+id/newmealBtnSub"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="-" />
 
                 <TextView
+                    android:id="@+id/newmealTxtPortion"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:text="0"
                     android:gravity="center"
-                    android:textSize="40sp"/>
+                    android:text="1"
+                    android:textSize="40sp" />
 
                 <Button
+                    android:id="@+id/newmealBtnAdd"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="40sp"
@@ -67,13 +70,18 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/newmealTxtFlour"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:background="#8c8c8c"
                         android:gravity="center"
-                        android:text="Flour" />
+                        android:text="Flour"
+                        android:textColor="#ffffff"
+                        android:textStyle="bold" />
 
                     <SeekBar
+                        android:id="@+id/newmealSbFlour"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -89,13 +97,18 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/newmealTxtMilk"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:background="#8c8c8c"
                         android:gravity="center"
-                        android:text="Milk" />
+                        android:text="Milk"
+                        android:textColor="#ffffff"
+                        android:textStyle="bold" />
 
                     <SeekBar
+                        android:id="@+id/newmealSbMilk"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -111,13 +124,18 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/newmealTxtMeat"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:background="#8c8c8c"
                         android:gravity="center"
-                        android:text="Meat" />
+                        android:text="Meat"
+                        android:textColor="#ffffff"
+                        android:textStyle="bold" />
 
                     <SeekBar
+                        android:id="@+id/newmealSbMeat"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -131,17 +149,20 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/newmealBtnSearch"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#8eb676"
             android:text="Search"
             android:textColor="#FFFFFF"
-            android:textSize="10sp" />
+            android:textSize="10sp"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
     <ListView
+        android:id="@+id/newmealList"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

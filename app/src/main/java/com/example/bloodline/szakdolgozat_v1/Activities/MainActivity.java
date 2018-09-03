@@ -1,8 +1,10 @@
 package com.example.bloodline.szakdolgozat_v1.Activities;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -12,10 +14,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.bloodline.szakdolgozat_v1.Fragments.AdminPanelFragment;
 import com.example.bloodline.szakdolgozat_v1.Classes.Functions;
+import com.example.bloodline.szakdolgozat_v1.Fragments.NewMealFragment;
 import com.example.bloodline.szakdolgozat_v1.Fragments.ProductTypeFragment;
 import com.example.bloodline.szakdolgozat_v1.Fragments.ProfileFragment;
 import com.example.bloodline.szakdolgozat_v1.Fragments.StorageFragment;
@@ -52,8 +56,27 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+            //TODO letesztelni
         } else {
-            super.onBackPressed();
+            AlertDialog.Builder a_builder = new AlertDialog.Builder(MainActivity.this);
+            a_builder.setMessage("Are you sure you want to leave the application?").setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Functions.clearAccdata();
+                            Functions.getmAuth().signOut();
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert = a_builder.create();
+            alert.setTitle("Exit Application");
+            alert.show();
         }
     }
 
@@ -64,7 +87,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_newmeal) {
-
+            ChangeFragment(R.id.mainframeplace, new NewMealFragment());
         } else if (id == R.id.nav_profile) {
             ChangeFragment(R.id.mainframeplace, new ProfileFragment());
         } else if (id == R.id.nav_storage) {
