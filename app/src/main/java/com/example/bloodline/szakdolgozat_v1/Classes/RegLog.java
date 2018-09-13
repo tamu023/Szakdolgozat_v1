@@ -42,8 +42,12 @@ public class RegLog {
     }
 
     public void currUserMOD() {
-        Firebase ref = new Firebase(Global_Vars.usersRef);
-        RegLog uj = new RegLog(email, name, cukorbetegseg, liszterzekenyseg, laktozerzekenyseg, weight, height, gender, bmiindex, acctype);
-        ref.child(Functions.getUID()).setValue(uj);
+        Firebase ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID());
+        ref.child("name").setValue(name);
+        ref.child("cukorbetegseg").setValue(cukorbetegseg);
+        ref.child("liszterzekenyseg").setValue(liszterzekenyseg);
+        ref.child("laktozerzekenyseg").setValue(laktozerzekenyseg);
+        ref.child("weight").setValue(weight);
+        ref.child("height").setValue(height);
     }
 }

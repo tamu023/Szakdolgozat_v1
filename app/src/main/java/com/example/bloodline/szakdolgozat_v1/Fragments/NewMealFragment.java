@@ -24,7 +24,6 @@ public class NewMealFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_new_meal, null);
     }
 
-    //TODO elkészíteni a kinézetét és a listához tartozó adaptert
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -50,7 +49,6 @@ public class NewMealFragment extends Fragment {
             ChangeFilter(txtFlour, 0);
         }
 
-        //TODO letesztelni, a seekbar ok aszerint legyenek beállítva, hogy ha a felhasználónak vannak bizonyos érzékenységei a menü megnyitásakor azok legyenek az alapértelmezett beállítások
         //seekbar mozgatására változik a textview színe
         sbFlour.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -133,17 +131,16 @@ public class NewMealFragment extends Fragment {
         });
 
     }
-    //TODO kitalálni miért nem működnek a beírt 6 karakteres hexa színek
     private void ChangeFilter(TextView txt, int progress) {
         switch (progress) {
             case 0:
-                txt.setBackgroundColor(0xfff00000);
+                txt.setBackgroundColor(0xffff0000);
                 break;
             case 1:
-                txt.setBackgroundColor(0x8c8c8c);
+                txt.setBackgroundColor(0xff8f8f8f);
                 break;
             case 2:
-                txt.setBackgroundColor(0x00ff00);
+                txt.setBackgroundColor(0xff00ff00);
                 break;
         }
     }

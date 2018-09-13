@@ -144,7 +144,7 @@ public class Functions {
         RegLog reg = new RegLog(Functions.getEmail(), Functions.getName(), Functions.getCukorbetegseg(), Functions.getLiszterzekenyseg(), Functions.getLaktozerzekenyseg(), Functions.getWeight(), Functions.getHeight(), Functions.getGender(), Functions.getBmiindex(), Functions.getAcctype());
         if (NewOrOld) {
             reg.newUserADD();
-        } else if (!NewOrOld) {
+        } else {
             reg.currUserMOD();
         }
 
@@ -152,5 +152,43 @@ public class Functions {
 
     public static double calcBMI(long height, long weight) {
         return (double) weight / Math.pow((double) height, 2);
+    }
+
+    public static double calcExchangeUnit(boolean unitType, String unit, String quantity) {
+        double exchangedQuantity = 0;
+
+        if (unitType) {
+            if (unit.equals("KG")) {
+                exchangedQuantity = Double.parseDouble(quantity);
+            } else if (unit.equals("DKG")) {
+                exchangedQuantity = Double.parseDouble(quantity) / 10;
+            } else if (unit.equals("G")) {
+                exchangedQuantity = Double.parseDouble(quantity) / 1000;
+            }
+        } else {
+            if (unit.equals("L")) {
+                exchangedQuantity = Double.parseDouble(quantity);
+            } else if (unit.equals("DL")) {
+                exchangedQuantity = Double.parseDouble(quantity) / 10;
+            } else if (unit.equals("CL")) {
+                exchangedQuantity = Double.parseDouble(quantity) / 100;
+            } else if (unit.equals("ML")) {
+                exchangedQuantity = Double.parseDouble(quantity) / 1000;
+            } else if (unit.equals("MKK")) {
+                exchangedQuantity = Double.parseDouble(quantity) / 1000;
+            } else if (unit.equals("KVK")) {
+                exchangedQuantity = Double.parseDouble(quantity) / 1000;
+            } else if (unit.equals("TK")) {
+                exchangedQuantity = Double.parseDouble(quantity) / 100;
+            } else if (unit.equals("EVK")) {
+                exchangedQuantity = Double.parseDouble(quantity) / 66.66;
+            } else if (unit.equals("POH")) {
+                exchangedQuantity = Double.parseDouble(quantity) / 5;
+            } else if (unit.equals("BOG")) {
+                exchangedQuantity = Double.parseDouble(quantity) / 2;
+            }
+        }
+
+        return exchangedQuantity;
     }
 }

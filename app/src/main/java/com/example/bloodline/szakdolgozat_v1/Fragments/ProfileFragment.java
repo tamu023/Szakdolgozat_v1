@@ -110,6 +110,9 @@ public class ProfileFragment extends Fragment {
                         Functions.setHeight(Long.parseLong(edtHeight.getText().toString()));
                         Functions.setWeight(Long.parseLong(edtWeight.getText().toString()));
                         Functions.setBmiindex(Functions.calcBMI(Functions.getWeight(), Functions.getHeight()));
+                        Functions.setCukorbetegseg(swCukor.isChecked());
+                        Functions.setLiszterzekenyseg(swLiszt.isChecked());
+                        Functions.setLaktozerzekenyseg(swLaktoz.isChecked());
                         //adatok beírása adatbázisba
                         Functions.UpdateUserinfo(false);
                         btnCancel.callOnClick();

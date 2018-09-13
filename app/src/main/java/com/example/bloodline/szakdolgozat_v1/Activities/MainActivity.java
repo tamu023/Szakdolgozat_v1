@@ -4,8 +4,11 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,6 +25,7 @@ import com.example.bloodline.szakdolgozat_v1.Classes.Functions;
 import com.example.bloodline.szakdolgozat_v1.Fragments.NewMealFragment;
 import com.example.bloodline.szakdolgozat_v1.Fragments.ProductTypeFragment;
 import com.example.bloodline.szakdolgozat_v1.Fragments.ProfileFragment;
+import com.example.bloodline.szakdolgozat_v1.Fragments.ShoppingListFragment;
 import com.example.bloodline.szakdolgozat_v1.Fragments.StorageFragment;
 import com.example.bloodline.szakdolgozat_v1.R;
 
@@ -51,12 +55,12 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    //vissza gomb kezelése
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-            //TODO letesztelni
         } else {
             AlertDialog.Builder a_builder = new AlertDialog.Builder(MainActivity.this);
             a_builder.setMessage("Are you sure you want to leave the application?").setCancelable(false)
@@ -80,6 +84,19 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //ellenörzi hogy van e internet elérés ha a felhasználó lerakta tálcára az alkalmazást és folytatná a munkamenetet
+        if (!isNetworkAvailable()){
+            Functions.clearAccdata();
+            Toast.makeText(MainActivity.this, "Network error.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -93,7 +110,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_storage) {
             ChangeFragment(R.id.mainframeplace, new StorageFragment());
         } else if (id == R.id.nav_shoppingcart) {
-
+            ChangeFragment(R.id.mainframeplace, new ShoppingListFragment());
         } else if (id == R.id.nav_addfood) {
             ChangeFragment(R.id.mainframeplace, new ProductTypeFragment());
         } else if (id == R.id.nav_verify) {
@@ -127,5 +144,12 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(position, startfragment);
         ft.commit();
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

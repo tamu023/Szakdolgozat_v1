@@ -9,9 +9,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bloodline.szakdolgozat_v1.Classes.AddProducts;
+import com.example.bloodline.szakdolgozat_v1.Classes.Functions;
+import com.example.bloodline.szakdolgozat_v1.Classes.Global_Vars;
 import com.example.bloodline.szakdolgozat_v1.R;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.List;
 
@@ -19,6 +26,8 @@ public class ShoppingListAdapter extends ArrayAdapter<AddProducts> {
     private Context context;
     private int resource;
     private List<AddProducts> shoppingList;
+    private Firebase ref;
+    private double quantity;
 
     public ShoppingListAdapter(@NonNull Context context, int resource, List<AddProducts> shoppingList) {
         super(context, resource, shoppingList);
@@ -29,7 +38,7 @@ public class ShoppingListAdapter extends ArrayAdapter<AddProducts> {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(resource, null);
         final AddProducts shopItem = shoppingList.get(position);
@@ -50,11 +59,14 @@ public class ShoppingListAdapter extends ArrayAdapter<AddProducts> {
 
         txtName.setText(shopItem.getMegnevezes());
         txtQuantity.setText(shopItem.getQuantity() + " " + unit);
-        //TODO befejezni a gombokat
+
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("shopping list");
+                ref.child(shopItem.getMegnevezes()).removeValue();
+                shoppingList.remove(position);
+                notifyDataSetChanged();
             }
         });
 
@@ -79,7 +91,51 @@ public class ShoppingListAdapter extends ArrayAdapter<AddProducts> {
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("shopping list");
+                ref.child(shopItem.getMegnevezes()).removeValue();
+                ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("storage");
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        quantity = 0;
+                        for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {
+                            if (elsoszint.getKey().equals(shopItem.getMegnevezes())) {
+                                quantity = (double) elsoszint.child("quantity").getValue();
+                            }
+                        }
+                        if (quantity != 0) {
+                            ref.child(shopItem.getMegnevezes()).child("quantity").setValue(shopItem.getQuantity() + quantity);
+                        } else {
+                            AddProducts uj = new AddProducts(shopItem.getMegnevezes(),shopItem.getUnit(),shopItem.getQuantity());
+                            ref.child(shopItem.getMegnevezes()).setValue(uj);
+                        }
+                        //törli az olyan childokat amelyek fölöslegesen vannak benne
+                        ref = ref.child(shopItem.getMegnevezes());
+                        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for(DataSnapshot elsoszint : dataSnapshot.getChildren()){
+                                    if(!elsoszint.getKey().equals("megnevezes") && !elsoszint.getKey().equals("unit") && !elsoszint.getKey().equals("quantity")){
+                                        ref.child(elsoszint.getKey()).removeValue();
+                                    }
+                                }
+                            }
 
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+
+                            }
+                        });
+                        Toast.makeText(getContext(), shopItem.getMegnevezes() + "added to Storage", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
+                shoppingList.remove(position);
+                notifyDataSetChanged();
             }
         });
 

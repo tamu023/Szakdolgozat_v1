@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
+    <TextView
+        android:id="@+id/itmFinTxtName"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:gravity="center_vertical"
+        android:text="Name"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/itmFinTxtQuantity"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/itmFinTxtUnit"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:gravity="" />
+
+    <Button
+        android:id="@+id/itmFinBtnDelete"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#ff0000"
+        android:gravity="center"
+        android:text="X"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
 </LinearLayout>

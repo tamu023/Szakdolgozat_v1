@@ -78,27 +78,10 @@ public class StorageItemAddAdapter extends ArrayAdapter<AddProducts> {
             public void onClick(View v) {
                 if (!edtQuantity.getText().toString().isEmpty() && !edtQuantity.getText().toString().equals("0")) {
                     //Beírt összeg átváltása, Solid esetén Kilogrammra ra Liquid esetén Literre
+                    //TODO tesztelni mert valamit nagyon nem számol jól amikor márlétezőhöz adok hozzá (b jelű alapanyagnál)
                     //TODO többi listához is Toast okat hozzáadni hogy informatívabb legyen egy egy sikeres művelet
-                    exchangedQuantity = 0;
-                    if (unit) {
-                        if (spnUnit.getSelectedItem().toString().equals("KG")) {
-                            exchangedQuantity = Double.parseDouble(edtQuantity.getText().toString());
-                        } else if (spnUnit.getSelectedItem().toString().equals("DKG")) {
-                            exchangedQuantity = Double.parseDouble(edtQuantity.getText().toString()) / 10;
-                        } else if (spnUnit.getSelectedItem().toString().equals("G")) {
-                            exchangedQuantity = Double.parseDouble(edtQuantity.getText().toString()) / 1000;
-                        }
-                    } else {
-                        if (spnUnit.getSelectedItem().toString().equals("L")) {
-                            exchangedQuantity = Double.parseDouble(edtQuantity.getText().toString());
-                        } else if (spnUnit.getSelectedItem().toString().equals("DL")) {
-                            exchangedQuantity = Double.parseDouble(edtQuantity.getText().toString()) / 10;
-                        } else if (spnUnit.getSelectedItem().toString().equals("CL")) {
-                            exchangedQuantity = Double.parseDouble(edtQuantity.getText().toString()) / 100;
-                        } else if (spnUnit.getSelectedItem().toString().equals("ML")) {
-                            exchangedQuantity = Double.parseDouble(edtQuantity.getText().toString()) / 1000;
-                        }
-                    }
+                    exchangedQuantity = Functions.calcExchangeUnit(unit,spnUnit.getSelectedItem().toString(),edtQuantity.getText().toString());
+
                     ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("storage");
                     ref.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -125,8 +108,8 @@ public class StorageItemAddAdapter extends ArrayAdapter<AddProducts> {
                             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    for(DataSnapshot elsoszint : dataSnapshot.getChildren()){
-                                        if(!elsoszint.getKey().equals("megnevezes") && !elsoszint.getKey().equals("unit") && !elsoszint.getKey().equals("quantity")){
+                                    for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {
+                                        if (!elsoszint.getKey().equals("megnevezes") && !elsoszint.getKey().equals("unit") && !elsoszint.getKey().equals("quantity")) {
                                             ref.child(elsoszint.getKey()).removeValue();
                                         }
                                     }

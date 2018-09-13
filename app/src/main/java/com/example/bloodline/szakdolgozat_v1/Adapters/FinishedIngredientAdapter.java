@@ -7,8 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.bloodline.szakdolgozat_v1.Classes.AddProducts;
+import com.example.bloodline.szakdolgozat_v1.R;
 
 import java.util.List;
 
@@ -33,6 +36,21 @@ public class FinishedIngredientAdapter extends ArrayAdapter<AddProducts> {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(resource, null);
         final AddProducts rawIngredient = rawIngredientList.get(position);
+
+        TextView txtName = view.findViewById(R.id.itmFinTxtName);
+        TextView txtQuantity = view.findViewById(R.id.itmFinTxtQuantity);
+        TextView txtUnit = view.findViewById(R.id.itmFinTxtUnit);
+        Button btnDelete = view.findViewById(R.id.itmFinBtnDelete);
+
+        txtName.setText(rawIngredient.getMegnevezes());
+        txtQuantity.setText(rawIngredient.getQuantity() + "");
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         return view;
     }

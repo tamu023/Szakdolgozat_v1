@@ -25,7 +25,7 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/itmShpBtnAdd"
+        android:id="@+id/itmShpBtnSub"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -41,7 +41,7 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/itmShpBtnSub"
+        android:id="@+id/itmShpBtnAdd"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginEnd="20sp"

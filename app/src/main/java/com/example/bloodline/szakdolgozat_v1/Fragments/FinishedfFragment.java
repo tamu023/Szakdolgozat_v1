@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.bloodline.szakdolgozat_v1.Adapters.FinishedIngredientAdapter;
 import com.example.bloodline.szakdolgozat_v1.Adapters.FinishedIngredientRawAdapter;
 import com.example.bloodline.szakdolgozat_v1.Classes.AddProducts;
 import com.example.bloodline.szakdolgozat_v1.Classes.Global_Vars;
@@ -26,7 +27,7 @@ public class FinishedfFragment extends Fragment {
 
     private ListView ingredientListView;
     private ListView rawingredientListView;
-    private List<AddProducts> ingredientList;
+    private static List<AddProducts> ingredientList;
     private List<AddProducts> rawingredientList;
 
     @Override
@@ -38,7 +39,7 @@ public class FinishedfFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        //TODO folytatni a kinézet kialakítását és leellenőrizni hogy működik e ListView onTouchListener
+        //TODO folytatni a kinézet kialakítását
         super.onViewCreated(view, savedInstanceState);
 
         ingredientListView = view.findViewById(R.id.finlistIngredient);
@@ -108,5 +109,11 @@ public class FinishedfFragment extends Fragment {
             }
         });
 
+        //TODO callbackel vagy valamilyen módon megoldani hogy a FinishedIngredientRawAdapterben az IngerdientListhez hozzáadott itemet megjelenísük a listájában
+
+    }
+
+    public static List<AddProducts> getIngredientList() {
+        return ingredientList;
     }
 }

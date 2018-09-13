@@ -42,7 +42,7 @@ public class ShoppingListFragment extends Fragment {
         listView = view.findViewById(R.id.shoppingListView);
         shoppingItemList = new ArrayList<>();
 
-        Firebase ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("Shopping List");
+        Firebase ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("shopping list");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
