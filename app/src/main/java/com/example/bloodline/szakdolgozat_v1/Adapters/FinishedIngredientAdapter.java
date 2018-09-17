@@ -30,7 +30,7 @@ public class FinishedIngredientAdapter extends ArrayAdapter<AddProducts> {
     //TODO itemet elkészíteni és ezt befejezni
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         //ebben a listában jelenítjük meg a hozzávalókat éa a mennyiségőket, innen csak törölni lehet a hozzávalót
         //item_finishedingredient az iteme
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -44,11 +44,19 @@ public class FinishedIngredientAdapter extends ArrayAdapter<AddProducts> {
 
         txtName.setText(rawIngredient.getMegnevezes());
         txtQuantity.setText(rawIngredient.getQuantity() + "");
+        if (rawIngredient.getUnit()) {
+            txtUnit.setText("KG");
+        } else {
+            txtUnit.setText("L");
+        }
+
+        //TODO unitot beírni
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                rawIngredientList.remove(position);
+                notifyDataSetChanged();
             }
         });
 

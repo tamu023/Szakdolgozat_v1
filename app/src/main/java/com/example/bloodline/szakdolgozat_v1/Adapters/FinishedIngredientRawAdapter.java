@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,12 +26,14 @@ public class FinishedIngredientRawAdapter extends ArrayAdapter<AddProducts> {
     private int resource;
     private List<AddProducts> rawIngredientList;
     private static List<AddProducts> ingredientList;
+    private ListView ingredientListView;
 
-    public FinishedIngredientRawAdapter(Context context, int resource, List<AddProducts> rawIngredientList) {
+    public FinishedIngredientRawAdapter(Context context, int resource, List<AddProducts> rawIngredientList, ListView ingredientListView) {
         super(context, resource, rawIngredientList);
         this.context = context;
         this.resource = resource;
         this.rawIngredientList = rawIngredientList;
+        this.ingredientListView = ingredientListView;
     }
 
     @NonNull
@@ -44,12 +47,12 @@ public class FinishedIngredientRawAdapter extends ArrayAdapter<AddProducts> {
 
         final TextView txtName = view.findViewById(R.id.itmFinRawTxtName);
         final EditText edtQuantity = view.findViewById(R.id.itmFinRawEdtQuantity);
-        Spinner spnUnit = view.findViewById(R.id.itmFinRawSpnUnit);
+        final Spinner spnUnit = view.findViewById(R.id.itmFinRawSpnUnit);
         Button btnOk = view.findViewById(R.id.itmFinRawBtnOk);
 
         txtName.setText(rawIngredient.getMegnevezes());
 
-        //TODO tesztelni
+        //TODO egyedi spinner itemet készíteni neki mert től nagy a betüméret
         final boolean unit = rawIngredient.getUnit();
         String liquid[] = {"L", "DL", "CL", "ML", "MKK", "KVK", "TK", "EVK", "POH", "BOG"};
         String solid[] = {"KG", "DKG", "G"};
@@ -64,16 +67,33 @@ public class FinishedIngredientRawAdapter extends ArrayAdapter<AddProducts> {
             spnUnit.setAdapter(spinnerArrayAdapter);
         }
 
-        final double exchangedQuantity = Functions.calcExchangeUnit(unit, spnUnit.getSelectedItem().toString(), edtQuantity.getText().toString());
-
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!edtQuantity.getText().toString().isEmpty() && !edtQuantity.getText().toString().equals("0")) {
+                    int existInt = -1;
+                    double exchangedQuantity = Functions.calcExchangeUnit(unit, spnUnit.getSelectedItem().toString(), edtQuantity.getText().toString());
                     ingredientList = FinishedfFragment.getIngredientList();
-                    ingredientList.add(new AddProducts(txtName.getText().toString(), unit, exchangedQuantity));
-                    //TODO itt kellene a callbacket hívni amellyel frissítjük a fragmentben az ingredient listát
-
+                    //ellenörzés hogy benne van e a hozzáadni kívánt elem a listában, ha igen módosítunk az értékén
+                    for (int i = 0; i < ingredientList.size(); i++) {
+                        AddProducts check = ingredientList.get(i);
+                        if (check.getMegnevezes().equals(txtName.getText().toString())) {
+                            existInt = i;
+                            break;
+                        }
+                    }
+                    if (existInt != -1) {
+                        AddProducts check = ingredientList.get(existInt);
+                        check.setQuantity(check.getQuantity() + exchangedQuantity);
+                    } else {
+                        ingredientList.add(new AddProducts(txtName.getText().toString(), unit, exchangedQuantity));
+                    }
+                    //végigmegyünk újra a listán miután beleraktuk az új elemet és újra kiiratjuk
+                    for (int i = 0; i < ingredientList.size(); i++) {
+                        edtQuantity.setText(null);
+                        FinishedIngredientAdapter adapter = new FinishedIngredientAdapter(context, R.layout.item_finishedingredient, ingredientList);
+                        ingredientListView.setAdapter(adapter);
+                    }
                 } else {
                     Toast.makeText(getContext(), "Please fill the Quantity field", Toast.LENGTH_LONG).show();
                 }
@@ -84,6 +104,7 @@ public class FinishedIngredientRawAdapter extends ArrayAdapter<AddProducts> {
     }
 
     public static List<AddProducts> getIngredientList() {
+
         return ingredientList;
     }
 }

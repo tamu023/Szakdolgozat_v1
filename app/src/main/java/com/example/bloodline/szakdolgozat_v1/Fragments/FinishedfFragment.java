@@ -98,7 +98,7 @@ public class FinishedfFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {
                     rawingredientList.add(new AddProducts(elsoszint.getKey(), (boolean) elsoszint.child("flour").getValue(), (boolean) elsoszint.child("milk").getValue(), (boolean) elsoszint.child("meat").getValue(), (boolean) elsoszint.child("unit").getValue()));
-                    FinishedIngredientRawAdapter adapter = new FinishedIngredientRawAdapter(getActivity().getApplicationContext(), R.layout.item_finishedingredientraw, rawingredientList);
+                    FinishedIngredientRawAdapter adapter = new FinishedIngredientRawAdapter(getActivity().getApplicationContext(), R.layout.item_finishedingredientraw, rawingredientList, ingredientListView);
                     rawingredientListView.setAdapter(adapter);
                 }
             }
