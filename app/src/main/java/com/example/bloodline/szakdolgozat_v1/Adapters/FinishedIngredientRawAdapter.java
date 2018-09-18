@@ -102,9 +102,4 @@ public class FinishedIngredientRawAdapter extends ArrayAdapter<AddProducts> {
 
         return view;
     }
-
-    public static List<AddProducts> getIngredientList() {
-
-        return ingredientList;
-    }
 }

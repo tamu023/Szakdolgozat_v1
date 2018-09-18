@@ -10,9 +10,9 @@ public class FinishedFood {
     boolean meat;
     String recipe;
     double preptime;
-    List<AddProducts> ingredientList;
+    List<FinishedFoodIngredient> ingredientList;
 
-    public FinishedFood(String foodname, long carb, boolean flour, boolean milk, boolean meat, String recipe, double preptime, List<AddProducts> ingredientList) {
+    public FinishedFood(String foodname, long carb, boolean flour, boolean milk, boolean meat, String recipe, double preptime, List<FinishedFoodIngredient> ingredientList) {
         this.foodname = foodname;
         this.carb = carb;
         this.flour = flour;
@@ -51,7 +51,7 @@ public class FinishedFood {
         return preptime;
     }
 
-    public List<AddProducts> getIngredientList() {
+    public List<FinishedFoodIngredient> getIngredientList() {
         return ingredientList;
     }
 
@@ -83,7 +83,7 @@ public class FinishedFood {
         this.preptime = preptime;
     }
 
-    public void setIngredientList(List<AddProducts> ingredientList) {
+    public void setIngredientList(List<FinishedFoodIngredient> ingredientList) {
         this.ingredientList = ingredientList;
     }
 }
