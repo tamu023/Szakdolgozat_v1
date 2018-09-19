@@ -34,7 +34,7 @@ public class ShoppingListFragment extends Fragment {
     private List<AddProducts> shoppingItemList;
     private ListView listView;
 
-    //TODO elkészíteni a hozzá tartozó fragmentet és a listview hez az adaptert
+    //TODO manuális hozzáadáshoz elkészíteni a hozzá tartozó fragmentet és a listview hez az adaptert
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

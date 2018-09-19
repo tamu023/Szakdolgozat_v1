@@ -161,7 +161,7 @@ public class FinishedfFragment extends Fragment {
                                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                //TODO void írása amelyel kiértékeljük hogy ingredient listben van e meat, milk, flour és ezeket true vagy falsera beállítja
+                                                SetParams();
                                                 //lista létrehozása hogy csak két adatot tároljunk a  hozzávalókban
                                                 List<FinishedFoodIngredient> hozzavalok = new ArrayList<>();
                                                 //ingredientListből való átpakolás a hozzávalókba
@@ -207,6 +207,22 @@ public class FinishedfFragment extends Fragment {
                 }
             }
         });
+    }
+
+    //beállítja a milk meat flour paraméterekt
+    private void SetParams() {
+        for (int i = 0; i < ingredientList.size(); i++) {
+            AddProducts check = ingredientList.get(i);
+            if (check.getMeat()) {
+                meat = true;
+            }
+            if (check.getFlour()) {
+                flour = true;
+            }
+            if (check.getMilk()) {
+                milk = true;
+            }
+        }
     }
 
     public static List<AddProducts> getIngredientList() {

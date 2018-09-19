@@ -27,7 +27,6 @@ public class FinishedIngredientAdapter extends ArrayAdapter<AddProducts> {
         this.rawIngredientList = rawIngredientList;
     }
 
-    //TODO itemet elkészíteni és ezt befejezni
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -49,8 +48,6 @@ public class FinishedIngredientAdapter extends ArrayAdapter<AddProducts> {
         } else {
             txtUnit.setText("L");
         }
-
-        //TODO unitot beírni
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
