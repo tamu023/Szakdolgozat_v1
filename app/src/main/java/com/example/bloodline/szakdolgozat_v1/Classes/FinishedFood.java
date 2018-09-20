@@ -23,6 +23,15 @@ public class FinishedFood {
         this.ingredientList = ingredientList;
     }
 
+    //admin lista elkészítéséhez
+    public FinishedFood(String foodname, long carb, boolean flour, boolean milk, boolean meat) {
+        this.foodname = foodname;
+        this.carb = carb;
+        this.flour = flour;
+        this.milk = milk;
+        this.meat = meat;
+    }
+
     public String getFoodname() {
         return foodname;
     }
