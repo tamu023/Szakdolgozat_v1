@@ -43,6 +43,19 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
         TextView txtFlour = view.findViewById(R.id.itmNewMTxtFlour);
         Button btnOk = view.findViewById(R.id.itmNewMBtnOk);
 
+        txtName.setText(newmealItem.getFoodname());
+        txtKcal.setText(newmealItem.getCarb() + " Kcal");
+        txtPrep.setText(newmealItem.getPreptime() + " Min");
+        if (newmealItem.getFlour()) {
+            txtFlour.setBackgroundColor(0xFFFF4A4D);
+        }
+        if (newmealItem.getMilk()) {
+            txtMilk.setBackgroundColor(0xFFFF4A4D);
+        }
+        if (newmealItem.getMeat()) {
+            txtMeat.setBackgroundColor(0xFFFF4A4D);
+        }
+
         //gomb lenyomására ellenőrizzük a raktárat hogy van e elegendő alapanyag az elkészítéshez és alertDialogban megkérdezzük hogy kívánja e elkészíteni, ha nincsen akkor AlertDialogban megkérdezzük hogy kívánja e hozzáadni a bevásárló listához a termékeket
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
