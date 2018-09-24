@@ -60,6 +60,7 @@ public class StorageAdapter extends ArrayAdapter<AddProducts> {
         }
         txtName.setText(storageItem.getMegnevezes());
         txtUnit.setText(storageItem.getQuantity() + seged);
+        //TODO megfontolni hogy szükséges e a storageitemMod Fragment
         btnMod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

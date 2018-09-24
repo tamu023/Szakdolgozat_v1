@@ -6,30 +6,19 @@
     android:orientation="vertical"
     tools:context=".Fragments.StorageFragment">
 
-    <LinearLayout
+    <ListView
+        android:id="@+id/storageListRaw"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <ListView
-            android:id="@+id/storageListRaw"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    </ListView>
 
-        </ListView>
-    </LinearLayout>
-
-    <LinearLayout
+    <Button
+        android:id="@+id/storageBtnAdd"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/storageBtnAdd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add Item" />
-
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:text="Add Item" />
 
 
 </LinearLayout>
