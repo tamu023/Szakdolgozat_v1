@@ -1,6 +1,8 @@
 package com.example.bloodline.szakdolgozat_v1.Fragments;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.Nullable;
@@ -146,9 +148,15 @@ public class NewMealFragment extends Fragment {
             }
         });
 
+
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Portion eltárolása hogy adapterclassban is lekérhessük
+                SharedPreferences prefs = getContext().getSharedPreferences("seged",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putInt("Adag",Integer.parseInt(txtPortion.getText().toString()));
+                editor.apply();
                 //TODO TESZTELNI, nem akarja kitörölni a teljes listát újrakeresésnél
                 for (int i = 0; i < finishedFoodList.size(); i++) {
                     finishedFoodList.remove(i);

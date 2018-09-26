@@ -39,7 +39,7 @@ public class ShoppingListItemAddFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        listView = view.findViewById(R.id.shoppingListView);
+        listView = view.findViewById(R.id.shpAddListView);
         shoppingAddItemList = new ArrayList<>();
 
         Firebase ref = new Firebase(Global_Vars.rawProdRef);
