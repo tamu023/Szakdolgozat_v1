@@ -1,5 +1,9 @@
 package com.example.bloodline.szakdolgozat_v1.Classes;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -191,4 +195,26 @@ public class Functions {
 
         return exchangedQuantity;
     }
+
+    public static void cleanPath(String megnevezes, String path) {
+        //törli az olyan childokat amelyek fölöslegesen vannak benne
+        final Firebase ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child(path).child(megnevezes);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot masodikszint : dataSnapshot.getChildren()) {
+                    if (!masodikszint.getKey().equals("megnevezes") && !masodikszint.getKey().equals("unit") && !masodikszint.getKey().equals("quantity")) {
+                        ref.child(masodikszint.getKey()).removeValue();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
 }

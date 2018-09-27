@@ -15,7 +15,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.bloodline.szakdolgozat_v1.Adapters.NewMealAdapter;
+import com.example.bloodline.szakdolgozat_v1.Classes.AddProducts;
 import com.example.bloodline.szakdolgozat_v1.Classes.FinishedFood;
+import com.example.bloodline.szakdolgozat_v1.Classes.FinishedFoodIngredient;
 import com.example.bloodline.szakdolgozat_v1.Classes.Functions;
 import com.example.bloodline.szakdolgozat_v1.Classes.Global_Vars;
 import com.example.bloodline.szakdolgozat_v1.R;
@@ -39,6 +41,9 @@ public class NewMealFragment extends Fragment {
     private SeekBar sbMeat;
     private List<FinishedFood> finishedFoodList;
     private ListView listView;
+    private List<AddProducts> rawFoodList;
+    private List<FinishedFoodIngredient> ingredientList;
+    private Firebase ref;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +58,7 @@ public class NewMealFragment extends Fragment {
 
         listView = view.findViewById(R.id.newmealList);
         finishedFoodList = new ArrayList<>();
+        rawFoodList = new ArrayList<>();
         final TextView txtFlour = view.findViewById(R.id.newmealTxtFlour);
         final TextView txtMilk = view.findViewById(R.id.newmealTxtMilk);
         final TextView txtMeat = view.findViewById(R.id.newmealTxtMeat);
@@ -63,6 +69,22 @@ public class NewMealFragment extends Fragment {
         sbFlour = view.findViewById(R.id.newmealSbFlour);
         sbMilk = view.findViewById(R.id.newmealSbMilk);
         sbMeat = view.findViewById(R.id.newmealSbMeat);
+
+        //storageból kiolvassa a megnevezést és a hozzá tartozó mértékegységet, hogy továbbadhassa az adapternek
+        ref = new Firebase(Global_Vars.rawProdRef);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {
+                    rawFoodList.add(new AddProducts((String) elsoszint.child("megnevezes").getValue(), (boolean) elsoszint.child("unit").getValue()));
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
         //preset seekbars
         if (Functions.getLaktozerzekenyseg()) {
@@ -153,26 +175,26 @@ public class NewMealFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //Portion eltárolása hogy adapterclassban is lekérhessük
-                SharedPreferences prefs = getContext().getSharedPreferences("seged",Context.MODE_PRIVATE);
+                SharedPreferences prefs = getContext().getSharedPreferences("seged", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putInt("Adag",Integer.parseInt(txtPortion.getText().toString()));
+                editor.putInt("Adag", Integer.parseInt(txtPortion.getText().toString()));
                 editor.apply();
                 //TODO TESZTELNI, nem akarja kitörölni a teljes listát újrakeresésnél
-                for (int i = 0; i < finishedFoodList.size(); i++) {
+                /*for (int i = 0; i < finishedFoodList.size(); i++) {
                     finishedFoodList.remove(i);
-                    NewMealAdapter adapter = new NewMealAdapter(getActivity().getApplicationContext(), R.layout.item_new_meal, finishedFoodList);
+                    NewMealAdapter adapter = new NewMealAdapter(getActivity().getApplicationContext(), R.layout.item_new_meal, finishedFoodList, rawFoodList);
                     listView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                }
-                Firebase ref = new Firebase(Global_Vars.finProdRef);
+                }*/
+                ref = new Firebase(Global_Vars.finProdRef);
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {
+                        for (final DataSnapshot elsoszint : dataSnapshot.getChildren()) {
                             ReadFilters();
-                            boolean milk = (boolean) elsoszint.child("milk").getValue();
-                            boolean meat = (boolean) elsoszint.child("meat").getValue();
-                            boolean flour = (boolean) elsoszint.child("flour").getValue();
+                            final boolean milk = (boolean) elsoszint.child("milk").getValue();
+                            final boolean meat = (boolean) elsoszint.child("meat").getValue();
+                            final boolean flour = (boolean) elsoszint.child("flour").getValue();
                             if (filMeat == null) {
                                 filMeat = meat;
                             }
@@ -183,10 +205,27 @@ public class NewMealFragment extends Fragment {
                                 filFlour = flour;
                             }
                             if (filFlour == flour && filMeat == meat && filMilk == milk) {
-                                finishedFoodList.add(new FinishedFood(elsoszint.getKey(), (long) elsoszint.child("carb").getValue(), flour, milk, meat, (double) elsoszint.child("preptime").getValue()));
-                                NewMealAdapter adapter = new NewMealAdapter(getActivity().getApplicationContext(), R.layout.item_new_meal, finishedFoodList);
-                                listView.setAdapter(adapter);
-                                adapter.notifyDataSetChanged();
+                                //ingredientList beolvasása
+                                ref = new Firebase(Global_Vars.finProdRef).child(elsoszint.getKey()).child("ingredientList");
+                                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        ingredientList = new ArrayList<>();
+
+                                        for (DataSnapshot masodikszint : dataSnapshot.getChildren()) {
+                                            ingredientList.add(new FinishedFoodIngredient((String) masodikszint.child("megnevezes").getValue(), (double) masodikszint.child("mennyiseg").getValue()));
+                                        }
+                                        finishedFoodList.add(new FinishedFood(elsoszint.getKey(), (long) elsoszint.child("carb").getValue(), flour, milk, meat, (String) elsoszint.child("recipe").getValue(), (double) elsoszint.child("preptime").getValue(), ingredientList));
+                                        NewMealAdapter adapter = new NewMealAdapter(getActivity().getApplicationContext(), R.layout.item_new_meal, finishedFoodList, rawFoodList);
+                                        listView.setAdapter(adapter);
+                                        adapter.notifyDataSetChanged();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(FirebaseError firebaseError) {
+
+                                    }
+                                });
                             }
                         }
                     }

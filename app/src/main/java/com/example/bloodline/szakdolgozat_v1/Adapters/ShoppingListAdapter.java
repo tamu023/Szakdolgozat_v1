@@ -110,22 +110,8 @@ public class ShoppingListAdapter extends ArrayAdapter<AddProducts> {
                             ref.child(shopItem.getMegnevezes()).setValue(uj);
                         }
                         //törli az olyan childokat amelyek fölöslegesen vannak benne
-                        ref = ref.child(shopItem.getMegnevezes());
-                        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                for(DataSnapshot elsoszint : dataSnapshot.getChildren()){
-                                    if(!elsoszint.getKey().equals("megnevezes") && !elsoszint.getKey().equals("unit") && !elsoszint.getKey().equals("quantity")){
-                                        ref.child(elsoszint.getKey()).removeValue();
-                                    }
-                                }
-                            }
+                        Functions.cleanPath(shopItem.getMegnevezes(),"shopping list");
 
-                            @Override
-                            public void onCancelled(FirebaseError firebaseError) {
-
-                            }
-                        });
                         Toast.makeText(getContext(), shopItem.getMegnevezes() + "added to Storage", Toast.LENGTH_SHORT).show();
                     }
 

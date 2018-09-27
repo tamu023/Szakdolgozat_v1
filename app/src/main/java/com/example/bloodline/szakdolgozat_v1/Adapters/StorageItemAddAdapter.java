@@ -103,23 +103,7 @@ public class StorageItemAddAdapter extends ArrayAdapter<AddProducts> {
                                 AddProducts uj = new AddProducts(storageAddItem.getMegnevezes(), storageAddItem.getUnit(), exchangedQuantity);
                                 ref.child(storageAddItem.getMegnevezes()).setValue(uj);
                             }
-                            //törli az olyan childokat amelyek fölöslegesen vannak benne
-                            ref = ref.child(storageAddItem.getMegnevezes());
-                            ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {
-                                        if (!elsoszint.getKey().equals("megnevezes") && !elsoszint.getKey().equals("unit") && !elsoszint.getKey().equals("quantity")) {
-                                            ref.child(elsoszint.getKey()).removeValue();
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(FirebaseError firebaseError) {
-
-                                }
-                            });
+                            Functions.cleanPath(storageAddItem.getMegnevezes(),"storage");
 
                             Toast.makeText(getContext(), "Ingredient adding to the Storage was Successful", Toast.LENGTH_SHORT).show();
                             Fragment startfragment = new StorageFragment();

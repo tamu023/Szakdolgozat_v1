@@ -32,16 +32,6 @@ public class FinishedFood {
         this.meat = meat;
     }
 
-    //new meal listához
-    public FinishedFood(String foodname, long carb, boolean flour, boolean milk, boolean meat, double preptime) {
-        this.foodname = foodname;
-        this.carb = carb;
-        this.flour = flour;
-        this.milk = milk;
-        this.meat = meat;
-        this.preptime = preptime;
-    }
-
     public String getFoodname() {
         return foodname;
     }
