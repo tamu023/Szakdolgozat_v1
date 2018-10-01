@@ -35,6 +35,7 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
     private List<AddProducts> shoppingList;
     private List<AddProducts> alterStorageList;
     private Firebase ref;
+    private boolean exist;
 
     public NewMealAdapter(@NonNull Context context, int resource, List<FinishedFood> newmealList, List<AddProducts> rawFoodList) {
         super(context, resource, newmealList);
@@ -131,7 +132,7 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
                                                     for (int i = 0; i < alterStorageList.size(); i++) {
                                                         AddProducts change = alterStorageList.get(i);
                                                         ref.child(change.getMegnevezes()).setValue(change);
-                                                        Functions.cleanPath(change.getMegnevezes(),"storage");
+                                                        Functions.cleanPath(change.getMegnevezes(), "storage");
                                                     }
                                                     dialog.cancel();
                                                 }
@@ -164,9 +165,22 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
                                                 @Override
                                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                                     for (int i = 0; i < shoppingList.size(); i++) {
-                                                        AddProducts add = shoppingList.get(i);
-                                                        ref.child(add.getMegnevezes()).setValue(add);
-                                                        Functions.cleanPath(add.getMegnevezes(),"shopping list");
+                                                        exist = false;
+                                                        for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {
+                                                            if (elsoszint.getKey().equals(shoppingList.get(i).getMegnevezes())) {
+                                                                exist = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                        if (exist) {
+                                                            AddProducts add = shoppingList.get(i);
+                                                            double currQuantity = (double) dataSnapshot.child(add.getMegnevezes()).child("quantity").getValue();
+                                                            ref.child(add.getMegnevezes()).child("quantity").setValue(currQuantity + add.getQuantity());
+                                                        } else {
+                                                            AddProducts add = shoppingList.get(i);
+                                                            ref.child(add.getMegnevezes()).setValue(add);
+                                                            Functions.cleanPath(add.getMegnevezes(), "shopping list");
+                                                        }
                                                     }
                                                     dialog.cancel();
                                                 }

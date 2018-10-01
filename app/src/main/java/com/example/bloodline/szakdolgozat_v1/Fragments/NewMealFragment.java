@@ -179,13 +179,12 @@ public class NewMealFragment extends Fragment {
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putInt("Adag", Integer.parseInt(txtPortion.getText().toString()));
                 editor.apply();
-                //TODO TESZTELNI, nem akarja kitörölni a teljes listát újrakeresésnél
-                /*for (int i = 0; i < finishedFoodList.size(); i++) {
+                for (int i = finishedFoodList.size() - 1; i >= 0; i--) {
                     finishedFoodList.remove(i);
                     NewMealAdapter adapter = new NewMealAdapter(getActivity().getApplicationContext(), R.layout.item_new_meal, finishedFoodList, rawFoodList);
                     listView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                }*/
+                }
                 ref = new Firebase(Global_Vars.finProdRef);
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

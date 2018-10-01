@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "538904864226-abndhgc747pb6kcm3t98m2vvhekmsstp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bloodline.szakdolgozat_v1",
+            "certificate_hash": "fe6a0f3bc457595ff1791106d5fe9d3304a15beb"
+          }
+        },
+        {
           "client_id": "538904864226-jg0v5cma9i25d2lr6g73jlj4uua5ve4r.apps.googleusercontent.com",
           "client_type": 3
         }

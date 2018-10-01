@@ -1,11 +1,6 @@
 package com.example.bloodline.szakdolgozat_v1.Adapters;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,17 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bloodline.szakdolgozat_v1.Classes.AddProducts;
 import com.example.bloodline.szakdolgozat_v1.Classes.Functions;
 import com.example.bloodline.szakdolgozat_v1.Classes.Global_Vars;
-import com.example.bloodline.szakdolgozat_v1.Fragments.StorageItemModFragment;
 import com.example.bloodline.szakdolgozat_v1.R;
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 
 import java.util.List;
 
@@ -48,7 +41,8 @@ public class StorageAdapter extends ArrayAdapter<AddProducts> {
         final AddProducts storageItem = storageList.get(position);
 
         txtName = view.findViewById(R.id.storageitemTxtName);
-        TextView txtUnit = view.findViewById(R.id.storageitemTxtUnit);
+        final TextView txtUnit = view.findViewById(R.id.storageitemTxtUnit);
+        final EditText edtQuantity = view.findViewById(R.id.storageitemEdtQuantity);
         Button btnMod = view.findViewById(R.id.storageitemBtnMod);
         Button btnDelete = view.findViewById(R.id.storageitemBtnDelete);
 
@@ -59,31 +53,31 @@ public class StorageAdapter extends ArrayAdapter<AddProducts> {
             seged = " Liter";
         }
         txtName.setText(storageItem.getMegnevezes());
-        txtUnit.setText(storageItem.getQuantity() + seged);
-        //TODO megfontolni hogy szükséges e a storageitemMod Fragment
+        edtQuantity.setText(storageItem.getQuantity() + "");
+        txtUnit.setText(seged);
+        //TODO Tesztelni
         btnMod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences prefs = parent.getContext().getSharedPreferences("seged", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("Name", storageItem.getMegnevezes());
-                editor.putBoolean("Unit",storageItem.getUnit());
-                //Stringként rakjuk bele mert Doublet nem lehet Shared Preferencesbe
-                editor.putString("Quantity", String.valueOf(storageItem.getQuantity()));
-                editor.apply();
-                Fragment startfragment = new StorageItemModFragment();
-                Context context = parent.getContext();
-                FragmentManager fm = ((Activity) context).getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.mainframeplace, startfragment);
-                ft.commit();
+                if (edtQuantity.isEnabled()) {
+                    Firebase ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("storage").child(storageItem.getMegnevezes()).child("quantity");
+                    if (Double.parseDouble(edtQuantity.getText().toString()) > 0 && !edtQuantity.getText().toString().isEmpty()) {
+                        ref.setValue(Double.parseDouble(edtQuantity.getText().toString()));
+                        Toast.makeText(getContext(), storageItem.getMegnevezes() + "quantity has changed", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(),"Please fill with number higher than zero.", Toast.LENGTH_SHORT).show();
+                    }
+                    edtQuantity.setEnabled(false);
+                } else {
+                    edtQuantity.setEnabled(true);
+                }
             }
         });
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Firebase ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("storage").child(txtName.getText().toString());
+                Firebase ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("storage").child(storageItem.getMegnevezes());
                 ref.removeValue();
                 storageList.remove(position);
                 notifyDataSetChanged();
