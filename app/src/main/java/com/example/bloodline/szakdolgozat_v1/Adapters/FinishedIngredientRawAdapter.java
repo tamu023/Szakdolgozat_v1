@@ -77,7 +77,7 @@ public class FinishedIngredientRawAdapter extends ArrayAdapter<AddProducts> {
                     //ellenörzés hogy benne van e a hozzáadni kívánt elem a listában, ha igen módosítunk az értékén
                     for (int i = 0; i < ingredientList.size(); i++) {
                         AddProducts check = ingredientList.get(i);
-                        if (check.getMegnevezes().equals(txtName.getText().toString())) {
+                        if (check.getMegnevezes().equals(rawIngredient.getMegnevezes())) {
                             existInt = i;
                             break;
                         }
@@ -86,7 +86,8 @@ public class FinishedIngredientRawAdapter extends ArrayAdapter<AddProducts> {
                         AddProducts check = ingredientList.get(existInt);
                         check.setQuantity(check.getQuantity() + exchangedQuantity);
                     } else {
-                        ingredientList.add(new AddProducts(txtName.getText().toString(), unit, exchangedQuantity));
+                        //ingredientList.add(new AddProducts(txtName.getText().toString(), unit, exchangedQuantity));
+                        ingredientList.add(new AddProducts(rawIngredient.getMegnevezes(), rawIngredient.getFlour(), rawIngredient.getMilk(), rawIngredient.getMeat(), unit, exchangedQuantity));
                     }
                     //végigmegyünk újra a listán miután beleraktuk az új elemet és újra kiiratjuk
                     for (int i = 0; i < ingredientList.size(); i++) {

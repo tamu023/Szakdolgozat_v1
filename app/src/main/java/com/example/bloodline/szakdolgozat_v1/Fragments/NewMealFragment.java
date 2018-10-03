@@ -70,6 +70,11 @@ public class NewMealFragment extends Fragment {
         sbMilk = view.findViewById(R.id.newmealSbMilk);
         sbMeat = view.findViewById(R.id.newmealSbMeat);
 
+        SharedPreferences prefs = getContext().getSharedPreferences("seged", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("Adag", 1);
+        editor.apply();
+
         //storageból kiolvassa a megnevezést és a hozzá tartozó mértékegységet, hogy továbbadhassa az adapternek
         ref = new Firebase(Global_Vars.rawProdRef);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -156,6 +161,7 @@ public class NewMealFragment extends Fragment {
                 } else {
                     txtPortion.setText(Integer.toString(Integer.parseInt(txtPortion.getText().toString()) - 1));
                 }
+                SavePortion(txtPortion);
             }
         });
 
@@ -167,18 +173,13 @@ public class NewMealFragment extends Fragment {
                 } else {
                     txtPortion.setText(Integer.toString(Integer.parseInt(txtPortion.getText().toString()) + 1));
                 }
+                SavePortion(txtPortion);
             }
         });
-
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Portion eltárolása hogy adapterclassban is lekérhessük
-                SharedPreferences prefs = getContext().getSharedPreferences("seged", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putInt("Adag", Integer.parseInt(txtPortion.getText().toString()));
-                editor.apply();
                 for (int i = finishedFoodList.size() - 1; i >= 0; i--) {
                     finishedFoodList.remove(i);
                     NewMealAdapter adapter = new NewMealAdapter(getActivity().getApplicationContext(), R.layout.item_new_meal, finishedFoodList, rawFoodList);
@@ -239,20 +240,34 @@ public class NewMealFragment extends Fragment {
 
     }
 
+    //Portion eltárolása hogy adapterclassban is lekérhessük
+    private void SavePortion(TextView txt) {
+        SharedPreferences prefs = getContext().getSharedPreferences("seged", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("Adag", Integer.parseInt(txt.getText().toString()));
+        editor.apply();
+    }
+
     //általunk beállított filtereket állítja be hogy az alapján keressen
     private void ReadFilters() {
         if (sbFlour.getProgress() == 0) {
             filFlour = false;
+        } else if (sbFlour.getProgress() == 1) {
+            filFlour = null;
         } else if (sbFlour.getProgress() == 2) {
             filFlour = true;
         }
         if (sbMeat.getProgress() == 0) {
             filMeat = false;
+        } else if (sbMeat.getProgress() == 1) {
+            filMeat = null;
         } else if (sbMeat.getProgress() == 2) {
             filMeat = true;
         }
         if (sbMilk.getProgress() == 0) {
             filMilk = false;
+        } else if (sbMilk.getProgress() == 1) {
+            filMilk = null;
         } else if (sbMilk.getProgress() == 2) {
             filMilk = true;
         }

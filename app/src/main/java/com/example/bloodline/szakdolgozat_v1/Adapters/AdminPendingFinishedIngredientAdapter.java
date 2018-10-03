@@ -23,7 +23,7 @@ import com.firebase.client.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminFinishedIngredientAdapter extends ArrayAdapter<FinishedFood> {
+public class AdminPendingFinishedIngredientAdapter extends ArrayAdapter<FinishedFood> {
     private Context context;
     private int resource;
     private List<FinishedFood> finishedFoodList;
@@ -32,7 +32,7 @@ public class AdminFinishedIngredientAdapter extends ArrayAdapter<FinishedFood> {
     private Firebase ref;
     private boolean exist;
 
-    public AdminFinishedIngredientAdapter(Context context, int resource, List<FinishedFood> finishedFoodList) {
+    public AdminPendingFinishedIngredientAdapter(Context context, int resource, List<FinishedFood> finishedFoodList) {
         super(context, resource, finishedFoodList);
         this.context = context;
         this.resource = resource;

@@ -17,6 +17,16 @@ public class AddProducts {
         this.unit = unit;
     }
 
+    //Finished ingredient raw adapter needs this constructor
+    public AddProducts(String megnevezes, boolean flour, boolean milk, boolean meat, boolean unit, double quantity) {
+        this.megnevezes = megnevezes;
+        this.flour = flour;
+        this.milk = milk;
+        this.meat = meat;
+        this.unit = unit;
+        this.quantity = quantity;
+    }
+
     //Storage Constructor
     public AddProducts(String megnevezes, boolean unit, double quantity) {
         this.megnevezes = megnevezes;

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bloodline.szakdolgozat_v1.Classes.AddProducts;
 import com.example.bloodline.szakdolgozat_v1.Classes.FinishedFood;
@@ -65,16 +66,15 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
         txtKcal.setText(newmealItem.getCarb() + " Kcal");
         txtPrep.setText(newmealItem.getPreptime() + " Min");
         if (newmealItem.getFlour()) {
-            txtFlour.setBackgroundColor(0xFFFF4A4D);
+            txtFlour.setBackgroundColor(0xFF00FF00);
         }
         if (newmealItem.getMilk()) {
-            txtMilk.setBackgroundColor(0xFFFF4A4D);
+            txtMilk.setBackgroundColor(0xFF00FF00);
         }
         if (newmealItem.getMeat()) {
-            txtMeat.setBackgroundColor(0xFFFF4A4D);
+            txtMeat.setBackgroundColor(0xFF00FF00);
         }
 
-        //TODO TESZTELNI, Adagot kitalálni hogyan hozzuk be az adapterbe mert minidg 1 et hozunk
         //gomb lenyomására ellenőrizzük a raktárat hogy van e elegendő alapanyag az elkészítéshez és alertDialogban megkérdezzük hogy kívánja e elkészíteni, ha nincsen akkor AlertDialogban megkérdezzük hogy kívánja e hozzáadni a bevásárló listához a termékeket
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,8 +131,12 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
                                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                                     for (int i = 0; i < alterStorageList.size(); i++) {
                                                         AddProducts change = alterStorageList.get(i);
-                                                        ref.child(change.getMegnevezes()).setValue(change);
-                                                        Functions.cleanPath(change.getMegnevezes(), "storage");
+                                                        if (change.getQuantity() == 0) {
+                                                            ref.child(change.getMegnevezes()).removeValue();
+                                                        } else {
+                                                            ref.child(change.getMegnevezes()).setValue(change);
+                                                            Functions.cleanPath(change.getMegnevezes(), "storage");
+                                                        }
                                                     }
                                                     dialog.cancel();
                                                 }
@@ -183,6 +187,7 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
                                                         }
                                                     }
                                                     dialog.cancel();
+                                                    Toast.makeText(getContext(), "Ingredients successfully added to the shopping list!", Toast.LENGTH_SHORT).show();
                                                 }
 
                                                 @Override

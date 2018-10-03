@@ -111,7 +111,7 @@ public class ShoppingListAdapter extends ArrayAdapter<AddProducts> {
                         }
                         //törli az olyan childokat amelyek fölöslegesen vannak benne
                         Functions.cleanPath(shopItem.getMegnevezes(),"storage");
-                        Toast.makeText(getContext(), shopItem.getMegnevezes() + "added to Storage", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), shopItem.getMegnevezes() + "Added to Storage", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

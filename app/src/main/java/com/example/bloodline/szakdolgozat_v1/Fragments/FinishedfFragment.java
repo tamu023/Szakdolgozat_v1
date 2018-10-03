@@ -161,6 +161,7 @@ public class FinishedfFragment extends Fragment {
                                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
+                                                //TODO tesztelni hogy miért mindig falset ad a milk meat flour ra
                                                 SetParams();
                                                 //lista létrehozása hogy csak két adatot tároljunk a  hozzávalókban
                                                 List<FinishedFoodIngredient> hozzavalok = new ArrayList<>();

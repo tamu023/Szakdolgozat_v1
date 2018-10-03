@@ -21,7 +21,7 @@
         android:enabled="false"
         android:gravity="center"
         android:hint="> 0"
-        android:inputType="number" />
+        android:inputType="numberDecimal" />
 
     <TextView
         android:id="@+id/storageitemTxtUnit"

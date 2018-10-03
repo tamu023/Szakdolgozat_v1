@@ -43,8 +43,7 @@ public class AdminPanelFragment extends Fragment {
         btnPendingFinished.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO elkészíteni a pending finishedhez a listát és a fragmentet
-
+                ChangeFragment(R.id.mainframeplace,new AdminPenFinishedIngredientFragment());
             }
         });
 
@@ -58,7 +57,7 @@ public class AdminPanelFragment extends Fragment {
         btnFinished.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChangeFragment(R.id.mainframeplace,new AdminFinishedIngredientFragment());
+                //TODO elkészíteni a finishedhez a listát és a fragmentet
             }
         });
 

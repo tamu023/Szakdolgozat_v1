@@ -46,6 +46,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="#ff0000"
                 android:gravity="center"
                 android:text="Flour" />
 
@@ -54,6 +55,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="#ff0000"
                 android:gravity="center"
                 android:text="Milk" />
 
@@ -62,6 +64,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="#ff0000"
                 android:gravity="center"
                 android:text="Meat" />
 
@@ -88,8 +91,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="X"
             android:background="#a40500"
+            android:text="X"
             android:textColor="#ffffff" />
 
     </LinearLayout>
