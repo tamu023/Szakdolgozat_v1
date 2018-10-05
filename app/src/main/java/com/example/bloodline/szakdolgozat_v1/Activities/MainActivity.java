@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_newmeal) {
             ChangeFragment(R.id.mainframeplace, new NewMealFragment());
         } else if (id==R.id.nav_prepare_now) {
-            //TODO elkészíteni ezt a fragmentet itemmel adapterrel együtt
+            //TODO elkészíteni ezt a fragmentet itemmel adapterrel együtt.
         } else if (id == R.id.nav_profile) {
             ChangeFragment(R.id.mainframeplace, new ProfileFragment());
         } else if (id == R.id.nav_storage) {
