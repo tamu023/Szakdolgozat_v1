@@ -17,7 +17,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/itmAdmFinTxtName"
+                android:id="@+id/itmAdmPenFinTxtName"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
@@ -26,7 +26,7 @@
                 android:textSize="30sp" />
 
             <TextView
-                android:id="@+id/itmAdmFinTxtKcal"
+                android:id="@+id/itmAdmPenFinTxtKcal"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -42,7 +42,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/itmAdmFinTxtFlour"
+                android:id="@+id/itmAdmPenFinTxtFlour"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -51,7 +51,7 @@
                 android:text="Flour" />
 
             <TextView
-                android:id="@+id/itmAdmFinTxtMilk"
+                android:id="@+id/itmAdmPenFinTxtMilk"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -60,7 +60,7 @@
                 android:text="Milk" />
 
             <TextView
-                android:id="@+id/itmAdmFinTxtMeat"
+                android:id="@+id/itmAdmPenFinTxtMeat"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -78,7 +78,7 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/itmAdmFinBtnOk"
+            android:id="@+id/itmAdmPenFinBtnOk"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -87,7 +87,7 @@
             android:textColor="#ffffff" />
 
         <Button
-            android:id="@+id/itmAdmFinBtnDecline"
+            android:id="@+id/itmAdmPenFinBtnDecline"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"

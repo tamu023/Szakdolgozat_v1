@@ -58,7 +58,6 @@ public class ProfileFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_profile, null);
     }
 
-    //TODO folytatni a profil kinézetét
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

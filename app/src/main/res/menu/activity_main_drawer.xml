@@ -5,6 +5,9 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_prepare_now"
+            android:title="Prepare NoW" />
+        <item
             android:id="@+id/nav_newmeal"
             android:title="New Meal" />
         <item

@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         //ellenörzi hogy van e internet elérés ha a felhasználó lerakta tálcára az alkalmazást és folytatná a munkamenetet
-        if (!isNetworkAvailable()){
+        if (!isNetworkAvailable()) {
             Functions.clearAccdata();
             Toast.makeText(MainActivity.this, "Network error.", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -105,6 +105,8 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_newmeal) {
             ChangeFragment(R.id.mainframeplace, new NewMealFragment());
+        } else if (id==R.id.nav_prepare_now) {
+            //TODO elkészíteni ezt a fragmentet itemmel adapterrel együtt
         } else if (id == R.id.nav_profile) {
             ChangeFragment(R.id.mainframeplace, new ProfileFragment());
         } else if (id == R.id.nav_storage) {

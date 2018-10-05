@@ -57,13 +57,13 @@ public class PendingRawIngredientAdapter extends ArrayAdapter<AddProducts> {
 
         txtName.setText(rawIngredient.getMegnevezes());
         if (rawIngredient.getFlour()) {
-            txtFlour.setBackgroundColor(0xFFFF4A4D);
+            txtFlour.setBackgroundColor(0xFF5EFF66);
         }
         if (rawIngredient.getMilk()) {
-            txtMilk.setBackgroundColor(0xFFFF4A4D);
+            txtMilk.setBackgroundColor(0xFF5EFF66);
         }
         if (rawIngredient.getMeat()) {
-            txtMeat.setBackgroundColor(0xFFFF4A4D);
+            txtMeat.setBackgroundColor(0xFF5EFF66);
         }
 
         btnMod.setOnClickListener(new View.OnClickListener() {

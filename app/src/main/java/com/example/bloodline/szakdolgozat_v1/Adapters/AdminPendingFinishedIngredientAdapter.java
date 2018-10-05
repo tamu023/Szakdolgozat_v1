@@ -46,13 +46,13 @@ public class AdminPendingFinishedIngredientAdapter extends ArrayAdapter<Finished
         View view = inflater.inflate(resource, null);
         final FinishedFood finishedFood = finishedFoodList.get(position);
 
-        TextView txtName = view.findViewById(R.id.itmAdmFinTxtName);
-        TextView txtKcal = view.findViewById(R.id.itmAdmFinTxtKcal);
-        TextView txtFlour = view.findViewById(R.id.itmAdmFinTxtFlour);
-        TextView txtMilk = view.findViewById(R.id.itmAdmFinTxtMilk);
-        TextView txtMeat = view.findViewById(R.id.itmAdmFinTxtMeat);
-        Button btnAdd = view.findViewById(R.id.itmAdmFinBtnOk);
-        Button btnDecline = view.findViewById(R.id.itmAdmFinBtnDecline);
+        TextView txtName = view.findViewById(R.id.itmAdmPenFinTxtName);
+        TextView txtKcal = view.findViewById(R.id.itmAdmPenFinTxtKcal);
+        TextView txtFlour = view.findViewById(R.id.itmAdmPenFinTxtFlour);
+        TextView txtMilk = view.findViewById(R.id.itmAdmPenFinTxtMilk);
+        TextView txtMeat = view.findViewById(R.id.itmAdmPenFinTxtMeat);
+        Button btnAdd = view.findViewById(R.id.itmAdmPenFinBtnOk);
+        Button btnDecline = view.findViewById(R.id.itmAdmPenFinBtnDecline);
 
         txtName.setText(finishedFood.getFoodname());
         txtKcal.setText(finishedFood.getCarb() + "Kcal");
@@ -146,7 +146,7 @@ public class AdminPendingFinishedIngredientAdapter extends ArrayAdapter<Finished
 
     private void setColors(boolean bl, TextView txt) {
         if (bl) {
-            txt.setBackgroundColor(0xFFFF4A4D);
+            txt.setBackgroundColor(0xFF5EFF66);
         }
     }
 }

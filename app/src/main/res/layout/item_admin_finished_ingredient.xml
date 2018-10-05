@@ -13,19 +13,26 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/itmRawTxtName"
-                android:layout_width="match_parent"
+                android:id="@+id/itmAdmFinTxtName"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="10sp"
-                android:layout_marginTop="10sp"
+                android:layout_weight="3"
                 android:gravity="center_vertical"
                 android:text="Name"
                 android:textSize="30sp" />
 
+            <TextView
+                android:id="@+id/itmAdmFinTxtKcal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Kcal"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -35,7 +42,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/itmRawTxtFluor"
+                android:id="@+id/itmAdmFinTxtFlour"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -44,7 +51,7 @@
                 android:text="Flour" />
 
             <TextView
-                android:id="@+id/itmRawTxtMilk"
+                android:id="@+id/itmAdmFinTxtMilk"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -53,7 +60,7 @@
                 android:text="Milk" />
 
             <TextView
-                android:id="@+id/itmRawTxtMeat"
+                android:id="@+id/itmAdmFinTxtMeat"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -63,4 +70,15 @@
 
         </LinearLayout>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/itmAdmFinBtnDecline"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#a40500"
+        android:text="X"
+        android:textColor="#ffffff" />
+
+
 </LinearLayout>

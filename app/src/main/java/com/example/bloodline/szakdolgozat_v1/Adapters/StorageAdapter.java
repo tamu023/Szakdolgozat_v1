@@ -3,6 +3,7 @@ package com.example.bloodline.szakdolgozat_v1.Adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,8 @@ public class StorageAdapter extends ArrayAdapter<AddProducts> {
         final EditText edtQuantity = view.findViewById(R.id.storageitemEdtQuantity);
         Button btnMod = view.findViewById(R.id.storageitemBtnMod);
         Button btnDelete = view.findViewById(R.id.storageitemBtnDelete);
+        //TODO Tesztelni hogy nem hozza e be a másik billentyűzetet és buggol be, ha működik a többi helyen is átállítani
+        edtQuantity.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
         String seged = " ";
         if (storageItem.getUnit()) {
@@ -55,18 +58,23 @@ public class StorageAdapter extends ArrayAdapter<AddProducts> {
         txtName.setText(storageItem.getMegnevezes());
         edtQuantity.setText(storageItem.getQuantity() + "");
         txtUnit.setText(seged);
-        //TODO Tesztelni
+
         btnMod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (edtQuantity.isEnabled()) {
                     Firebase ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("storage").child(storageItem.getMegnevezes()).child("quantity");
-                    if (Double.parseDouble(edtQuantity.getText().toString()) > 0 && !edtQuantity.getText().toString().isEmpty()) {
-                        ref.setValue(Double.parseDouble(edtQuantity.getText().toString()));
-                        Toast.makeText(getContext(), storageItem.getMegnevezes() + "quantity has changed", Toast.LENGTH_SHORT).show();
+                    if (!edtQuantity.getText().toString().isEmpty()) {
+                        if (Double.parseDouble(edtQuantity.getText().toString()) > 0) {
+                            ref.setValue(Double.parseDouble(edtQuantity.getText().toString()));
+                            Toast.makeText(getContext(), storageItem.getMegnevezes() + "quantity has changed", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), "Please fill with number higher than zero.", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(getContext(),"Please fill with number higher than zero.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Please fill with number higher than zero.", Toast.LENGTH_SHORT).show();
                     }
+
                     edtQuantity.setEnabled(false);
                 } else {
                     edtQuantity.setEnabled(true);
