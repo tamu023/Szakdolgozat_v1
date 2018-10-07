@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_prepare_now"
-            android:title="Prepare NoW" />
+            android:title="Prepare Now" />
         <item
             android:id="@+id/nav_newmeal"
             android:title="New Meal" />

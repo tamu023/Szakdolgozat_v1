@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.bloodline.szakdolgozat_v1.Fragments.AdminPanelFragment;
 import com.example.bloodline.szakdolgozat_v1.Classes.Functions;
 import com.example.bloodline.szakdolgozat_v1.Fragments.NewMealFragment;
+import com.example.bloodline.szakdolgozat_v1.Fragments.PrepareNowFragment;
 import com.example.bloodline.szakdolgozat_v1.Fragments.ProductTypeFragment;
 import com.example.bloodline.szakdolgozat_v1.Fragments.ProfileFragment;
 import com.example.bloodline.szakdolgozat_v1.Fragments.ShoppingListFragment;
@@ -105,8 +106,8 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_newmeal) {
             ChangeFragment(R.id.mainframeplace, new NewMealFragment());
-        } else if (id==R.id.nav_prepare_now) {
-            //TODO elkészíteni ezt a fragmentet itemmel adapterrel együtt.
+        } else if (id == R.id.nav_prepare_now) {
+            ChangeFragment(R.id.mainframeplace, new PrepareNowFragment());
         } else if (id == R.id.nav_profile) {
             ChangeFragment(R.id.mainframeplace, new ProfileFragment());
         } else if (id == R.id.nav_storage) {
