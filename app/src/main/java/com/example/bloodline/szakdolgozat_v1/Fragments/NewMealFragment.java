@@ -75,7 +75,7 @@ public class NewMealFragment extends Fragment {
         editor.putInt("Adag", 1);
         editor.apply();
 
-        //storageból kiolvassa a megnevezést és a hozzá tartozó mértékegységet, hogy továbbadhassa az adapternek
+        //raw food listből kiolvassa a megnevezést és a hozzá tartozó mértékegységet, hogy továbbadhassa az adapternek
         ref = new Firebase(Global_Vars.rawProdRef);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

@@ -58,7 +58,6 @@ public class FinishedfFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        //TODO folytatni a kinézet kialakítását
         super.onViewCreated(view, savedInstanceState);
 
         Button btnAdd = view.findViewById(R.id.finBtnAdd);

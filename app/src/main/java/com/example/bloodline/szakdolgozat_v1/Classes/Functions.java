@@ -7,6 +7,8 @@ import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.text.DecimalFormat;
+
 public class Functions {
     //nem szabad int-et használni mert Firebase long-ként tárolja a számokat
     private static String email;
@@ -207,7 +209,6 @@ public class Functions {
                         ref.child(masodikszint.getKey()).removeValue();
                     }
                 }
-
             }
 
             @Override

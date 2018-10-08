@@ -29,7 +29,7 @@ public class PrepareNowFragment extends Fragment {
 
     private List<FinishedFood> finishedFoodList;
     private ListView listView;
-    private List<AddProducts> rawFoodList;
+    private List<AddProducts> storageList;
     private List<FinishedFoodIngredient> ingredientList;
     private Firebase ref;
     private List<Double> maxPortionList;
@@ -48,7 +48,7 @@ public class PrepareNowFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         listView = view.findViewById(R.id.listPrepareNow);
         finishedFoodList = new ArrayList<>();
-        rawFoodList = new ArrayList<>();
+        storageList = new ArrayList<>();
         maxPortionList = new ArrayList<>();
 
         //felhasználó raktára
@@ -57,7 +57,7 @@ public class PrepareNowFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {
-                    rawFoodList.add(new AddProducts((String) elsoszint.child("megnevezes").getValue(), (boolean) elsoszint.child("unit").getValue(), (double) elsoszint.child("quantity").getValue()));
+                    storageList.add(new AddProducts((String) elsoszint.child("megnevezes").getValue(), (boolean) elsoszint.child("unit").getValue(), (double) elsoszint.child("quantity").getValue()));
                 }
                 //készételek kiolvasása
                 ref = new Firebase(Global_Vars.finProdRef);
@@ -74,8 +74,8 @@ public class PrepareNowFragment extends Fragment {
                             for (int j = 0; j < ingredientList.size(); j++) {
                                 ok = false;
                                 FinishedFoodIngredient ingredientcheck = ingredientList.get(j);
-                                for (int i = 0; i < rawFoodList.size(); i++) {
-                                    AddProducts check = rawFoodList.get(i);
+                                for (int i = 0; i < storageList.size(); i++) {
+                                    AddProducts check = storageList.get(i);
                                     //egyezik e a termék neve
                                     if (check.getMegnevezes().equals(ingredientcheck.getMegnevezes())) {
                                         //mennyiség elegendő e
@@ -102,7 +102,7 @@ public class PrepareNowFragment extends Fragment {
                                 //adapter
                                 maxPortionList.add(maxPortion);
                                 finishedFoodList.add(new FinishedFood(elsoszint.getKey(), (long) elsoszint.child("carb").getValue(), (boolean) elsoszint.child("flour").getValue(), (boolean) elsoszint.child("milk").getValue(), (boolean) elsoszint.child("meat").getValue(), (String) elsoszint.child("recipe").getValue(), (double) elsoszint.child("preptime").getValue(), ingredientList));
-                                PrepareNowAdapter adapter = new PrepareNowAdapter(getActivity().getApplicationContext(), R.layout.item_prepare_now, finishedFoodList, rawFoodList, maxPortionList);
+                                PrepareNowAdapter adapter = new PrepareNowAdapter(getActivity().getApplicationContext(), R.layout.item_prepare_now, finishedFoodList, storageList, maxPortionList);
                                 listView.setAdapter(adapter);
                             }
                         }

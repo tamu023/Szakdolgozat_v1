@@ -79,7 +79,6 @@ public class StorageItemAddAdapter extends ArrayAdapter<AddProducts> {
                 if (!edtQuantity.getText().toString().isEmpty() && !edtQuantity.getText().toString().equals("0")) {
                     //Beírt összeg átváltása, Solid esetén Kilogrammra ra Liquid esetén Literre
                     //TODO tesztelni mert valamit nagyon nem számol jól amikor márlétezőhöz adok hozzá (b jelű alapanyagnál)
-                    //TODO többi listához is Toast okat hozzáadni hogy informatívabb legyen egy egy sikeres művelet
                     exchangedQuantity = Functions.calcExchangeUnit(unit,spnUnit.getSelectedItem().toString(),edtQuantity.getText().toString());
 
                     ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("storage");

@@ -1,6 +1,10 @@
 package com.example.bloodline.szakdolgozat_v1.Adapters;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -18,6 +22,7 @@ import com.example.bloodline.szakdolgozat_v1.Classes.AddProducts;
 import com.example.bloodline.szakdolgozat_v1.Classes.FinishedFood;
 import com.example.bloodline.szakdolgozat_v1.Classes.Functions;
 import com.example.bloodline.szakdolgozat_v1.Classes.Global_Vars;
+import com.example.bloodline.szakdolgozat_v1.Fragments.RecipeFragment;
 import com.example.bloodline.szakdolgozat_v1.R;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -139,9 +144,18 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
                                                         }
                                                     }
                                                     dialog.cancel();
+                                                    SharedPreferences prefs = parent.getContext().getSharedPreferences("recept", Context.MODE_PRIVATE);
+                                                    SharedPreferences.Editor editor = prefs.edit();
+                                                    editor.putString("recept", newmealItem.getRecipe());
+                                                    editor.apply();
+                                                    Fragment startfragment = new RecipeFragment();
+                                                    Context context = parent.getContext();
+                                                    FragmentManager fm = ((Activity) context).getFragmentManager();
+                                                    FragmentTransaction ft = fm.beginTransaction();
+                                                    ft.replace(R.id.mainframeplace, startfragment);
+                                                    ft.commit();
                                                 }
 
-                                                //TODO fragmens készítése amelyen egész oldalon a recept látható és oda betöltés
                                                 @Override
                                                 public void onCancelled(FirebaseError firebaseError) {
 
