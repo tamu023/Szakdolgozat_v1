@@ -98,36 +98,40 @@ public class PrepareNowAdapter extends ArrayAdapter<FinishedFood> {
                 builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        int portion = Integer.parseInt(input.getText().toString());
-                        if (portion > 0 && portion <= (int) Math.floor(maxPortion)) {
-                            //TODO megadott adag alapján levonni a storageból az elkészíteni kívánt mennyiséget
-                            ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("storage");
-                            for (int i = 0; i < prepareNowItem.getIngredientList().size(); i++) {
-                                FinishedFoodIngredient hozzavalo = prepareNowItem.getIngredientList().get(i);
-                                for (int j = 0; j < storageList.size(); j++) {
-                                    AddProducts raktarItem = storageList.get(i);
-                                    if (hozzavalo.getMegnevezes().equals(raktarItem.getMegnevezes())) {
-                                        double newQuantity = raktarItem.getQuantity() - portion * hozzavalo.getMennyiseg();
-                                        if (newQuantity != 0) {
-                                            ref.child(hozzavalo.getMegnevezes()).child("quantity").setValue(BigDecimal.valueOf(newQuantity).setScale(4, RoundingMode.CEILING));
-                                            break;
-                                        } else {
-                                            ref.child(hozzavalo.getMegnevezes()).removeValue();
-                                            break;
+                        if (!input.getText().toString().isEmpty()) {
+                            int portion = Integer.parseInt(input.getText().toString());
+                            if (portion > 0 && portion <= (int) Math.floor(maxPortion)) {
+                                ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("storage");
+                                for (int i = 0; i < prepareNowItem.getIngredientList().size(); i++) {
+                                    FinishedFoodIngredient hozzavalo = prepareNowItem.getIngredientList().get(i);
+                                    for (int j = 0; j < storageList.size(); j++) {
+                                        AddProducts raktarItem = storageList.get(i);
+                                        if (hozzavalo.getMegnevezes().equals(raktarItem.getMegnevezes())) {
+                                            double newQuantity = raktarItem.getQuantity() - portion * hozzavalo.getMennyiseg();
+                                            if (newQuantity != 0) {
+                                                ref.child(hozzavalo.getMegnevezes()).child("quantity").setValue(BigDecimal.valueOf(newQuantity).setScale(4, RoundingMode.CEILING));
+                                                break;
+                                            } else {
+                                                ref.child(hozzavalo.getMegnevezes()).removeValue();
+                                                break;
+                                            }
                                         }
                                     }
                                 }
+                                Fragment startfragment = new RecipeFragment();
+                                Context context = parent.getContext();
+                                FragmentManager fm = ((Activity) context).getFragmentManager();
+                                FragmentTransaction ft = fm.beginTransaction();
+                                ft.replace(R.id.mainframeplace, startfragment);
+                                ft.commit();
+                                dialog.cancel();
+                            } else {
+                                Toast.makeText(getContext(), "Invalid Portion", Toast.LENGTH_SHORT).show();
                             }
-                            Fragment startfragment = new RecipeFragment();
-                            Context context = parent.getContext();
-                            FragmentManager fm = ((Activity) context).getFragmentManager();
-                            FragmentTransaction ft = fm.beginTransaction();
-                            ft.replace(R.id.mainframeplace, startfragment);
-                            ft.commit();
-                            dialog.cancel();
                         } else {
                             Toast.makeText(getContext(), "Invalid Portion", Toast.LENGTH_SHORT).show();
                         }
+
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

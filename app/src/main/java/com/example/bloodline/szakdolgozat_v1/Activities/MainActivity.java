@@ -33,8 +33,6 @@ import com.example.bloodline.szakdolgozat_v1.R;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    //TODO átlátszó hátteret találni az activityre
-    //TODO circle loading bart beilleszteni mindenhova ahol olvasási vagy írási Firebase művelet van
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

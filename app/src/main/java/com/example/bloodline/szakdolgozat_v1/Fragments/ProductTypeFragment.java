@@ -15,8 +15,7 @@ import com.example.bloodline.szakdolgozat_v1.R;
 
 
 public class ProductTypeFragment extends Fragment {
-    //TODO Alapanyagra utaló képet szöveggel beilleszteni a bal gombra
-    //TODO Kész ételre utaló képet szöveggel beilleszteni a jobb gombra
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -14,12 +14,14 @@
         android:id="@+id/addRaw"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:background="@mipmap/raw_food" />
 
     <ImageButton
         android:id="@+id/addFinished"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:background="@mipmap/prepared_food"/>
 
 </LinearLayout>
