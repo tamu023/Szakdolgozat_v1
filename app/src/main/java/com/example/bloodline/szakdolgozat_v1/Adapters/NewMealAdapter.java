@@ -29,6 +29,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -135,8 +137,9 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
                                                 @Override
                                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                                     for (int i = 0; i < alterStorageList.size(); i++) {
+
                                                         AddProducts change = alterStorageList.get(i);
-                                                        if (change.getQuantity() == 0) {
+                                                        if (change.getQuantity() ==0) {
                                                             ref.child(change.getMegnevezes()).removeValue();
                                                         } else {
                                                             ref.child(change.getMegnevezes()).setValue(change);
@@ -193,10 +196,11 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
                                                         if (exist) {
                                                             AddProducts add = shoppingList.get(i);
                                                             double currQuantity = (double) dataSnapshot.child(add.getMegnevezes()).child("quantity").getValue();
-                                                            ref.child(add.getMegnevezes()).child("quantity").setValue(currQuantity + add.getQuantity());
+                                                            ref.child(add.getMegnevezes()).child("quantity").setValue(BigDecimal.valueOf(currQuantity + add.getQuantity()).setScale(3, RoundingMode.CEILING));
                                                         } else {
                                                             AddProducts add = shoppingList.get(i);
                                                             ref.child(add.getMegnevezes()).setValue(add);
+                                                            ref.child(add.getMegnevezes()).child("quantity").setValue(BigDecimal.valueOf(add.getQuantity()).setScale(3, RoundingMode.CEILING));
                                                             Functions.cleanPath(add.getMegnevezes(), "shopping list");
                                                         }
                                                     }

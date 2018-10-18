@@ -37,8 +37,7 @@ public class PrepareNowAdapter extends ArrayAdapter<FinishedFood> {
     private Context context;
     private int resource;
     private List<AddProducts> storageList;
-    private List<FinishedFood> prepareNowList;
-    private List<AddProducts> alterStorageList;
+    private List<FinishedFood> prepareNowList;;
     private Firebase ref;
     private List<Double> maxPortionList;
 
@@ -109,7 +108,7 @@ public class PrepareNowAdapter extends ArrayAdapter<FinishedFood> {
                                         if (hozzavalo.getMegnevezes().equals(raktarItem.getMegnevezes())) {
                                             double newQuantity = raktarItem.getQuantity() - portion * hozzavalo.getMennyiseg();
                                             if (newQuantity != 0) {
-                                                ref.child(hozzavalo.getMegnevezes()).child("quantity").setValue(BigDecimal.valueOf(newQuantity).setScale(4, RoundingMode.CEILING));
+                                                ref.child(hozzavalo.getMegnevezes()).child("quantity").setValue(BigDecimal.valueOf(newQuantity).setScale(3, RoundingMode.CEILING));
                                                 break;
                                             } else {
                                                 ref.child(hozzavalo.getMegnevezes()).removeValue();

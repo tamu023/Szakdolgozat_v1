@@ -20,6 +20,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 public class ShoppingListAdapter extends ArrayAdapter<AddProducts> {
@@ -74,8 +76,13 @@ public class ShoppingListAdapter extends ArrayAdapter<AddProducts> {
             @Override
             public void onClick(View v) {
                 if (shopItem.getQuantity() > 1) {
-                    shopItem.setQuantity(shopItem.getQuantity() - 1);
-                    txtQuantity.setText(shopItem.getQuantity() + " " + unit);
+                    if (shopItem.getQuantity() - Math.floor(shopItem.getQuantity()) != 0) {
+                        shopItem.setQuantity(Math.floor(shopItem.getQuantity()));
+                        txtQuantity.setText(shopItem.getQuantity() + " " + unit);
+                    } else {
+                        shopItem.setQuantity(shopItem.getQuantity() - 1);
+                        txtQuantity.setText(shopItem.getQuantity() + " " + unit);
+                    }
                 }
             }
         });
@@ -83,8 +90,13 @@ public class ShoppingListAdapter extends ArrayAdapter<AddProducts> {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shopItem.setQuantity(shopItem.getQuantity() + 1);
-                txtQuantity.setText(shopItem.getQuantity() + " " + unit);
+                if (shopItem.getQuantity() - Math.floor(shopItem.getQuantity()) != 0) {
+                    shopItem.setQuantity(Math.ceil(shopItem.getQuantity()));
+                    txtQuantity.setText(shopItem.getQuantity() + " " + unit);
+                } else {
+                    shopItem.setQuantity(shopItem.getQuantity() + 1);
+                    txtQuantity.setText(shopItem.getQuantity() + " " + unit);
+                }
             }
         });
 
@@ -104,14 +116,41 @@ public class ShoppingListAdapter extends ArrayAdapter<AddProducts> {
                             }
                         }
                         if (quantity != 0) {
-                            ref.child(shopItem.getMegnevezes()).child("quantity").setValue(shopItem.getQuantity() + quantity);
+                            ref.child(shopItem.getMegnevezes()).child("quantity").setValue(BigDecimal.valueOf(shopItem.getQuantity() + quantity).setScale(3, RoundingMode.CEILING));
                         } else {
-                            AddProducts uj = new AddProducts(shopItem.getMegnevezes(),shopItem.getUnit(),shopItem.getQuantity());
+                            AddProducts uj = new AddProducts(shopItem.getMegnevezes(), shopItem.getUnit(), shopItem.getQuantity());
                             ref.child(shopItem.getMegnevezes()).setValue(uj);
+                            ref.child(shopItem.getMegnevezes()).child("quantity").setValue(BigDecimal.valueOf(shopItem.getQuantity()).setScale(3, RoundingMode.CEILING));
                         }
-                        //törli az olyan childokat amelyek fölöslegesen vannak benne
-                        Functions.cleanPath(shopItem.getMegnevezes(),"storage");
-                        Toast.makeText(getContext(), shopItem.getMegnevezes() + " added to Storage", Toast.LENGTH_SHORT).show();
+                        //Statisztikába való beírás
+                        ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("statistics");
+                        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                quantity = 0;
+                                for (DataSnapshot elsoszint : dataSnapshot.getChildren()) {
+                                    if (elsoszint.getKey().equals(shopItem.getMegnevezes())) {
+                                        quantity = (double) elsoszint.child("quantity").getValue();
+                                    }
+                                }
+                                //TODO teszt
+                                if (quantity != 0) {
+                                    ref.child(shopItem.getMegnevezes()).child("quantity").setValue(BigDecimal.valueOf(shopItem.getQuantity() + quantity).setScale(3, RoundingMode.CEILING));
+                                } else {
+                                    ref.child(shopItem.getMegnevezes()).child("quantity").setValue(BigDecimal.valueOf(shopItem.getQuantity()).setScale(3, RoundingMode.CEILING));
+                                    ref.child(shopItem.getMegnevezes()).child("unit").setValue(shopItem.getUnit());
+                                }
+                                Functions.cleanPath(shopItem.getMegnevezes(), "statistics");
+                                //törli az olyan childokat amelyek fölöslegesen vannak benne
+                                Functions.cleanPath(shopItem.getMegnevezes(), "storage");
+                                Toast.makeText(getContext(), shopItem.getMegnevezes() + " added to Storage", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+
+                            }
+                        });
                     }
 
                     @Override

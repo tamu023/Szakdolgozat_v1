@@ -27,6 +27,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 public class StorageItemAddAdapter extends ArrayAdapter<AddProducts> {
@@ -78,7 +80,6 @@ public class StorageItemAddAdapter extends ArrayAdapter<AddProducts> {
             public void onClick(View v) {
                 if (!edtQuantity.getText().toString().isEmpty() && !edtQuantity.getText().toString().equals("0")) {
                     //Beírt összeg átváltása, Solid esetén Kilogrammra ra Liquid esetén Literre
-                    //TODO tesztelni mert valamit nagyon nem számol jól amikor márlétezőhöz adok hozzá (b jelű alapanyagnál)
                     exchangedQuantity = Functions.calcExchangeUnit(unit,spnUnit.getSelectedItem().toString(),edtQuantity.getText().toString());
 
                     ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("storage");
@@ -98,6 +99,7 @@ public class StorageItemAddAdapter extends ArrayAdapter<AddProducts> {
                                 exchangedQuantity = storageQuantity + exchangedQuantity;
                                 AddProducts uj = new AddProducts(storageAddItem.getMegnevezes(), storageAddItem.getUnit(), exchangedQuantity);
                                 ref.child(storageAddItem.getMegnevezes()).setValue(uj);
+                                ref.child(storageAddItem.getMegnevezes()).child("quantity").setValue(BigDecimal.valueOf(exchangedQuantity).setScale(3, RoundingMode.CEILING));
                             } else {
                                 AddProducts uj = new AddProducts(storageAddItem.getMegnevezes(), storageAddItem.getUnit(), exchangedQuantity);
                                 ref.child(storageAddItem.getMegnevezes()).setValue(uj);

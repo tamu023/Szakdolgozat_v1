@@ -27,6 +27,10 @@
             android:icon="@drawable/add_food"
             android:title="Add Food" />
         <item
+            android:id="@+id/nav_statistic"
+            android:icon="@drawable/icon_statistics"
+            android:title="Statistics" />
+        <item
             android:id="@+id/nav_verify"
             android:icon="@drawable/admin_panel"
             android:title="Admin Panel" />

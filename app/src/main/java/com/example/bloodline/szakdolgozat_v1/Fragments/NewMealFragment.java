@@ -237,6 +237,8 @@ public class NewMealFragment extends Fragment {
                 });
             }
         });
+        //betöltéskor azonal hozzon listát
+        btnSearch.performClick();
 
     }
 
