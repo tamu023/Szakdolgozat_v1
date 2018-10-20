@@ -37,17 +37,20 @@ public class PrepareNowAdapter extends ArrayAdapter<FinishedFood> {
     private Context context;
     private int resource;
     private List<AddProducts> storageList;
-    private List<FinishedFood> prepareNowList;;
+    private List<FinishedFood> prepareNowList;
     private Firebase ref;
     private List<Double> maxPortionList;
+    private List<Long> prepCountList;
+    private long prepCount;
 
-    public PrepareNowAdapter(@NonNull Context context, int resource, List<FinishedFood> prepareNowList, List<AddProducts> storageList, List<Double> maxPortionList) {
+    public PrepareNowAdapter(@NonNull Context context, int resource, List<FinishedFood> prepareNowList, List<AddProducts> storageList, List<Double> maxPortionList, List<Long> prepCountList) {
         super(context, resource, prepareNowList);
         this.context = context;
         this.resource = resource;
         this.prepareNowList = prepareNowList;
         this.storageList = storageList;
         this.maxPortionList = maxPortionList;
+        this.prepCountList = prepCountList;
     }
 
     @NonNull
@@ -57,6 +60,7 @@ public class PrepareNowAdapter extends ArrayAdapter<FinishedFood> {
         View view = inflater.inflate(resource, null);
         final FinishedFood prepareNowItem = prepareNowList.get(position);
         final double maxPortion = maxPortionList.get(position);
+        prepCount = prepCountList.get(position);
 
         LinearLayout linButton = view.findViewById(R.id.itmPrepNowLin);
         TextView txtName = view.findViewById(R.id.itmPrepNowTxtName);
@@ -85,10 +89,16 @@ public class PrepareNowAdapter extends ArrayAdapter<FinishedFood> {
         linButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //recept SharedPreference
                 SharedPreferences prefs = parent.getContext().getSharedPreferences("recept", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString("recept", prepareNowItem.getRecipe());
                 editor.apply();
+                //food name SharedPreference
+                SharedPreferences foodpref = parent.getContext().getSharedPreferences("foodname", Context.MODE_PRIVATE);
+                SharedPreferences.Editor foodeditor = foodpref.edit();
+                foodeditor.putString("foodname", prepareNowItem.getFoodname());
+                foodeditor.apply();
                 AlertDialog.Builder builder = new AlertDialog.Builder(parent.getContext());
                 builder.setTitle("Set Portion: Min 1, Max  " + (int) Math.floor(maxPortion));
                 final EditText input = new EditText(parent.getContext());
@@ -117,6 +127,9 @@ public class PrepareNowAdapter extends ArrayAdapter<FinishedFood> {
                                         }
                                     }
                                 }
+                                prepCount = prepCount + 1;
+                                ref = new Firebase(Global_Vars.finProdRef).child(prepareNowItem.getFoodname()).child("prepcount");
+                                ref.setValue(prepCount);
                                 Fragment startfragment = new RecipeFragment();
                                 Context context = parent.getContext();
                                 FragmentManager fm = ((Activity) context).getFragmentManager();

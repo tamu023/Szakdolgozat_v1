@@ -23,6 +23,10 @@
             android:icon="@drawable/shopping_cart"
             android:title="Shopping List" />
         <item
+            android:id="@+id/nav_recipebrowser"
+            android:icon="@drawable/recipe_browser"
+            android:title="Recipe Browser" />
+        <item
             android:id="@+id/nav_addfood"
             android:icon="@drawable/add_food"
             android:title="Add Food" />

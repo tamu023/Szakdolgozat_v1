@@ -4,17 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragments.StatisticsFragment">
+    tools:context=".Fragments.RecipeBrowserFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Shopping Statistics"
+        android:text="Recipe Browser"
         android:textSize="30sp" />
 
     <ListView
-        android:id="@+id/listStatistics"
+        android:id="@+id/listRecipeBrowser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

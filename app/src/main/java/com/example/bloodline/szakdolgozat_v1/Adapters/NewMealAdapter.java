@@ -42,16 +42,18 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
     private List<AddProducts> storageList;
     private List<AddProducts> shoppingList;
     private List<AddProducts> alterStorageList;
+    private List<Long> prepCountList;
+    private long prepCount;
     private Firebase ref;
     private boolean exist;
 
-    public NewMealAdapter(@NonNull Context context, int resource, List<FinishedFood> newmealList, List<AddProducts> rawFoodList) {
+    public NewMealAdapter(@NonNull Context context, int resource, List<FinishedFood> newmealList, List<AddProducts> rawFoodList, List<Long> prepCountList) {
         super(context, resource, newmealList);
         this.context = context;
         this.resource = resource;
         this.newmealList = newmealList;
         this.rawFoodList = rawFoodList;
-
+        this.prepCountList = prepCountList;
     }
 
     @NonNull
@@ -60,6 +62,7 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(resource, null);
         final FinishedFood newmealItem = newmealList.get(position);
+        prepCount = prepCountList.get(position);
 
         TextView txtName = view.findViewById(R.id.itmNewMTxtName);
         TextView txtKcal = view.findViewById(R.id.itmNewMTxtKcal);
@@ -139,7 +142,7 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
                                                     for (int i = 0; i < alterStorageList.size(); i++) {
 
                                                         AddProducts change = alterStorageList.get(i);
-                                                        if (change.getQuantity() ==0) {
+                                                        if (change.getQuantity() == 0) {
                                                             ref.child(change.getMegnevezes()).removeValue();
                                                         } else {
                                                             ref.child(change.getMegnevezes()).setValue(change);
@@ -147,10 +150,19 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
                                                         }
                                                     }
                                                     dialog.cancel();
+                                                    //recept Shared Preferences
                                                     SharedPreferences prefs = parent.getContext().getSharedPreferences("recept", Context.MODE_PRIVATE);
                                                     SharedPreferences.Editor editor = prefs.edit();
                                                     editor.putString("recept", newmealItem.getRecipe());
                                                     editor.apply();
+                                                    //food name SharedPreference
+                                                    SharedPreferences foodpref = parent.getContext().getSharedPreferences("foodname", Context.MODE_PRIVATE);
+                                                    SharedPreferences.Editor foodeditor = foodpref.edit();
+                                                    foodeditor.putString("foodname", newmealItem.getFoodname());
+                                                    foodeditor.apply();
+                                                    prepCount = prepCount + 1;
+                                                    ref = new Firebase(Global_Vars.finProdRef).child(newmealItem.getFoodname()).child("prepcount");
+                                                    ref.setValue(prepCount);
                                                     Fragment startfragment = new RecipeFragment();
                                                     Context context = parent.getContext();
                                                     FragmentManager fm = ((Activity) context).getFragmentManager();

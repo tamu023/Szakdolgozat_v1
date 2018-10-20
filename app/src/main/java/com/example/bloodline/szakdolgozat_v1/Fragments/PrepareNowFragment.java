@@ -33,6 +33,7 @@ public class PrepareNowFragment extends Fragment {
     private List<FinishedFoodIngredient> ingredientList;
     private Firebase ref;
     private List<Double> maxPortionList;
+    private List<Long> prepCountList;
     private double maxPortion;
     private boolean ok;
 
@@ -50,6 +51,7 @@ public class PrepareNowFragment extends Fragment {
         finishedFoodList = new ArrayList<>();
         storageList = new ArrayList<>();
         maxPortionList = new ArrayList<>();
+        prepCountList = new ArrayList<>();
 
         //felhasználó raktára
         ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("storage");
@@ -100,9 +102,14 @@ public class PrepareNowFragment extends Fragment {
                             }
                             if (ok) {
                                 //adapter
+                                Long prepcount = (long) 0;
+                                if (elsoszint.child("prepcount").getValue() != null) {
+                                    prepcount = (long) elsoszint.child("prepcount").getValue();
+                                }
+                                prepCountList.add(prepcount);
                                 maxPortionList.add(maxPortion);
                                 finishedFoodList.add(new FinishedFood(elsoszint.getKey(), (long) elsoszint.child("carb").getValue(), (boolean) elsoszint.child("flour").getValue(), (boolean) elsoszint.child("milk").getValue(), (boolean) elsoszint.child("meat").getValue(), (String) elsoszint.child("recipe").getValue(), (double) elsoszint.child("preptime").getValue(), ingredientList));
-                                PrepareNowAdapter adapter = new PrepareNowAdapter(getActivity().getApplicationContext(), R.layout.item_prepare_now, finishedFoodList, storageList, maxPortionList);
+                                PrepareNowAdapter adapter = new PrepareNowAdapter(getActivity().getApplicationContext(), R.layout.item_prepare_now, finishedFoodList, storageList, maxPortionList, prepCountList);
                                 listView.setAdapter(adapter);
                             }
                         }

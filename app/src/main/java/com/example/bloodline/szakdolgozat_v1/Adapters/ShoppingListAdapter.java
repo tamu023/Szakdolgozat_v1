@@ -133,7 +133,6 @@ public class ShoppingListAdapter extends ArrayAdapter<AddProducts> {
                                         quantity = (double) elsoszint.child("quantity").getValue();
                                     }
                                 }
-                                //TODO teszt
                                 if (quantity != 0) {
                                     ref.child(shopItem.getMegnevezes()).child("quantity").setValue(BigDecimal.valueOf(shopItem.getQuantity() + quantity).setScale(3, RoundingMode.CEILING));
                                 } else {

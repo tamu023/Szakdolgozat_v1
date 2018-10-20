@@ -43,6 +43,7 @@ public class NewMealFragment extends Fragment {
     private ListView listView;
     private List<AddProducts> rawFoodList;
     private List<FinishedFoodIngredient> ingredientList;
+    private List<Long> prepCountList;
     private Firebase ref;
 
     @Override
@@ -59,6 +60,8 @@ public class NewMealFragment extends Fragment {
         listView = view.findViewById(R.id.newmealList);
         finishedFoodList = new ArrayList<>();
         rawFoodList = new ArrayList<>();
+        prepCountList = new ArrayList<>();
+
         final TextView txtFlour = view.findViewById(R.id.newmealTxtFlour);
         final TextView txtMilk = view.findViewById(R.id.newmealTxtMilk);
         final TextView txtMeat = view.findViewById(R.id.newmealTxtMeat);
@@ -182,7 +185,7 @@ public class NewMealFragment extends Fragment {
             public void onClick(View v) {
                 for (int i = finishedFoodList.size() - 1; i >= 0; i--) {
                     finishedFoodList.remove(i);
-                    NewMealAdapter adapter = new NewMealAdapter(getActivity().getApplicationContext(), R.layout.item_new_meal, finishedFoodList, rawFoodList);
+                    NewMealAdapter adapter = new NewMealAdapter(getActivity().getApplicationContext(), R.layout.item_new_meal, finishedFoodList, rawFoodList, prepCountList);
                     listView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
@@ -205,6 +208,12 @@ public class NewMealFragment extends Fragment {
                                 filFlour = flour;
                             }
                             if (filFlour == flour && filMeat == meat && filMilk == milk) {
+                                //TODO miért hoz NULL értéket amikor PrepareNow Fragmentben ugyanez felismeri
+                                Long prepcount = (long) 0;
+                                if (elsoszint.child("prepcount").getValue() != null) {
+                                    prepcount = (long) elsoszint.child("prepcount").getValue();
+                                }
+                                prepCountList.add(prepcount);
                                 //ingredientList beolvasása
                                 ref = new Firebase(Global_Vars.finProdRef).child(elsoszint.getKey()).child("ingredientList");
                                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -216,7 +225,7 @@ public class NewMealFragment extends Fragment {
                                             ingredientList.add(new FinishedFoodIngredient((String) masodikszint.child("megnevezes").getValue(), (double) masodikszint.child("mennyiseg").getValue()));
                                         }
                                         finishedFoodList.add(new FinishedFood(elsoszint.getKey(), (long) elsoszint.child("carb").getValue(), flour, milk, meat, (String) elsoszint.child("recipe").getValue(), (double) elsoszint.child("preptime").getValue(), ingredientList));
-                                        NewMealAdapter adapter = new NewMealAdapter(getActivity().getApplicationContext(), R.layout.item_new_meal, finishedFoodList, rawFoodList);
+                                        NewMealAdapter adapter = new NewMealAdapter(getActivity().getApplicationContext(), R.layout.item_new_meal, finishedFoodList, rawFoodList, prepCountList);
                                         listView.setAdapter(adapter);
                                         adapter.notifyDataSetChanged();
                                     }

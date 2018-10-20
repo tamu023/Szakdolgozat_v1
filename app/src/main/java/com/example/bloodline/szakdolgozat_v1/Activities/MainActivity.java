@@ -26,6 +26,7 @@ import com.example.bloodline.szakdolgozat_v1.Fragments.NewMealFragment;
 import com.example.bloodline.szakdolgozat_v1.Fragments.PrepareNowFragment;
 import com.example.bloodline.szakdolgozat_v1.Fragments.ProductTypeFragment;
 import com.example.bloodline.szakdolgozat_v1.Fragments.ProfileFragment;
+import com.example.bloodline.szakdolgozat_v1.Fragments.RecipeBrowserFragment;
 import com.example.bloodline.szakdolgozat_v1.Fragments.ShoppingListFragment;
 import com.example.bloodline.szakdolgozat_v1.Fragments.StatisticsFragment;
 import com.example.bloodline.szakdolgozat_v1.Fragments.StorageFragment;
@@ -113,6 +114,8 @@ public class MainActivity extends AppCompatActivity
             ChangeFragment(R.id.mainframeplace, new StorageFragment());
         } else if (id == R.id.nav_shoppingcart) {
             ChangeFragment(R.id.mainframeplace, new ShoppingListFragment());
+        } else if (id == R.id.nav_recipebrowser) {
+            ChangeFragment(R.id.mainframeplace, new RecipeBrowserFragment());
         } else if (id == R.id.nav_addfood) {
             ChangeFragment(R.id.mainframeplace, new ProductTypeFragment());
         } else if (id == R.id.nav_statistic) {
