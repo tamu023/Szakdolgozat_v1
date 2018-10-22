@@ -208,7 +208,6 @@ public class NewMealFragment extends Fragment {
                                 filFlour = flour;
                             }
                             if (filFlour == flour && filMeat == meat && filMilk == milk) {
-                                //TODO miért hoz NULL értéket amikor PrepareNow Fragmentben ugyanez felismeri
                                 Long prepcount = (long) 0;
                                 if (elsoszint.child("prepcount").getValue() != null) {
                                     prepcount = (long) elsoszint.child("prepcount").getValue();

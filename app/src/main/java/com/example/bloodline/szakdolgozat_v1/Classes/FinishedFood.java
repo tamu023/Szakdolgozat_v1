@@ -32,6 +32,15 @@ public class FinishedFood {
         this.meat = meat;
     }
 
+    //recipe browser constructor
+    public FinishedFood(String foodname, boolean flour, boolean milk, boolean meat, String recipe) {
+        this.foodname = foodname;
+        this.flour = flour;
+        this.milk = milk;
+        this.meat = meat;
+        this.recipe = recipe;
+    }
+
     public String getFoodname() {
         return foodname;
     }

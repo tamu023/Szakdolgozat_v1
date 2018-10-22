@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.bloodline.szakdolgozat_v1.Classes.Global_Vars;
 import com.example.bloodline.szakdolgozat_v1.Fragments.AdminPanelFragment;
 import com.example.bloodline.szakdolgozat_v1.Classes.Functions;
 import com.example.bloodline.szakdolgozat_v1.Fragments.NewMealFragment;
@@ -31,6 +32,10 @@ import com.example.bloodline.szakdolgozat_v1.Fragments.ShoppingListFragment;
 import com.example.bloodline.szakdolgozat_v1.Fragments.StatisticsFragment;
 import com.example.bloodline.szakdolgozat_v1.Fragments.StorageFragment;
 import com.example.bloodline.szakdolgozat_v1.R;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -51,8 +56,43 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //Alapértelmezettként a profilt jeleníti meg
-        ChangeFragment(R.id.mainframeplace, new ProfileFragment());
+        //ha van valami a bevásárlási listán akkor megkérdezi a felhasználót hogy szeretné e megnézni
+        Firebase ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("shopping list");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    AlertDialog.Builder a_builder = new AlertDialog.Builder(MainActivity.this);
+                    a_builder.setMessage("Your shopping list is not empty").setCancelable(false)
+                            .setPositiveButton("Show it", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ChangeFragment(R.id.mainframeplace, new ShoppingListFragment());
+                                    dialog.cancel(); //alert dialog bezárása
+                                }
+                            })
+                            .setNegativeButton("Leave it", new DialogInterface.OnClickListener() { //másik válaszlehetőség és a rá vonatkozó action
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ChangeFragment(R.id.mainframeplace, new ProfileFragment());
+                                    dialog.cancel(); //alert dialog bezárása
+                                }
+                            });
+                    AlertDialog alert = a_builder.create();
+                    alert.setTitle("Shopping List");
+                    alert.show();
+
+                } else {
+                    ChangeFragment(R.id.mainframeplace, new ProfileFragment());
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
 
     }
 

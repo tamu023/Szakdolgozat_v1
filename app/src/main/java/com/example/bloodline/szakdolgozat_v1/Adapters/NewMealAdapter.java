@@ -43,7 +43,6 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
     private List<AddProducts> shoppingList;
     private List<AddProducts> alterStorageList;
     private List<Long> prepCountList;
-    private long prepCount;
     private Firebase ref;
     private boolean exist;
 
@@ -62,7 +61,7 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(resource, null);
         final FinishedFood newmealItem = newmealList.get(position);
-        prepCount = prepCountList.get(position);
+        final long prepCount = prepCountList.get(position);
 
         TextView txtName = view.findViewById(R.id.itmNewMTxtName);
         TextView txtKcal = view.findViewById(R.id.itmNewMTxtKcal);
@@ -160,9 +159,10 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
                                                     SharedPreferences.Editor foodeditor = foodpref.edit();
                                                     foodeditor.putString("foodname", newmealItem.getFoodname());
                                                     foodeditor.apply();
-                                                    prepCount = prepCount + 1;
+                                                    long seged = prepCount;
+                                                    seged = seged + 1;
                                                     ref = new Firebase(Global_Vars.finProdRef).child(newmealItem.getFoodname()).child("prepcount");
-                                                    ref.setValue(prepCount);
+                                                    ref.setValue(seged);
                                                     Fragment startfragment = new RecipeFragment();
                                                     Context context = parent.getContext();
                                                     FragmentManager fm = ((Activity) context).getFragmentManager();

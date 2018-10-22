@@ -31,8 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20sp"
-            android:layout_marginEnd="15sp"
-            android:layout_marginStart="15sp"
+            android:layout_marginEnd="25sp"
+            android:layout_marginStart="25sp"
             android:orientation="vertical">
 
             <EditText
@@ -93,11 +93,24 @@
                 android:layout_height="250sp"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Raw Ingredients (Pick List)"
-                    android:textSize="15sp" />
+                    android:layout_height="45sp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="wrap_content"
+                        android:text="Raw Ingredients (Pick List)"
+                        android:textSize="15sp" />
+
+                    <Button
+                        android:id="@+id/finBtnAddRaw"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="ADD"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
 
                 <ListView
                     android:id="@+id/finlistRaw"
@@ -115,6 +128,5 @@
 
         </LinearLayout>
     </LinearLayout>
-
 
 </ScrollView>

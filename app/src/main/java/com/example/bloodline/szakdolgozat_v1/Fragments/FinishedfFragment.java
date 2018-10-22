@@ -61,6 +61,7 @@ public class FinishedfFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         Button btnAdd = view.findViewById(R.id.finBtnAdd);
+        Button btnRawAdd = view.findViewById(R.id.finBtnAddRaw);
         edtMegnevezes = view.findViewById(R.id.finName);
         edtCarb = view.findViewById(R.id.finCarb);
         edtPrepTime = view.findViewById(R.id.finPrepTime);
@@ -206,6 +207,18 @@ public class FinishedfFragment extends Fragment {
                 }
             }
         });
+
+        btnRawAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragm = new RawfFragment();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.mainframeplace, fragm);
+                ft.commit();
+            }
+        });
+
     }
 
     //beállítja a milk meat flour paraméterekt
