@@ -167,7 +167,7 @@ public class Functions {
             if (unit.equals("KG")) {
                 exchangedQuantity = Double.parseDouble(quantity);
             } else if (unit.equals("DKG")) {
-                exchangedQuantity = Double.parseDouble(quantity) / 10;
+                exchangedQuantity = Double.parseDouble(quantity) / 100;
             } else if (unit.equals("G")) {
                 exchangedQuantity = Double.parseDouble(quantity) / 1000;
             }
