@@ -28,7 +28,7 @@ public class AdminPendingFinishedIngredientAdapter extends ArrayAdapter<Finished
     private int resource;
     private List<FinishedFood> finishedFoodList;
     private String recept;
-    private long prepTime;
+    private double prepTime;
     private Firebase ref;
     private boolean exist;
 
@@ -60,7 +60,7 @@ public class AdminPendingFinishedIngredientAdapter extends ArrayAdapter<Finished
         setColors(finishedFood.getFlour(), txtFlour);
         setColors(finishedFood.getMeat(), txtMeat);
         setColors(finishedFood.getMilk(), txtMilk);
-        //TODO TESZTELNI
+
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,9 +82,9 @@ public class AdminPendingFinishedIngredientAdapter extends ArrayAdapter<Finished
                             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    recept = (String) dataSnapshot.child("recipe").getValue();
-                                    prepTime = (long) dataSnapshot.child("preptime").getValue();
                                     ref = ref.child(finishedFood.getFoodname()).child("ingredientList");
+                                    recept = (String) dataSnapshot.child(finishedFood.getFoodname()).child("recipe").getValue();
+                                    prepTime = (double) dataSnapshot.child(finishedFood.getFoodname()).child("preptime").getValue();
                                     //hozzávalók kiolvasása
                                     ref.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override

@@ -44,6 +44,8 @@ public class NewMealFragment extends Fragment {
     private List<AddProducts> rawFoodList;
     private List<FinishedFoodIngredient> ingredientList;
     private List<Long> prepCountList;
+    private List<Long> likesList;
+    private List<Long> dislikesList;
     private Firebase ref;
 
     @Override
@@ -61,6 +63,8 @@ public class NewMealFragment extends Fragment {
         finishedFoodList = new ArrayList<>();
         rawFoodList = new ArrayList<>();
         prepCountList = new ArrayList<>();
+        likesList = new ArrayList<>();
+        dislikesList = new ArrayList<>();
 
         final TextView txtFlour = view.findViewById(R.id.newmealTxtFlour);
         final TextView txtMilk = view.findViewById(R.id.newmealTxtMilk);
@@ -185,7 +189,7 @@ public class NewMealFragment extends Fragment {
             public void onClick(View v) {
                 for (int i = finishedFoodList.size() - 1; i >= 0; i--) {
                     finishedFoodList.remove(i);
-                    NewMealAdapter adapter = new NewMealAdapter(getActivity().getApplicationContext(), R.layout.item_new_meal, finishedFoodList, rawFoodList, prepCountList);
+                    NewMealAdapter adapter = new NewMealAdapter(getActivity().getApplicationContext(), R.layout.item_new_meal, finishedFoodList, rawFoodList, prepCountList, likesList, dislikesList);
                     listView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
@@ -194,6 +198,15 @@ public class NewMealFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (final DataSnapshot elsoszint : dataSnapshot.getChildren()) {
+                            Long likes = (long) 0;
+                            Long dislikes = (long) 0;
+                            for (DataSnapshot harmadikszint : elsoszint.child("likes").getChildren()) {
+                                if ((boolean) harmadikszint.getValue()) {
+                                    likes = likes + 1;
+                                } else {
+                                    dislikes = dislikes + 1;
+                                }
+                            }
                             ReadFilters();
                             final boolean milk = (boolean) elsoszint.child("milk").getValue();
                             final boolean meat = (boolean) elsoszint.child("meat").getValue();
@@ -208,6 +221,8 @@ public class NewMealFragment extends Fragment {
                                 filFlour = flour;
                             }
                             if (filFlour == flour && filMeat == meat && filMilk == milk) {
+                                likesList.add(likes);
+                                dislikesList.add(dislikes);
                                 Long prepcount = (long) 0;
                                 if (elsoszint.child("prepcount").getValue() != null) {
                                     prepcount = (long) elsoszint.child("prepcount").getValue();
@@ -219,12 +234,11 @@ public class NewMealFragment extends Fragment {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         ingredientList = new ArrayList<>();
-
                                         for (DataSnapshot masodikszint : dataSnapshot.getChildren()) {
                                             ingredientList.add(new FinishedFoodIngredient((String) masodikszint.child("megnevezes").getValue(), (double) masodikszint.child("mennyiseg").getValue()));
                                         }
                                         finishedFoodList.add(new FinishedFood(elsoszint.getKey(), (long) elsoszint.child("carb").getValue(), flour, milk, meat, (String) elsoszint.child("recipe").getValue(), (double) elsoszint.child("preptime").getValue(), ingredientList));
-                                        NewMealAdapter adapter = new NewMealAdapter(getActivity().getApplicationContext(), R.layout.item_new_meal, finishedFoodList, rawFoodList, prepCountList);
+                                        NewMealAdapter adapter = new NewMealAdapter(getActivity().getApplicationContext(), R.layout.item_new_meal, finishedFoodList, rawFoodList, prepCountList, likesList, dislikesList);
                                         listView.setAdapter(adapter);
                                         adapter.notifyDataSetChanged();
                                     }

@@ -34,6 +34,8 @@ public class PrepareNowFragment extends Fragment {
     private Firebase ref;
     private List<Double> maxPortionList;
     private List<Long> prepCountList;
+    private List<Long> likesList;
+    private List<Long> dislikesList;
     private double maxPortion;
     private boolean ok;
 
@@ -52,6 +54,8 @@ public class PrepareNowFragment extends Fragment {
         storageList = new ArrayList<>();
         maxPortionList = new ArrayList<>();
         prepCountList = new ArrayList<>();
+        likesList = new ArrayList<>();
+        dislikesList = new ArrayList<>();
 
         //felhasználó raktára
         ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("storage");
@@ -71,6 +75,16 @@ public class PrepareNowFragment extends Fragment {
                             for (final DataSnapshot masodikszint : dataSnapshot.child(elsoszint.getKey()).child("ingredientList").getChildren()) {
                                 ingredientList.add(new FinishedFoodIngredient((String) masodikszint.child("megnevezes").getValue(), (double) masodikszint.child("mennyiseg").getValue()));
                             }
+                            Long likes = (long) 0;
+                            Long dislikes = (long) 0;
+                            for (DataSnapshot harmadikszint : elsoszint.child("likes").getChildren()) {
+                                if ((boolean) harmadikszint.getValue()) {
+                                    likes = likes + 1;
+                                } else {
+                                    dislikes = dislikes + 1;
+                                }
+                            }
+
                             //felhasználó raktárában megnézzük hogy megtalálható e a hozzávaló és ha igen esetleg oszthazó e többel és így kiderül hány adagot tud elkészíteni
                             maxPortion = 0;
                             for (int j = 0; j < ingredientList.size(); j++) {
@@ -87,6 +101,7 @@ public class PrepareNowFragment extends Fragment {
                                                 ok = true;
                                                 break;
                                             } else if (maxPortion == Math.floor(check.getQuantity() / ingredientcheck.getMennyiseg())) {
+                                                maxPortion = Math.floor(check.getQuantity() / ingredientcheck.getMennyiseg());
                                                 ok = true;
                                                 break;
                                             }
@@ -106,11 +121,14 @@ public class PrepareNowFragment extends Fragment {
                                 if (elsoszint.child("prepcount").getValue() != null) {
                                     prepcount = (long) elsoszint.child("prepcount").getValue();
                                 }
+                                likesList.add(likes);
+                                dislikesList.add(dislikes);
                                 prepCountList.add(prepcount);
                                 maxPortionList.add(maxPortion);
                                 finishedFoodList.add(new FinishedFood(elsoszint.getKey(), (long) elsoszint.child("carb").getValue(), (boolean) elsoszint.child("flour").getValue(), (boolean) elsoszint.child("milk").getValue(), (boolean) elsoszint.child("meat").getValue(), (String) elsoszint.child("recipe").getValue(), (double) elsoszint.child("preptime").getValue(), ingredientList));
-                                PrepareNowAdapter adapter = new PrepareNowAdapter(getActivity().getApplicationContext(), R.layout.item_prepare_now, finishedFoodList, storageList, maxPortionList, prepCountList);
+                                PrepareNowAdapter adapter = new PrepareNowAdapter(getActivity().getApplicationContext(), R.layout.item_prepare_now, finishedFoodList, storageList, maxPortionList, prepCountList, likesList, dislikesList);
                                 listView.setAdapter(adapter);
+
                             }
                         }
                     }

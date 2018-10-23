@@ -43,16 +43,20 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
     private List<AddProducts> shoppingList;
     private List<AddProducts> alterStorageList;
     private List<Long> prepCountList;
+    private List<Long> likesList;
+    private List<Long> dislikesList;
     private Firebase ref;
     private boolean exist;
 
-    public NewMealAdapter(@NonNull Context context, int resource, List<FinishedFood> newmealList, List<AddProducts> rawFoodList, List<Long> prepCountList) {
+    public NewMealAdapter(@NonNull Context context, int resource, List<FinishedFood> newmealList, List<AddProducts> rawFoodList, List<Long> prepCountList, List<Long> likesList, List<Long> dislikesList) {
         super(context, resource, newmealList);
         this.context = context;
         this.resource = resource;
         this.newmealList = newmealList;
         this.rawFoodList = rawFoodList;
         this.prepCountList = prepCountList;
+        this.likesList = likesList;
+        this.dislikesList = dislikesList;
     }
 
     @NonNull
@@ -62,6 +66,8 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
         View view = inflater.inflate(resource, null);
         final FinishedFood newmealItem = newmealList.get(position);
         final long prepCount = prepCountList.get(position);
+        final long likes = likesList.get(position);
+        final long dislikes = dislikesList.get(position);
 
         TextView txtName = view.findViewById(R.id.itmNewMTxtName);
         TextView txtKcal = view.findViewById(R.id.itmNewMTxtKcal);
@@ -69,11 +75,17 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
         TextView txtMilk = view.findViewById(R.id.itmNewMTxtMilk);
         TextView txtMeat = view.findViewById(R.id.itmNewMTxtMeat);
         TextView txtFlour = view.findViewById(R.id.itmNewMTxtFlour);
+        TextView txtLike = view.findViewById(R.id.itmNewMTxtLike);
+        TextView txtDislike = view.findViewById(R.id.itmNewMTxtDislike);
+        TextView txtPrepared = view.findViewById(R.id.itmNewMTxtPrepared);
         Button btnOk = view.findViewById(R.id.itmNewMBtnOk);
 
         txtName.setText(newmealItem.getFoodname());
         txtKcal.setText(newmealItem.getCarb() + " Kcal");
         txtPrep.setText(newmealItem.getPreptime() + " Min");
+        txtLike.setText((int) Math.floor(likes) + "");
+        txtDislike.setText((int) Math.floor(dislikes) + "");
+        txtPrepared.setText("Prepared: " + (int) Math.floor(prepCount) + " times");
         if (newmealItem.getFlour()) {
             txtFlour.setBackgroundColor(0xFF00FF00);
         }

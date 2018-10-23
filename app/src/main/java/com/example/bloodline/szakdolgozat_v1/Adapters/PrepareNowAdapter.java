@@ -41,9 +41,10 @@ public class PrepareNowAdapter extends ArrayAdapter<FinishedFood> {
     private Firebase ref;
     private List<Double> maxPortionList;
     private List<Long> prepCountList;
-    private long prepCount;
+    private List<Long> likesList;
+    private List<Long> dislikesList;
 
-    public PrepareNowAdapter(@NonNull Context context, int resource, List<FinishedFood> prepareNowList, List<AddProducts> storageList, List<Double> maxPortionList, List<Long> prepCountList) {
+    public PrepareNowAdapter(@NonNull Context context, int resource, List<FinishedFood> prepareNowList, List<AddProducts> storageList, List<Double> maxPortionList, List<Long> prepCountList, List<Long> likesList, List<Long> dislikesList) {
         super(context, resource, prepareNowList);
         this.context = context;
         this.resource = resource;
@@ -51,6 +52,8 @@ public class PrepareNowAdapter extends ArrayAdapter<FinishedFood> {
         this.storageList = storageList;
         this.maxPortionList = maxPortionList;
         this.prepCountList = prepCountList;
+        this.likesList = likesList;
+        this.dislikesList = dislikesList;
     }
 
     @NonNull
@@ -60,7 +63,9 @@ public class PrepareNowAdapter extends ArrayAdapter<FinishedFood> {
         View view = inflater.inflate(resource, null);
         final FinishedFood prepareNowItem = prepareNowList.get(position);
         final double maxPortion = maxPortionList.get(position);
-        prepCount = prepCountList.get(position);
+        final long prepCount = prepCountList.get(position);
+        final long likes = likesList.get(position);
+        final long dislikes = dislikesList.get(position);
 
         LinearLayout linButton = view.findViewById(R.id.itmPrepNowLin);
         TextView txtName = view.findViewById(R.id.itmPrepNowTxtName);
@@ -70,11 +75,18 @@ public class PrepareNowAdapter extends ArrayAdapter<FinishedFood> {
         TextView txtMeat = view.findViewById(R.id.itmPrepNowTxtMeat);
         TextView txtFlour = view.findViewById(R.id.itmPrepNowTxtFlour);
         TextView txtPortion = view.findViewById(R.id.itmPrepNowTxtPortion);
+        TextView txtLike = view.findViewById(R.id.itmPrepNowTxtLike);
+        TextView txtDislike = view.findViewById(R.id.itmPrepNowTxtDislike);
+        TextView txtPrepared = view.findViewById(R.id.itmPrepNowTxtPrepared);
 
         txtName.setText(prepareNowItem.getFoodname());
         txtKcal.setText(prepareNowItem.getCarb() + " Kcal");
         txtTime.setText((int) Math.floor(prepareNowItem.getPreptime()) + " Min");
         txtPortion.setText((int) Math.floor(maxPortion) + " Portion");
+        txtLike.setText((int) Math.floor(likes) + "");
+        txtDislike.setText((int) Math.floor(dislikes) + "");
+        txtPrepared.setText("Prepared: " + (int) Math.floor(prepCount) + " times");
+
 
         if (prepareNowItem.getFlour()) {
             txtFlour.setBackgroundColor(0xFF00FF00);
@@ -114,7 +126,7 @@ public class PrepareNowAdapter extends ArrayAdapter<FinishedFood> {
                                 for (int i = 0; i < prepareNowItem.getIngredientList().size(); i++) {
                                     FinishedFoodIngredient hozzavalo = prepareNowItem.getIngredientList().get(i);
                                     for (int j = 0; j < storageList.size(); j++) {
-                                        AddProducts raktarItem = storageList.get(i);
+                                        AddProducts raktarItem = storageList.get(j);
                                         if (hozzavalo.getMegnevezes().equals(raktarItem.getMegnevezes())) {
                                             double newQuantity = raktarItem.getQuantity() - portion * hozzavalo.getMennyiseg();
                                             if (newQuantity != 0) {
@@ -127,9 +139,10 @@ public class PrepareNowAdapter extends ArrayAdapter<FinishedFood> {
                                         }
                                     }
                                 }
-                                prepCount = prepCount + 1;
+                                long seged = prepCount;
+                                seged = seged + 1;
                                 ref = new Firebase(Global_Vars.finProdRef).child(prepareNowItem.getFoodname()).child("prepcount");
-                                ref.setValue(prepCount);
+                                ref.setValue(seged);
                                 Fragment startfragment = new RecipeFragment();
                                 Context context = parent.getContext();
                                 FragmentManager fm = ((Activity) context).getFragmentManager();

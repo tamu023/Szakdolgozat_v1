@@ -29,7 +29,6 @@ public class RecipeFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_recipe, null);
     }
 
-    //TODO elkészítéskor számláló, receot explorer tab a főmenübe
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -46,7 +45,7 @@ public class RecipeFragment extends Fragment {
         Button btnDislike = view.findViewById(R.id.recipeBtnDislike);
         final LinearLayout linLikes = view.findViewById(R.id.recipeLinLikes);
 
-        ref = new Firebase(Global_Vars.finProdRef).child(foodname).child("Likes").child(Functions.getUID());
+        ref = new Firebase(Global_Vars.finProdRef).child(foodname).child("likes").child(Functions.getUID());
         btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
