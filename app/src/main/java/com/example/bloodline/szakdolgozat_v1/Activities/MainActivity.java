@@ -40,6 +40,8 @@ import com.firebase.client.ValueEventListener;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private Firebase ref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //ha van valami a bevásárlási listán akkor megkérdezi a felhasználót hogy szeretné e megnézni
-        Firebase ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("shopping list");
+        ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("shopping list");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -68,22 +70,55 @@ public class MainActivity extends AppCompatActivity
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     ChangeFragment(R.id.mainframeplace, new ShoppingListFragment());
-                                    dialog.cancel(); //alert dialog bezárása
+                                    dialog.cancel();
                                 }
                             })
                             .setNegativeButton("Leave it", new DialogInterface.OnClickListener() { //másik válaszlehetőség és a rá vonatkozó action
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     ChangeFragment(R.id.mainframeplace, new ProfileFragment());
-                                    dialog.cancel(); //alert dialog bezárása
+                                    dialog.cancel();
                                 }
                             });
                     AlertDialog alert = a_builder.create();
                     alert.setTitle("Shopping List");
                     alert.show();
-
                 } else {
-                    ChangeFragment(R.id.mainframeplace, new ProfileFragment());
+                    ref = new Firebase(Global_Vars.usersRef).child(Functions.getUID()).child("storage");
+                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (!dataSnapshot.exists()) {
+                                AlertDialog.Builder a_builder = new AlertDialog.Builder(MainActivity.this);
+                                a_builder.setMessage("Your storage is empty").setCancelable(false)
+                                        .setPositiveButton("Show it", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                ChangeFragment(R.id.mainframeplace, new StorageFragment());
+                                                dialog.cancel();
+                                            }
+                                        })
+                                        .setNegativeButton("Leave it", new DialogInterface.OnClickListener() { //másik válaszlehetőség és a rá vonatkozó action
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                ChangeFragment(R.id.mainframeplace, new ProfileFragment());
+                                                dialog.cancel();
+                                            }
+                                        });
+                                AlertDialog alert = a_builder.create();
+                                alert.setTitle("Empty Storage");
+                                alert.show();
+                            } else {
+                                ChangeFragment(R.id.mainframeplace, new ProfileFragment());
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
                 }
             }
 
