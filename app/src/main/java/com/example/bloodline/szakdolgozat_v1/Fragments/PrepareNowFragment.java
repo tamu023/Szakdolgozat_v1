@@ -100,7 +100,8 @@ public class PrepareNowFragment extends Fragment {
                                                 maxPortion = Math.floor(check.getQuantity() / ingredientcheck.getMennyiseg());
                                                 ok = true;
                                                 break;
-                                            } else if (maxPortion < Math.floor(check.getQuantity() / ingredientcheck.getMennyiseg())) {
+                                            } else if (maxPortion == Math.floor(check.getQuantity() / ingredientcheck.getMennyiseg())) {
+                                                maxPortion = Math.floor(check.getQuantity() / ingredientcheck.getMennyiseg());
                                                 ok = true;
                                                 break;
                                             }
@@ -127,7 +128,7 @@ public class PrepareNowFragment extends Fragment {
                                 finishedFoodList.add(new FinishedFood(elsoszint.getKey(), (long) elsoszint.child("carb").getValue(), (boolean) elsoszint.child("flour").getValue(), (boolean) elsoszint.child("milk").getValue(), (boolean) elsoszint.child("meat").getValue(), (String) elsoszint.child("recipe").getValue(), (double) elsoszint.child("preptime").getValue(), ingredientList));
                                 PrepareNowAdapter adapter = new PrepareNowAdapter(getActivity().getApplicationContext(), R.layout.item_prepare_now, finishedFoodList, storageList, maxPortionList, prepCountList, likesList, dislikesList);
                                 listView.setAdapter(adapter);
-                                adapter.notifyDataSetChanged();
+
                             }
                         }
                     }
