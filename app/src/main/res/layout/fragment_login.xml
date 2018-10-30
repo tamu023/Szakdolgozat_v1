@@ -69,7 +69,6 @@
             android:text="No account yet? Create one"
             android:textColor="#000dff" />
 
-
         <com.google.android.gms.ads.AdView
             android:id="@+id/adView"
             android:layout_width="wrap_content"
@@ -78,6 +77,7 @@
             ads:adUnitId="@string/banner_ad_unit_id">
 
         </com.google.android.gms.ads.AdView>
+
     </LinearLayout>
 
 </ScrollView>
