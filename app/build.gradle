@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 
 android {
+    repositories{
+        maven { url 'https://jitpack.io' }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.example.bloodline.szakdolgozat_v1"
@@ -33,6 +36,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.android.gms:play-services-ads:17.0.0'
     implementation 'com.firebase:firebase-client-android:2.5.2'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
 }
 
 apply plugin: 'com.google.gms.google-services'

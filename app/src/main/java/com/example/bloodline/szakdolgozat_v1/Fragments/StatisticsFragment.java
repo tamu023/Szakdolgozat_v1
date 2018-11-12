@@ -1,11 +1,16 @@
 package com.example.bloodline.szakdolgozat_v1.Fragments;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.bloodline.szakdolgozat_v1.Adapters.StatisticsAdapter;
@@ -56,5 +61,35 @@ public class StatisticsFragment extends Fragment {
 
             }
         });
+
+        Button btnLiquid = view.findViewById(R.id.statBtnLiquid);
+        Button btnSolid = view.findViewById(R.id.statBtnSolid);
+        btnLiquid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences prefs = getContext().getSharedPreferences("unit",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean("unit",false); //adatok beillesztése, első paraméter a kulcs második azérték
+                editor.apply(); //jóváhagyás
+                ChangeFragment(R.id.mainframeplace, new StatisticsChartsFragment());
+            }
+        });
+        btnSolid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences prefs = getContext().getSharedPreferences("unit",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean("unit",true); //adatok beillesztése, első paraméter a kulcs második azérték
+                editor.apply(); //jóváhagyás
+                ChangeFragment(R.id.mainframeplace, new StatisticsChartsFragment());
+            }
+        });
+    }
+    private void ChangeFragment(int position, Fragment fr) {
+        Fragment startfragment = fr;
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(position, startfragment);
+        ft.commit();
     }
 }

@@ -46,7 +46,6 @@ public class StorageAdapter extends ArrayAdapter<AddProducts> {
         final EditText edtQuantity = view.findViewById(R.id.storageitemEdtQuantity);
         Button btnMod = view.findViewById(R.id.storageitemBtnMod);
         Button btnDelete = view.findViewById(R.id.storageitemBtnDelete);
-        //TODO Tesztelni hogy nem hozza e be a másik billentyűzetet és buggol be, ha működik a többi helyen is átállítani
         edtQuantity.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
         String seged = " ";

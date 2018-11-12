@@ -151,7 +151,6 @@ public class NewMealAdapter extends ArrayAdapter<FinishedFood> {
                                                 @Override
                                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                                     for (int i = 0; i < alterStorageList.size(); i++) {
-
                                                         AddProducts change = alterStorageList.get(i);
                                                         if (change.getQuantity() == 0) {
                                                             ref.child(change.getMegnevezes()).removeValue();
