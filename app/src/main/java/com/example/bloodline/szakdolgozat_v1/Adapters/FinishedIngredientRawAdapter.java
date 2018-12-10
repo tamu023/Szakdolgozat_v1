@@ -52,7 +52,6 @@ public class FinishedIngredientRawAdapter extends ArrayAdapter<AddProducts> {
 
         txtName.setText(rawIngredient.getMegnevezes());
 
-        //TODO egyedi spinner itemet készíteni neki mert től nagy a betüméret
         final boolean unit = rawIngredient.getUnit();
         String liquid[] = {"L", "DL", "CL", "ML", "MKK", "KVK", "TK", "EVK", "POH", "BOG"};
         String solid[] = {"KG", "DKG", "G"};

@@ -69,9 +69,9 @@ public class StatisticsFragment extends Fragment {
             public void onClick(View view) {
                 SharedPreferences prefs = getContext().getSharedPreferences("unit",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putBoolean("unit",false); //adatok beillesztése, első paraméter a kulcs második azérték
-                editor.apply(); //jóváhagyás
-                ChangeFragment(R.id.mainframeplace, new StatisticsChartsFragment());
+                editor.putBoolean("unit",false);
+                editor.apply();
+                //ChangeFragment(R.id.mainframeplace, new StatisticsChartsFragment());
             }
         });
         btnSolid.setOnClickListener(new View.OnClickListener() {
@@ -79,9 +79,9 @@ public class StatisticsFragment extends Fragment {
             public void onClick(View view) {
                 SharedPreferences prefs = getContext().getSharedPreferences("unit",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putBoolean("unit",true); //adatok beillesztése, első paraméter a kulcs második azérték
-                editor.apply(); //jóváhagyás
-                ChangeFragment(R.id.mainframeplace, new StatisticsChartsFragment());
+                editor.putBoolean("unit",true);
+                editor.apply();
+                //ChangeFragment(R.id.mainframeplace, new StatisticsChartsFragment());
             }
         });
     }
